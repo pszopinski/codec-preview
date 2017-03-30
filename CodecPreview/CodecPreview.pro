@@ -36,10 +36,10 @@ win32 {
         # CHANGE OPENCV PATH HERE
         OPENCV_BUILDPATH = C:\opencv
 
-        INCLUDEPATH += OPENCV_BUILDPATH\include
+        INCLUDEPATH += $$OPENCV_BUILDPATH\include
 
         LIBS += \
-            -LOPENCV_BUILDPATH\install\x86\mingw\lib \
+            -L$$OPENCV_BUILDPATH\x86\mingw\lib \
             -lopencv_core320.dll \
             -lopencv_highgui320.dll \
             -lopencv_imgcodecs320.dll \
