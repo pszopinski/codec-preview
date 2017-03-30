@@ -1,10 +1,10 @@
-#include "camwindow.h"
+#include "codecpreview.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    CamWindow w;
+    CodecPreview w;
     w.show();
 
     return a.exec();
