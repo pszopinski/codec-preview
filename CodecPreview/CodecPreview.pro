@@ -31,13 +31,36 @@ HEADERS  += codecpreview.h
 FORMS    += codecpreview.ui
 
 # OpenCV libraries
-LIBS += \
-    -lopencv_core \
-    -lopencv_highgui \
-    -lopencv_imgcodecs \
-    -lopencv_imgproc \
-    -lopencv_features2d \
-    -lopencv_calib3d \
-    -lopencv_video \
-    -lopencv_videoio \
-    -lopencv_videostab
+
+win32 {
+        # CHANGE OPENCV PATH HERE
+        OPENCV_BUILDPATH = C:\opencv
+
+        INCLUDEPATH += $$OPENCV_BUILDPATH\include
+
+        LIBS += \
+            -L$$OPENCV_BUILDPATH\x86\mingw\lib \
+            -lopencv_core320.dll \
+            -lopencv_highgui320.dll \
+            -lopencv_imgcodecs320.dll \
+            -lopencv_imgproc320.dll \
+            -lopencv_features2d320.dll \
+            -lopencv_calib3d320.dll \
+            -lopencv_video320.dll \
+            -lopencv_videoio320.dll \
+            -lopencv_videostab320.dll
+
+}
+
+unix {
+        LIBS += \
+            -lopencv_core \
+            -lopencv_highgui \
+            -lopencv_imgcodecs \
+            -lopencv_imgproc \
+            -lopencv_features2d \
+            -lopencv_calib3d \
+            -lopencv_video \
+            -lopencv_videoio \
+            -lopencv_videostab
+}
