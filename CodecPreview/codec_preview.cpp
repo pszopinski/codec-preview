@@ -1,5 +1,5 @@
 #include "codec_preview.h"
-#include "ui_codecpreview.h"
+#include "ui_codec_preview.h"
 
 CodecPreview::CodecPreview(QWidget *parent) {
 
