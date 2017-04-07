@@ -1,0 +1,22 @@
+# camera -> mjpeg -> rawvideo rgb24 | ffplay
+ffmpeg -i /dev/video0 -s 720x480 -vcodec mjpeg -f nut - | ffmpeg -f nut -i - -vcodec rawvideo -vf format=pix_fmts=rgb24 -pixel_format rgb24 -f rawvideo - | ffplay -f rawvideo -video_size 720x480 -pixel_format rgb24 -
+
+# media file -> mjpeg -> rawvideo rgb24 | ffplay
+ffmpeg -y -i /tmp/video.mp4 -s 720x480 -vcodec mjpeg -f nut - | ffmpeg -f nut -i - -vcodec rawvideo -vf format=pix_fmts=rgb24 -pixel_format rgb24 -f rawvideo - | ffplay -f rawvideo -video_size 720x480 -pixel_format rgb24 -
+ 
+
+# Get camera footage as NUT
+ffmpeg -i /dev/video0 -s 720x480 -f nut -
+
+# Encode NUT stream to MJPEG
+ffmpeg -f nut -i - -vcodec mjpeg -f nut -
+
+# Encode NUT stream to rawvideo rgb24
+ffmpeg -f nut -i - -vcodec rawvideo -vf format=pix_fmts=rgb24 -pixel_format rgb24 -f rawvideo -
+
+
+
+# You can use named pipes and tee to duplicate byte streams
+mkfifo /tmp/myfifo
+ffmpeg ... > tee /tmp/myfifo > ffplay ...
+cat /tmp/myfifo | ffplay ...
