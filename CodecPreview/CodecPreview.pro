@@ -22,7 +22,7 @@ FORMS += \
 
 # We use some mostly deprecated stuff (new functionality is poorly documented...),
 # so we supress warnings (otherwise there is like 200 of those)
-QMAKE_CXXFLAGS = -std=c++0x -Wno-deprecated-declarations -Wno-unused-result
+QMAKE_CXXFLAGS = -std=c++0x -Wno-deprecated-declarations -Wno-unused-result -static-libgcc -static-libstdc++
 
 
 win32 {
@@ -30,7 +30,7 @@ win32 {
     OPENCV_PATH = C:\opencv
 
     #CHANGE FFMPEG PATH HERE
-    FFMPEG_PATH = C:\ffmpeg
+    FFMPEG_PATH = C:\ffmpeg1
 
     INCLUDEPATH += $$OPENCV_PATH\include
 
