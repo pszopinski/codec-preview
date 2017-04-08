@@ -8,17 +8,19 @@ TEMPLATE = app
 DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp \
-    codec_preview.cpp \
-    frame_encoder.cpp \
-    image_converter.cpp
+    MainWindow.cpp \
+    FrameEncoder.cpp \
+    ImageConverter.cpp \
+    VideoPlayer.cpp
 
 HEADERS += \
-    codec_preview.h \
-    frame_encoder.h \
-    image_converter.h
+    MainWindow.h \
+    FrameEncoder.h \
+    ImageConverter.h \
+    VideoPlayer.h
 
 FORMS += \
-    codec_preview.ui
+    MainWindow.ui
 
 # We use some mostly deprecated stuff (new functionality is poorly documented...),
 # so we supress warnings (otherwise there is like 200 of those)
@@ -30,7 +32,7 @@ win32 {
     OPENCV_PATH = C:\opencv
 
     #CHANGE FFMPEG PATH HERE
-    FFMPEG_PATH = C:\ffmpeg1
+    FFMPEG_PATH = C:\ffmpeg
 
     INCLUDEPATH += $$OPENCV_PATH\include
 

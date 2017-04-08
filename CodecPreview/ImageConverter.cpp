@@ -1,4 +1,4 @@
-#include "image_converter.h"
+#include "ImageConverter.h"
 
 
 QImage ImageConverter::cvMatToQImage(const cv::Mat &inMat) {
