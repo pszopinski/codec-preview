@@ -1,6 +1,4 @@
-QT += core gui
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT += core gui network concurrent widgets
 
 TARGET = CodecPreview
 TEMPLATE = app
@@ -9,15 +7,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp \
     MainWindow.cpp \
-    FrameEncoder.cpp \
-    ImageConverter.cpp \
-    VideoPlayer.cpp
+    VideoPlayer.cpp \
+    TcpReceiver.cpp \
+    CmdThread.cpp
 
 HEADERS += \
     MainWindow.h \
-    FrameEncoder.h \
-    ImageConverter.h \
-    VideoPlayer.h
+    VideoPlayer.h \
+    TcpReceiver.h \
+    CmdThread.h
 
 FORMS += \
     MainWindow.ui

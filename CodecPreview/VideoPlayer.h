@@ -34,6 +34,8 @@ public:
     bool isStopped() const;
     bool startCamera(int n);
     void stopCamera();
+    int getWidth();
+    int getHeight();
 signals:
     void processedImage(const QImage &image);
 };

@@ -14,6 +14,7 @@ bool Player::loadVideo(std::string filename) {
     }
     else
         return false;
+
 }
 
 
@@ -89,4 +90,12 @@ void Player::stopCamera() {
     stop();
     inputFromCamera = false;
     capture.release();
+}
+
+int Player::getWidth() {
+    return capture.get(CV_CAP_PROP_FRAME_WIDTH);
+}
+
+int Player::getHeight() {
+    return capture.get(CV_CAP_PROP_FRAME_HEIGHT);
 }

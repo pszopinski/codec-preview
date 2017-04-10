@@ -13,10 +13,10 @@
 
 #include <opencv2/opencv.hpp>
 
-#include "FrameEncoder.h"
 #include "ImageConverter.h"
 #include "VideoPlayer.h"
-
+#include "TcpReceiver.h"
+#include "CmdThread.h"
 
 namespace Ui {
 class MainWindow;
@@ -27,17 +27,16 @@ class MainWindow : public QMainWindow {
 private:
     QTimer timer;
     cv::VideoCapture capture;
-    const int dstWidth = 640;
-    const int dstHeight = 480;
     std::vector<uint8_t> imgBuf;
     cv::Mat image;
-    FrameEncoder encoder;
     std::string fileName = "";
     bool playVideo = false;
     bool getCameraInput = false;
     Ui::MainWindow *ui;
     Player* rawPlayer;
     Player* encodedPlayer;
+    CmdThread cmdThread;
+    TcpReceiver* tcpReceiver;
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
