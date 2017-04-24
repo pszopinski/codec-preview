@@ -21,8 +21,7 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent) :
     vlcVolume->mute();
 
 
-    vlcInstanceEncoded = new VlcInstance(VlcCommon::args(), NULL);
-    vlcPlayerEncoded = new VlcMediaPlayer(vlcInstanceEncoded);
+    vlcPlayerEncoded = new VlcMediaPlayer(vlcInstance);
     vlcPlayerEncoded->setVideoWidget(ui->encodedVideo);
     ui->encodedVideo->setMediaPlayer(vlcPlayerEncoded);
     vlcVolumeEncoded = new VlcWidgetVolumeSlider();
@@ -44,6 +43,8 @@ CodecComparisonWindow::~CodecComparisonWindow()
     delete vlcPlayerEncoded;
     delete vlcMediaEncoded;
     delete vlcInstanceEncoded;
+
+
 }
 
 
@@ -69,11 +70,36 @@ void CodecComparisonWindow::openLocal()
     //MJPEG
     process.start(QString("ffmpeg -re -i  \"" + file + "\" -preset ultrafast -an -strict experimental -f mpegts udp://localhost:2000").toUtf8().constData());
 
-    vlcMediaEncoded = new VlcMedia("udp://@localhost:2000", vlcInstanceEncoded);
+    vlcMediaEncoded = new VlcMedia("udp://@localhost:2000", vlcInstance);
+    vlcPlayerEncoded->open(vlcMediaEncoded);
+}
+
+void CodecComparisonWindow::openCamera()
+{
+    QString cameraName = QString("Lenovo EasyCamera");
+
+    vlcMedia = new VlcMedia(QString("dshow:// :dshow-vdev=\"") + cameraName + QString("\""), vlcInstance);
+
+    vlcPlayer->open(vlcMedia);
+
+    //MJPEG
+    process.start(QString("ffmpeg -f dshow -i video=\"") + cameraName + QString("\" -q 50 -f mpegts udp://localhost:2000"));
+
+    vlcMediaEncoded = new VlcMedia("udp://@localhost:2000", vlcInstance);
     vlcPlayerEncoded->open(vlcMediaEncoded);
 }
 
 void CodecComparisonWindow::on_actionOpen_file_triggered()
 {
     openLocal();
+}
+
+void CodecComparisonWindow::on_actionOpen_camera_triggered()
+{
+    openCamera();
+}
+
+void CodecComparisonWindow::closeEvent(QCloseEvent *event)
+{
+    process.kill();
 }

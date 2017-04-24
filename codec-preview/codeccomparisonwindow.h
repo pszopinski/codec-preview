@@ -38,9 +38,13 @@ public:
     ~CodecComparisonWindow();
 
     void openLocal();
+    void openCamera();
+    void closeEvent(QCloseEvent *event);
 
 private slots:
     void on_actionOpen_file_triggered();
+
+    void on_actionOpen_camera_triggered();
 
 private:
     Ui::CodecComparisonWindow *ui;
