@@ -28,6 +28,8 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent) :
     vlcVolumeEncoded->setMediaPlayer(vlcPlayerEncoded);
     vlcVolumeEncoded->mute();
 
+    vlcMediaEncoded = new VlcMedia("udp://@localhost:2000", vlcInstance);
+    vlcPlayerEncoded->open(vlcMediaEncoded);
 
 
 
@@ -36,13 +38,7 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent) :
 CodecComparisonWindow::~CodecComparisonWindow()
 {
     delete ui;
-    delete vlcPlayer;
-    delete vlcMedia;
-    delete vlcInstance;
 
-    delete vlcPlayerEncoded;
-    delete vlcMediaEncoded;
-    delete vlcInstanceEncoded;
 
 
 }
@@ -50,6 +46,11 @@ CodecComparisonWindow::~CodecComparisonWindow()
 
 void CodecComparisonWindow::openLocal()
 {
+    process.kill();
+    process.waitForFinished();
+
+
+
 
     QString file =
             QFileDialog::getOpenFileName(this, tr("Open file"),
@@ -65,13 +66,12 @@ void CodecComparisonWindow::openLocal()
 
 
     //H.265
-    //process.start(QString("ffmpeg -r 25 -i \"" + file + "\" -c:v libx265 -preset ultrafast -x265-params crf=23 -strict experimental -an -re -f mpegts udp://localhost:2000").toUtf8().constData());
+    //process->start(QString("ffmpeg -r 25 -i \"" + file + "\" -c:v libx265 -preset ultrafast -x265-params crf=23 -strict experimental -an -re -f mpegts udp://localhost:2000").toUtf8().constData());
 
     //MJPEG
     process.start(QString("ffmpeg -re -i  \"" + file + "\" -preset ultrafast -an -strict experimental -f mpegts udp://localhost:2000").toUtf8().constData());
 
-    vlcMediaEncoded = new VlcMedia("udp://@localhost:2000", vlcInstance);
-    vlcPlayerEncoded->open(vlcMediaEncoded);
+
 }
 
 void CodecComparisonWindow::openCamera()
@@ -102,4 +102,10 @@ void CodecComparisonWindow::on_actionOpen_camera_triggered()
 void CodecComparisonWindow::closeEvent(QCloseEvent *event)
 {
     process.kill();
+
+    //vlcPlayer->stop();
+    //vlcPlayerEncoded->stop();
+
+
+
 }
