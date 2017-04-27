@@ -36,7 +36,18 @@
        </layout>
       </item>
       <item>
-       <widget class="QWidget" name="widget" native="true"/>
+       <widget class="QWidget" name="widget" native="true">
+        <widget class="QLineEdit" name="frameTypes">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>341</width>
+           <height>61</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
       </item>
      </layout>
     </item>
