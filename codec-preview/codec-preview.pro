@@ -31,7 +31,8 @@ SOURCES += main.cpp\
     mpeg2.cpp \
     h264.cpp \
     avc.cpp \
-    h265.cpp
+    h265.cpp \
+    codec.cpp
 
 HEADERS  += codeccomparisonwindow.h \
     codec.h \

@@ -1,5 +1,6 @@
 #include "codeccomparisonwindow.h"
 #include "ui_codeccomparisonwindow.h"
+#include <iostream>
 
 
 CodecComparisonWindow::CodecComparisonWindow(QWidget *parent) :
@@ -11,6 +12,8 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent) :
 
     ui->setupUi(this);
     tabWidget = ui->tabWidget;
+    initCodecs();
+    connect(ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabSelected()));
     vlcInstance = new VlcInstance(VlcCommon::args(), NULL);
     vlcPlayer = new VlcMediaPlayer(vlcInstance);
     vlcPlayer->setVideoWidget(ui->rawVideo);
@@ -44,19 +47,27 @@ CodecComparisonWindow::~CodecComparisonWindow()
     delete vlcInstanceEncoded;
     */
 
+    for(int i=0;i<CODECS_NUMBER;i++) delete codecs[i];
+    delete[] codecs;
+
 }
 
 
 void CodecComparisonWindow::openLocal()
 {
     process.kill();
-    QString file =
-            QFileDialog::getOpenFileName(this, tr("Open file"),
-                                         QDir::homePath(),
-                                         tr("Multimedia files(*)"));
+    file =
+          QFileDialog::getOpenFileName(this, tr("Open file"),
+                                       QDir::homePath(),
+                                       tr("Multimedia files(*)"));
 
     if (file.isEmpty())
         return;
+
+    for(int i=0;i<CODECS_NUMBER;i++)
+    {
+        codecs[i]->setFile(file);
+    }
 
     vlcMedia = new VlcMedia(file, true, vlcInstance);
 
@@ -67,7 +78,10 @@ void CodecComparisonWindow::openLocal()
     //process.start(QString("ffmpeg -r 25 -i \"" + file + "\" -c:v libx265 -preset ultrafast -x265-params crf=23 -strict experimental -an -re -f mpegts udp://localhost:2000").toUtf8().constData());
 
     //MJPEG
-    process.start(QString("ffmpeg -re -i  \"" + file + "\" -preset ultrafast -an -strict experimental -f mpegts udp://localhost:2000").toUtf8().constData());
+   // process.start(QString("ffmpeg -re -i  \"" + file + "\" -preset ultrafast -an -strict experimental -f mpegts udp://localhost:2000").toUtf8().constData());
+    std::cout<<&process<<std::endl;
+    std::cout<<tabWidget->currentIndex()<<std::endl;
+    codecs[tabWidget->currentIndex()]->start();
 }
 
 void CodecComparisonWindow::openCamera()
@@ -98,4 +112,27 @@ void CodecComparisonWindow::on_actionOpen_camera_triggered()
 void CodecComparisonWindow::closeEvent(QCloseEvent *event)
 {
     process.kill();
+}
+
+void CodecComparisonWindow::tabSelected()
+{
+    if(file != NULL)
+    {
+        std::cout<<"Change codec!!!"<<std::endl;
+        process.kill();
+        vlcPlayer->open(vlcMedia);
+        codecs[tabWidget->currentIndex()]->start();
+    }
+}
+
+void CodecComparisonWindow::initCodecs()
+{
+    codecs = new Codec*[CODECS_NUMBER];
+    codecs[0] = new MJPEG();
+    codecs[1] = new H261();
+    codecs[2] = new MPEG1();
+    codecs[3] = new MPEG2();
+    codecs[4] = new H264();
+    codecs[5] = new AVC();
+    codecs[6] = new H265();
 }
