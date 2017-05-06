@@ -31,7 +31,10 @@ HEADERS  += codeccomparisonwindow.h
 FORMS    += codeccomparisonwindow.ui
 
 
-VLCQT_PATH = C:\vlc-qt
+
+	
+win32 {
+VLCQT_PATH = D:\programming-tools\vlc-qt
 
 INCLUDEPATH += $$VLCQT_PATH\include
 
@@ -40,3 +43,13 @@ LIBS += \
     -lVLCQtCored.dll \
     -lVLCQtQmld.dll \
     -lVLCQtWidgetsd.dll
+}
+
+
+unix {
+LIBS += \
+    -lVLCQtCore \
+    -lVLCQtQml \
+    -lVLCQtWidgets
+}
+
