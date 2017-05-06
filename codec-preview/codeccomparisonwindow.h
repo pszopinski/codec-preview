@@ -13,6 +13,7 @@
 #include <VLCQtCore/Media.h>
 #include <VLCQtCore/MediaPlayer.h>
 #include <VLCQtWidgets/WidgetVolumeSlider.h>
+#include <VLCQtCore/Stats.h>
 
 
 namespace Ui {
