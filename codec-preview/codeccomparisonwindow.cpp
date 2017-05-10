@@ -33,7 +33,7 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent) :
     vlcMediaEncoded = new VlcMedia("udp://@localhost:2000", vlcInstance);
     vlcPlayerEncoded->open(vlcMediaEncoded);
 
-    connect(&framesProbe,SIGNAL(readyRead()),this,SLOT(readOutput()));
+    connect(&framesProbe, &QProcess::readyRead, this, &CodecComparisonWindow::readOutput);
 
     //framesProbe.setProcessChannelMode(QProcess::ForwardedChannels);
 
@@ -89,17 +89,30 @@ void CodecComparisonWindow::openLocal()
 
 void CodecComparisonWindow::openCamera()
 {
+    // Create OS-dependent vlcMedia and command objects
+    QString command;
+    #ifdef Q_OS_WIN
     QString cameraName = QString("Lenovo EasyCamera");
+    command = QString("ffmpeg -f dshow -i video=\"") + cameraName + QString("\" -q 50 -f mpegts udp://localhost:2000");
+    #else
+    QString devicePath = QString("/dev/video0");
+    command = QString("ffmpeg -i \"") + devicePath + QString("\" -q 50 -f mpegts udp://localhost:2000 -vcodec copy -f nut udp://localhost:2005");
+    #endif
 
-    vlcMedia = new VlcMedia(QString("dshow:// :dshow-vdev=\"") + cameraName + QString("\""), vlcInstance);
+    // Run the command
+    qDebug() << command;
+    process.start(command);
 
+    // Start displaying raw video
+    vlcMedia = new VlcMedia(QString("udp://@localhost:2005"), false, vlcInstance);
     vlcPlayer->open(vlcMedia);
 
-    //MJPEG
-    process.start(QString("ffmpeg -f dshow -i video=\"") + cameraName + QString("\" -q 50 -f mpegts udp://localhost:2000"));
-
+    // Start displaying encoded video
     vlcMediaEncoded = new VlcMedia("udp://@localhost:2000", vlcInstance);
     vlcPlayerEncoded->open(vlcMediaEncoded);
+
+    // Start the probe
+    framesProbe.start(QString("ffprobe udp://localhost:2000 -show_frames"));
 }
 
 void CodecComparisonWindow::on_actionOpen_file_triggered()
@@ -116,7 +129,6 @@ void CodecComparisonWindow::closeEvent(QCloseEvent *event)
 {
     process.kill();
     framesProbe.kill();
-
 }
 
 void CodecComparisonWindow::readOutput(){
