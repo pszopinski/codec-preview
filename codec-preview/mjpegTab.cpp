@@ -7,5 +7,5 @@ MJPEG::MJPEG()
 
 void MJPEG::start(QProcess &process)
 {
-    process.start(QString("ffmpeg -re -i "+getFile()+" -c:v mjpeg -preset ultrafast -an -f mpegts udp://localhost:2000").toUtf8().constData());
+    process.start(QString("ffmpeg -re -i "+getFile()+" -c:v libx265 -preset ultrafast -an -f matroska udp://localhost:2000").toUtf8().constData());
 }
