@@ -152,3 +152,24 @@ void CodecComparisonWindow::readOutput(){
    }
 }
 
+
+
+void CodecComparisonWindow::broadcast(QString command) {
+    vlcPlayer->stop();
+    vlcPlayerEncoded->stop();
+
+    qDebug() << "Killing current ffmpeg process...";
+    process.kill();
+
+    qDebug() << "Running the following command...";
+    qDebug() << command;
+    process.start(command);
+
+    // DELETE THE BELOW
+    vlcMedia = new VlcMedia("udp://@localhost:3000", false, vlcInstance);
+    vlcPlayer->open(vlcMedia);
+    // DELETE THE ABOVE
+
+//    vlcPlayer->open(vlcMedia);
+//    vlcPlayerEncoded->open(vlcMediaEncoded);
+}

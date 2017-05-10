@@ -27,6 +27,7 @@ class CodecComparisonWindow : public QMainWindow
     QProcess process;
     QProcess framesProbe;
 
+
 private:
     VlcInstance *vlcInstance;
     VlcMedia *vlcMedia;
@@ -41,6 +42,7 @@ private:
     QQueue<char> typesOfFrames;
 
 
+
 public:
     explicit CodecComparisonWindow(QWidget *parent = 0);
     ~CodecComparisonWindow();
@@ -48,6 +50,7 @@ public:
     void openLocal();
     void openCamera();
     void closeEvent(QCloseEvent *event);
+    void broadcast(QString command);
 
 
 private slots:
