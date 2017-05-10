@@ -7,13 +7,13 @@
 #include <QThread>
 #include <QDebug>
 #include <QQueue>
+#include <QThread>
 
 #include <VLCQtCore/Common.h>
 #include <VLCQtCore/Instance.h>
 #include <VLCQtCore/Media.h>
 #include <VLCQtCore/MediaPlayer.h>
 #include <VLCQtWidgets/WidgetVolumeSlider.h>
-#include <VLCQtCore/Stats.h>
 
 
 namespace Ui {
