@@ -1,13 +1,13 @@
 #ifndef MJPEG_H
 #define MJPEG_H
 
-#include "codec.h"
+#include "codecTab.h"
 
 class MJPEG : public Codec
 {
 public:
     MJPEG();
-    void start();
+    void start(QProcess &process);
 };
 
 #endif // MJPEG_H

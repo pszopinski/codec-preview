@@ -25,24 +25,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         codeccomparisonwindow.cpp \
-    mjpeg.cpp \
-    h261.cpp \
-    mpeg1.cpp \
-    mpeg2.cpp \
-    h264.cpp \
-    avc.cpp \
-    h265.cpp \
-    codec.cpp
+    codecTab.cpp \
+    h261Tab.cpp \
+    h264Tab.cpp \
+    h265Tab.cpp \
+    mjpegTab.cpp \
+    mpeg1Tab.cpp \
+    mpeg2Tab.cpp
 
 HEADERS  += codeccomparisonwindow.h \
-    codec.h \
-    mjpeg.h \
-    h261.h \
-    mpeg1.h \
-    mpeg2.h \
-    h264.h \
-    avc.h \
-    h265.h
+    codecTab.h \
+    h261Tab.h \
+    h264Tab.h \
+    h265Tab.h \
+    mjpegTab.h \
+    mpeg1Tab.h \
+    mpeg2Tab.h
 
 FORMS    += codeccomparisonwindow.ui
 

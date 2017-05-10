@@ -55,7 +55,11 @@ CodecComparisonWindow::~CodecComparisonWindow()
 
 void CodecComparisonWindow::openLocal()
 {
-    process.kill();
+    if(!first)
+    {
+        process.kill();
+    }
+    else first = false;
     file =
           QFileDialog::getOpenFileName(this, tr("Open file"),
                                        QDir::homePath(),
@@ -81,7 +85,7 @@ void CodecComparisonWindow::openLocal()
    // process.start(QString("ffmpeg -re -i  \"" + file + "\" -preset ultrafast -an -strict experimental -f mpegts udp://localhost:2000").toUtf8().constData());
     std::cout<<&process<<std::endl;
     std::cout<<tabWidget->currentIndex()<<std::endl;
-    codecs[tabWidget->currentIndex()]->start();
+    codecs[tabWidget->currentIndex()]->start(process);
 }
 
 void CodecComparisonWindow::openCamera()
@@ -120,8 +124,10 @@ void CodecComparisonWindow::tabSelected()
     {
         std::cout<<"Change codec!!!"<<std::endl;
         process.kill();
+        vlcMedia = new VlcMedia(file, true, vlcInstance);
         vlcPlayer->open(vlcMedia);
-        codecs[tabWidget->currentIndex()]->start();
+        std::cout<<&process<<std::endl;
+        codecs[tabWidget->currentIndex()]->start(process);
     }
 }
 
@@ -133,6 +139,6 @@ void CodecComparisonWindow::initCodecs()
     codecs[2] = new MPEG1();
     codecs[3] = new MPEG2();
     codecs[4] = new H264();
-    codecs[5] = new AVC();
-    codecs[6] = new H265();
+    codecs[5] = new H265();
 }
+

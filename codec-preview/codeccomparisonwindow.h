@@ -12,15 +12,14 @@
 #include <VLCQtCore/MediaPlayer.h>
 #include <VLCQtWidgets/WidgetVolumeSlider.h>
 
-#include "avc.h"
-#include "h261.h"
-#include "h264.h"
-#include "h265.h"
-#include "mjpeg.h"
-#include "mpeg1.h"
-#include "mpeg2.h"
+#include "h261Tab.h"
+#include "h264Tab.h"
+#include "h265Tab.h"
+#include "mjpegTab.h"
+#include "mpeg1Tab.h"
+#include "mpeg2Tab.h"
 
-#define CODECS_NUMBER 7
+#define CODECS_NUMBER 6
 
 
 namespace Ui {
@@ -46,6 +45,7 @@ public:
     QTabWidget *tabWidget;
     QString file = NULL;
     Codec **codecs;
+    bool first = true;
 
 public:
     explicit CodecComparisonWindow(QWidget *parent = 0);
@@ -60,6 +60,8 @@ private slots:
     void on_actionOpen_file_triggered();
     void on_actionOpen_camera_triggered();
     void tabSelected();
+
+    void on_AVC_destroyed();
 
 private:
     Ui::CodecComparisonWindow *ui;

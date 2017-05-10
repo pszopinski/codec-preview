@@ -1,13 +1,13 @@
 #ifndef H264_H
 #define H264_H
 
-#include "codec.h"
+#include "codecTab.h"
 
 class H264 : public Codec
 {
 public:
     H264();
-    void start();
+    void start(QProcess &process);
 };
 
 

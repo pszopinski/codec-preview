@@ -7,10 +7,9 @@
 class Codec
 {
 protected:
-    QProcess process;
     QString file;
 public:
-    virtual void start() = 0;
+    virtual void start(QProcess &process) = 0;
     virtual QString getFile();
     virtual void setFile(QString file);
 };

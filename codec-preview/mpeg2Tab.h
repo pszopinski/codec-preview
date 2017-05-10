@@ -1,13 +1,13 @@
 #ifndef MPEG2_H
 #define MPEG2_H
 
-#include "codec.h"
+#include "codecTab.h"
 
 class MPEG2 : public Codec
 {
 public:
     MPEG2();
-    void start();
+    void start(QProcess &process);
 };
 
 #endif // MPEG2_H

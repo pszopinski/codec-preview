@@ -7,7 +7,7 @@ class AVC : public Codec
 {
 public:
     AVC();
-    void start();
+    void start(QProcess &process);
 };
 
 #endif // AVC_H

@@ -1,4 +1,4 @@
-#include "codec.h"
+#include "codecTab.h"
 
 
 QString Codec::getFile()

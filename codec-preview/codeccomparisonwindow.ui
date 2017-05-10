@@ -31,7 +31,6 @@
           <property name="styleSheet">
            <string notr="true">Background-color: #000;</string>
           </property>
-          <zorder>widget</zorder>
          </widget>
         </item>
        </layout>
@@ -51,7 +50,7 @@
           <enum>QTabWidget::South</enum>
          </property>
          <property name="currentIndex">
-          <number>6</number>
+          <number>5</number>
          </property>
          <widget class="QWidget" name="MJPEG">
           <attribute name="title">
@@ -76,11 +75,6 @@
          <widget class="QWidget" name="H264">
           <attribute name="title">
            <string>H264</string>
-          </attribute>
-         </widget>
-         <widget class="QWidget" name="AVC">
-          <attribute name="title">
-           <string>AVC</string>
           </attribute>
          </widget>
          <widget class="QWidget" name="H265">
