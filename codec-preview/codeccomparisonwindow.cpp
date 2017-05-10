@@ -93,12 +93,10 @@ void CodecComparisonWindow::openCamera()
     QString command;
     #ifdef Q_OS_WIN
     QString cameraName = QString("Lenovo EasyCamera");
-    vlcMedia = new VlcMedia(QString("dshow:// :dshow-vdev=\"") + cameraName + QString("\""), vlcInstance);
     command = QString("ffmpeg -f dshow -i video=\"") + cameraName + QString("\" -q 50 -f mpegts udp://localhost:2000");
     #else
     QString devicePath = QString("/dev/video0");
-    vlcMedia = new VlcMedia(QString("udp://@localhost:2005"), false, vlcInstance);
-    command = QString("ffmpeg -i \"") + devicePath + QString("\" -pix_fmt yuv420p -q 50 -f mpegts udp://localhost:2000 -vcodec copy -f nut udp://localhost:2005");
+    command = QString("ffmpeg -i \"") + devicePath + QString("\" -q 50 -f mpegts udp://localhost:2000 -vcodec copy -f nut udp://localhost:2005");
     #endif
 
     // Run the command
@@ -106,6 +104,7 @@ void CodecComparisonWindow::openCamera()
     process.start(command);
 
     // Start displaying raw video
+    vlcMedia = new VlcMedia(QString("udp://@localhost:2005"), false, vlcInstance);
     vlcPlayer->open(vlcMedia);
 
     // Start displaying encoded video

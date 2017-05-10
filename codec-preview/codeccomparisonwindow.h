@@ -8,6 +8,7 @@
 #include <QDebug>
 #include <QQueue>
 #include <QThread>
+#include <QCameraInfo>
 
 #include <VLCQtCore/Common.h>
 #include <VLCQtCore/Instance.h>
