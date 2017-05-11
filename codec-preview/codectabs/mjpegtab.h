@@ -3,11 +3,13 @@
 
 #include "codecTab.h"
 
+#include "constants.h"
+
 class MJPEG : public Codec
 {
 public:
     MJPEG();
-    void start(QProcess &process);
+    void start(QProcess &process, QString file);
 };
 
 #endif // MJPEG_H

@@ -2,11 +2,9 @@
 #define CODECCOMPARISONWINDOW_H
 
 #include <QMainWindow>
-#include <QFileDialog>
-#include <QProcess>
-#include <QThread>
-#include <QDebug>
 #include <QQueue>
+#include <QFileDialog>
+#include <QDebug>
 
 #include <VLCQtCore/Common.h>
 #include <VLCQtCore/Instance.h>
@@ -14,14 +12,15 @@
 #include <VLCQtCore/MediaPlayer.h>
 #include <VLCQtWidgets/WidgetVolumeSlider.h>
 
-#include "h261Tab.h"
-#include "h264Tab.h"
-#include "h265Tab.h"
-#include "mjpegTab.h"
-#include "mpeg1Tab.h"
-#include "mpeg2Tab.h"
+#include "h261tab.h"
+#include "h264tab.h"
+#include "h265tab.h"
+#include "mjpegtab.h"
+#include "mpeg1tab.h"
+#include "mpeg2tab.h"
 
-#define CODECS_NUMBER 6
+#include "constants.h"
+
 
 
 namespace Ui {
@@ -31,24 +30,24 @@ class CodecComparisonWindow;
 class CodecComparisonWindow : public QMainWindow
 {
     Q_OBJECT
-    QProcess process;
-    QProcess framesProbe;
+    QProcess encodingProcess;
+    QProcess probeProcess;
 
-public:
+private:
     VlcInstance *vlcInstance;
-    VlcMedia *vlcMedia;
-    VlcMediaPlayer *vlcPlayer;
-    VlcWidgetVolumeSlider *vlcVolume;
 
-    VlcInstance *vlcInstanceEncoded;
+    VlcMedia *vlcMediaRaw;
+    VlcMediaPlayer *vlcPlayerRaw;
+    VlcWidgetVolumeSlider *vlcVolumeRaw;
+
     VlcMedia *vlcMediaEncoded;
     VlcMediaPlayer *vlcPlayerEncoded;
     VlcWidgetVolumeSlider *vlcVolumeEncoded;
 
     QQueue<char> typesOfFrames;
 
-    QTabWidget *tabWidget;
-    QString file = NULL;
+    QString file;
+
     Codec **codecs;
 
 public:
@@ -64,9 +63,6 @@ private slots:
     void on_actionOpen_file_triggered();
     void on_actionOpen_camera_triggered();
     void tabSelected();
-
-    //void on_AVC_destroyed();
-
     void readOutput();
 
 private:

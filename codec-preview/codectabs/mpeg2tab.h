@@ -3,11 +3,13 @@
 
 #include "codecTab.h"
 
+#include "constants.h"
+
 class MPEG2 : public Codec
 {
 public:
     MPEG2();
-    void start(QProcess &process);
+    void start(QProcess &process, QString file);
 };
 
 #endif // MPEG2_H

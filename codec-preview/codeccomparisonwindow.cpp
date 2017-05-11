@@ -3,22 +3,24 @@
 
 CodecComparisonWindow::CodecComparisonWindow(QWidget *parent) :
     QMainWindow(parent),
-    vlcMedia(0),
+    vlcMediaRaw(0),
     vlcMediaEncoded(0),
     ui(new Ui::CodecComparisonWindow)
 {
-
     ui->setupUi(this);
-    tabWidget = ui->tabWidget;
+
     initCodecs();
+
     connect(ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabSelected()));
+
     vlcInstance = new VlcInstance(VlcCommon::args(), NULL);
-    vlcPlayer = new VlcMediaPlayer(vlcInstance);
-    vlcPlayer->setVideoWidget(ui->rawVideo);
-    ui->rawVideo->setMediaPlayer(vlcPlayer);
-    vlcVolume = new VlcWidgetVolumeSlider();
-    vlcVolume->setMediaPlayer(vlcPlayer);
-    vlcVolume->mute();
+
+    vlcPlayerRaw = new VlcMediaPlayer(vlcInstance);
+    vlcPlayerRaw->setVideoWidget(ui->rawVideo);
+    ui->rawVideo->setMediaPlayer(vlcPlayerRaw);
+    vlcVolumeRaw = new VlcWidgetVolumeSlider();
+    vlcVolumeRaw->setMediaPlayer(vlcPlayerRaw);
+    vlcVolumeRaw->mute();
 
 
     vlcPlayerEncoded = new VlcMediaPlayer(vlcInstance);
@@ -27,10 +29,13 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent) :
     vlcVolumeEncoded = new VlcWidgetVolumeSlider();
     vlcVolumeEncoded->setMediaPlayer(vlcPlayerEncoded);
     vlcVolumeEncoded->mute();
-    vlcMediaEncoded = new VlcMedia("udp://@localhost:2000", vlcInstance);
+
+
+
+    vlcMediaEncoded = new VlcMedia("udp://@localhost:" + QString::number(ENCODED_VIDEO_PORT), vlcInstance);
     vlcPlayerEncoded->open(vlcMediaEncoded);
 
-    connect(&framesProbe, &QProcess::readyRead, this, &CodecComparisonWindow::readOutput);
+    connect(&probeProcess, &QProcess::readyRead, this, &CodecComparisonWindow::readOutput);
 
     //prints probe output to standard output
     //framesProbe.setProcessChannelMode(QProcess::ForwardedChannels);
@@ -41,6 +46,9 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent) :
 CodecComparisonWindow::~CodecComparisonWindow()
 {
     delete ui;
+
+    //TODO: manage memory clearup, simply deleting causes tons of errors
+
     /*
     delete vlcPlayer;
     delete vlcMedia;
@@ -59,29 +67,22 @@ CodecComparisonWindow::~CodecComparisonWindow()
 
 void CodecComparisonWindow::openLocal()
 {
-    process.kill();
+    //kill existing streaming process
+    encodingProcess.kill();
 
-    file =
-          QFileDialog::getOpenFileName(this, tr("Open file"),
-                                       QDir::homePath(),
-                                       tr("Multimedia files(*)"));
+    //get file directory from user prompt
+    file = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath(), tr("Multimedia files(*)"));
 
-    if (file.isEmpty())
-        return;
+    if (file.isEmpty()) return;
 
-    for(int i=0;i<CODECS_NUMBER;i++)
-    {
-        codecs[i]->setFile(file);
-    }
+    vlcMediaRaw = new VlcMedia(file, true, vlcInstance);
 
-    vlcMedia = new VlcMedia(file, true, vlcInstance);
+    vlcPlayerRaw->open(vlcMediaRaw);
 
-    vlcPlayer->open(vlcMedia);
-
-    codecs[tabWidget->currentIndex()]->start(process);
+    codecs[ui->tabWidget->currentIndex()]->start(encodingProcess, file);
 
     // Start the probe
-    framesProbe.start(QString("ffprobe udp://localhost:2001 -show_frames"));
+    probeProcess.start("ffprobe udp://localhost:" + QString::number(VIDEO_PROBE_PORT) + " -show_frames");
 }
 
 void CodecComparisonWindow::openCamera()
@@ -89,27 +90,27 @@ void CodecComparisonWindow::openCamera()
     // Create OS-dependent vlcMedia and command objects
     QString command;
     #ifdef Q_OS_WIN
-    QString cameraName = QString("Lenovo EasyCamera");
-    command = QString("ffmpeg -f dshow -i video=\"") + cameraName + QString("\" -q 50 -f mpegts udp://localhost:2000");
+    QString cameraName = "Lenovo EasyCamera";
+    command = "ffmpeg -f dshow -i video=\"" + cameraName + "\" -q 50 -f mpegts udp://localhost:" + QString::number(ENCODED_VIDEO_PORT);
     #else
     QString devicePath = QString("/dev/video0");
-    command = QString("ffmpeg -i \"") + devicePath + QString("\" -q 50 -f mpegts udp://localhost:2000 -vcodec copy -f nut udp://localhost:2005");
+    command = "ffmpeg -i \"" + devicePath + "\" -q 50 -f mpegts udp://localhost:" + QString::number(ENCODED_VIDEO_PORT) + " -vcodec copy -f nut udp://localhost:2005";
     #endif
 
     // Run the command
     qDebug() << command;
-    process.start(command);
+    encodingProcess.start(command);
 
     // Start displaying raw video
-    vlcMedia = new VlcMedia(QString("udp://@localhost:2005"), false, vlcInstance);
-    vlcPlayer->open(vlcMedia);
+    vlcMediaRaw = new VlcMedia("udp://@localhost:" + QString::number(RAW_VIDEO_PORT), false, vlcInstance);
+    vlcPlayerRaw->open(vlcMediaRaw);
 
     // Start displaying encoded video
-    vlcMediaEncoded = new VlcMedia("udp://@localhost:2000", vlcInstance);
+    vlcMediaEncoded = new VlcMedia("udp://@localhost:" + QString::number(ENCODED_VIDEO_PORT), vlcInstance);
     vlcPlayerEncoded->open(vlcMediaEncoded);
 
     // Start the probe
-    framesProbe.start(QString("ffprobe udp://localhost:2001 -show_frames"));
+    probeProcess.start("ffprobe udp://localhost:" + QString::number(VIDEO_PROBE_PORT) + " -show_frames");
 }
 
 void CodecComparisonWindow::on_actionOpen_file_triggered()
@@ -125,24 +126,24 @@ void CodecComparisonWindow::on_actionOpen_camera_triggered()
 void CodecComparisonWindow::closeEvent(QCloseEvent *event)
 {
     (void)event; //silence annoying warning
-    process.kill();
-    framesProbe.kill();
+    encodingProcess.kill();
+    probeProcess.kill();
 }
 
 void CodecComparisonWindow::tabSelected()
 {
     if(file != NULL)
     {
-        process.kill();
-        vlcMedia = new VlcMedia(file, true, vlcInstance);
-        vlcPlayer->open(vlcMedia);
-        codecs[tabWidget->currentIndex()]->start(process);
+        encodingProcess.kill();
+        vlcMediaRaw = new VlcMedia(file, true, vlcInstance);
+        vlcPlayerRaw->open(vlcMediaRaw);
+        codecs[ui->tabWidget->currentIndex()]->start(encodingProcess, file);
     }
 }
 
 void CodecComparisonWindow::initCodecs()
 {
-    codecs = new Codec*[CODECS_NUMBER];
+    codecs = new Codec*[NUMBER_OF_CODECS];
     codecs[0] = new MJPEG();
     codecs[1] = new H261();
     codecs[2] = new MPEG1();
@@ -151,9 +152,10 @@ void CodecComparisonWindow::initCodecs()
     codecs[5] = new H265();
 }
 
-void CodecComparisonWindow::readOutput(){
-    while(framesProbe.canReadLine()){
-        QString output = framesProbe.readLine();
+void CodecComparisonWindow::readOutput()
+{
+    while(probeProcess.canReadLine()){
+        QString output = probeProcess.readLine();
 
         if(output.startsWith("pict_type=")) {
             typesOfFrames.enqueue(output.toUtf8().constData()[10]);

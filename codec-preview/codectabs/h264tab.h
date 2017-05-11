@@ -3,11 +3,13 @@
 
 #include "codecTab.h"
 
+#include "constants.h"
+
 class H264 : public Codec
 {
 public:
     H264();
-    void start(QProcess &process);
+    void start(QProcess &process, QString file);
 };
 
 

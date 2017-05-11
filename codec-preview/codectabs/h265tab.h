@@ -3,11 +3,13 @@
 
 #include "codecTab.h"
 
+#include "constants.h"
+
 class H265 : public Codec
 {
 public:
     H265();
-    void start(QProcess &process);
+    void start(QProcess &process, QString file);
 };
 
 #endif // H265_H
