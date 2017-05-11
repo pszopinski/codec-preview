@@ -1,14 +1,14 @@
 #ifndef H265_H
 #define H265_H
 
-#include "codectab.h"
+#include "codecmanager.h"
 
 #include "constants.h"
 
-class H265 : public Codec
+class H265Manager : public CodecManager
 {
 public:
-    H265();
+    H265Manager();
     void start(QProcess &process, QString file);
 };
 

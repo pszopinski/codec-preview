@@ -12,12 +12,12 @@
 #include <VLCQtCore/MediaPlayer.h>
 #include <VLCQtWidgets/WidgetVolumeSlider.h>
 
-#include "codectabs/h261tab.h"
-#include "codectabs/h264tab.h"
-#include "codectabs/h265tab.h"
-#include "codectabs/mjpegtab.h"
-#include "codectabs/mpeg1tab.h"
-#include "codectabs/mpeg2tab.h"
+#include "codectabs/h261manager.h"
+#include "codectabs/h264manager.h"
+#include "codectabs/h265manager.h"
+#include "codectabs/mjpegmanager.h"
+#include "codectabs/mpeg1manager.h"
+#include "codectabs/mpeg2manager.h"
 
 #include "constants.h"
 
@@ -49,7 +49,7 @@ private:
 
     QString file;
 
-    Codec **codecs;
+    CodecManager **codecs;
 
 
 public:

@@ -1,14 +1,14 @@
 #ifndef H261_H
 #define H261_H
 
-#include "codectab.h"
+#include "codecmanager.h"
 
 #include "constants.h"
 
-class H261 : public Codec
+class H261Manager : public CodecManager
 {
 public:
-    H261();
+    H261Manager();
     void start(QProcess &process, QString file);
 };
 

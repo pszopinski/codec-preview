@@ -1,14 +1,14 @@
 #ifndef H264_H
 #define H264_H
 
-#include "codectab.h"
+#include "codecmanager.h"
 
 #include "constants.h"
 
-class H264 : public Codec
+class H264Manager : public CodecManager
 {
 public:
-    H264();
+    H264Manager();
     void start(QProcess &process, QString file);
 };
 

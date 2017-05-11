@@ -143,13 +143,13 @@ void CodecComparisonWindow::tabSelected()
 
 void CodecComparisonWindow::initCodecs()
 {
-    codecs = new Codec*[NUMBER_OF_CODECS];
-    codecs[0] = new MJPEG();
-    codecs[1] = new H261();
-    codecs[2] = new MPEG1();
-    codecs[3] = new MPEG2();
-    codecs[4] = new H264();
-    codecs[5] = new H265();
+    codecs = new CodecManager*[NUMBER_OF_CODECS];
+    codecs[0] = new MJPEGManager();
+    codecs[1] = new H261Manager();
+    codecs[2] = new MPEG1Manager();
+    codecs[3] = new MPEG2Manager();
+    codecs[4] = new H264Manager();
+    codecs[5] = new H265Manager();
 }
 
 void CodecComparisonWindow::readOutput()
