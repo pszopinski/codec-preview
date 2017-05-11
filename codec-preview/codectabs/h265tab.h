@@ -1,7 +1,7 @@
 #ifndef H265_H
 #define H265_H
 
-#include "codectabs/codectab.h"
+#include "codectab.h"
 
 #include "constants.h"
 
