@@ -12,12 +12,12 @@
 #include <VLCQtCore/MediaPlayer.h>
 #include <VLCQtWidgets/WidgetVolumeSlider.h>
 
-#include "h261tab.h"
-#include "h264tab.h"
-#include "h265tab.h"
-#include "mjpegtab.h"
-#include "mpeg1tab.h"
-#include "mpeg2tab.h"
+#include "codectabs/h261tab.h"
+#include "codectabs/h264tab.h"
+#include "codectabs/h265tab.h"
+#include "codectabs/mjpegtab.h"
+#include "codectabs/mpeg1tab.h"
+#include "codectabs/mpeg2tab.h"
 
 #include "constants.h"
 
