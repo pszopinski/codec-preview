@@ -7,8 +7,6 @@
 #include <QThread>
 #include <QDebug>
 #include <QQueue>
-#include <QCameraInfo>
-
 
 #include <VLCQtCore/Common.h>
 #include <VLCQtCore/Instance.h>
@@ -34,6 +32,7 @@ class CodecComparisonWindow : public QMainWindow
 {
     Q_OBJECT
     QProcess process;
+    QProcess framesProbe;
 
 public:
     VlcInstance *vlcInstance;
@@ -46,10 +45,11 @@ public:
     VlcMediaPlayer *vlcPlayerEncoded;
     VlcWidgetVolumeSlider *vlcVolumeEncoded;
 
+    QQueue<char> typesOfFrames;
+
     QTabWidget *tabWidget;
     QString file = NULL;
     Codec **codecs;
-    bool first = true;
 
 public:
     explicit CodecComparisonWindow(QWidget *parent = 0);
@@ -65,7 +65,9 @@ private slots:
     void on_actionOpen_camera_triggered();
     void tabSelected();
 
-    void on_AVC_destroyed();
+    //void on_AVC_destroyed();
+
+    void readOutput();
 
 private:
     Ui::CodecComparisonWindow *ui;

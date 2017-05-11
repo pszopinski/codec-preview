@@ -7,5 +7,6 @@ MPEG1::MPEG1()
 
 void MPEG1::start(QProcess &process)
 {
-    process.start(QString("ffmpeg -re -i "+getFile()+" -c:v mpeg1video -preset ultrafast -an -f matroska udp://localhost:2000").toUtf8().constData());
+    QString command = QString("ffmpeg -re -i \""+getFile()+"\" -c:v mpeg1video -preset ultrafast -an -f matroska udp://localhost:2000 -c:v mpeg1video -preset ultrafast -an -f matroska udp://localhost:2001");
+    process.start(command.toUtf8().constData());
 }

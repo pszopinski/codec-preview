@@ -1,7 +1,5 @@
 #include "codeccomparisonwindow.h"
 #include "ui_codeccomparisonwindow.h"
-#include <iostream>
-
 
 CodecComparisonWindow::CodecComparisonWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -34,6 +32,7 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent) :
 
     connect(&framesProbe, &QProcess::readyRead, this, &CodecComparisonWindow::readOutput);
 
+    //prints probe output to standard output
     //framesProbe.setProcessChannelMode(QProcess::ForwardedChannels);
 
     ui->frameTypes->setReadOnly(true);
@@ -52,19 +51,16 @@ CodecComparisonWindow::~CodecComparisonWindow()
     delete vlcInstanceEncoded;
     */
 
-    for(int i=0;i<CODECS_NUMBER;i++) delete codecs[i];
-    delete[] codecs;
+    //for(int i=0;i<CODECS_NUMBER;i++) delete codecs[i];
+    //delete[] codecs;
 
 }
 
 
 void CodecComparisonWindow::openLocal()
 {
-    if(!first)
-    {
-        process.kill();
-    }
-    else first = false;
+    process.kill();
+
     file =
           QFileDialog::getOpenFileName(this, tr("Open file"),
                                        QDir::homePath(),
@@ -82,15 +78,10 @@ void CodecComparisonWindow::openLocal()
 
     vlcPlayer->open(vlcMedia);
 
-
-    //H.265
-    //process.start(QString("ffmpeg -r 25 -i \"" + file + "\" -c:v libx265 -preset ultrafast -x265-params crf=23 -strict experimental -an -re -f mpegts udp://localhost:2000").toUtf8().constData());
-
-    //MJPEG
-   // process.start(QString("ffmpeg -re -i  \"" + file + "\" -preset ultrafast -an -strict experimental -f mpegts udp://localhost:2000").toUtf8().constData());
-    std::cout<<&process<<std::endl;
-    std::cout<<tabWidget->currentIndex()<<std::endl;
     codecs[tabWidget->currentIndex()]->start(process);
+
+    // Start the probe
+    framesProbe.start(QString("ffprobe udp://localhost:2001 -show_frames"));
 }
 
 void CodecComparisonWindow::openCamera()
@@ -118,7 +109,7 @@ void CodecComparisonWindow::openCamera()
     vlcPlayerEncoded->open(vlcMediaEncoded);
 
     // Start the probe
-    framesProbe.start(QString("ffprobe udp://localhost:2000 -show_frames"));
+    framesProbe.start(QString("ffprobe udp://localhost:2001 -show_frames"));
 }
 
 void CodecComparisonWindow::on_actionOpen_file_triggered()
@@ -133,6 +124,7 @@ void CodecComparisonWindow::on_actionOpen_camera_triggered()
 
 void CodecComparisonWindow::closeEvent(QCloseEvent *event)
 {
+    (void)event; //silence annoying warning
     process.kill();
     framesProbe.kill();
 }
@@ -141,11 +133,9 @@ void CodecComparisonWindow::tabSelected()
 {
     if(file != NULL)
     {
-        std::cout<<"Change codec!!!"<<std::endl;
         process.kill();
         vlcMedia = new VlcMedia(file, true, vlcInstance);
         vlcPlayer->open(vlcMedia);
-        std::cout<<&process<<std::endl;
         codecs[tabWidget->currentIndex()]->start(process);
     }
 }
@@ -161,3 +151,23 @@ void CodecComparisonWindow::initCodecs()
     codecs[5] = new H265();
 }
 
+void CodecComparisonWindow::readOutput(){
+    while(framesProbe.canReadLine()){
+        QString output = framesProbe.readLine();
+
+        if(output.startsWith("pict_type=")) {
+            typesOfFrames.enqueue(output.toUtf8().constData()[10]);
+            if(typesOfFrames.size() > 16) typesOfFrames.dequeue();
+
+            QString currentFrameTypes;
+
+            QListIterator<char> i(typesOfFrames);
+
+            while(i.hasNext()) {
+                currentFrameTypes.append(i.next());
+            }
+
+            ui->frameTypes->setText(currentFrameTypes);
+        }
+   }
+}
