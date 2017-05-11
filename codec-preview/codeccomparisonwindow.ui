@@ -37,15 +37,51 @@
       </item>
       <item>
        <widget class="QWidget" name="widget" native="true">
-        <widget class="QLineEdit" name="frameTypes">
+        <widget class="QTabWidget" name="tabWidget">
          <property name="geometry">
           <rect>
-           <x>10</x>
-           <y>10</y>
-           <width>341</width>
-           <height>61</height>
+           <x>-4</x>
+           <y>189</y>
+           <width>1141</width>
+           <height>171</height>
           </rect>
          </property>
+         <property name="tabPosition">
+          <enum>QTabWidget::South</enum>
+         </property>
+         <property name="currentIndex">
+          <number>5</number>
+         </property>
+         <widget class="QWidget" name="MJPEG">
+          <attribute name="title">
+           <string>MJPEG</string>
+          </attribute>
+         </widget>
+         <widget class="QWidget" name="H261">
+          <attribute name="title">
+           <string>H261</string>
+          </attribute>
+         </widget>
+         <widget class="QWidget" name="MPEG1">
+          <attribute name="title">
+           <string>MPEG1</string>
+          </attribute>
+         </widget>
+         <widget class="QWidget" name="MPEG2">
+          <attribute name="title">
+           <string>MPEG2</string>
+          </attribute>
+         </widget>
+         <widget class="QWidget" name="H264">
+          <attribute name="title">
+           <string>H264</string>
+          </attribute>
+         </widget>
+         <widget class="QWidget" name="H265">
+          <attribute name="title">
+           <string>H265</string>
+          </attribute>
+         </widget>
         </widget>
        </widget>
       </item>
@@ -59,7 +95,7 @@
      <x>0</x>
      <y>0</y>
      <width>1152</width>
-     <height>19</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

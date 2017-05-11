@@ -7,14 +7,23 @@
 #include <QThread>
 #include <QDebug>
 #include <QQueue>
-#include <QThread>
 #include <QCameraInfo>
+
 
 #include <VLCQtCore/Common.h>
 #include <VLCQtCore/Instance.h>
 #include <VLCQtCore/Media.h>
 #include <VLCQtCore/MediaPlayer.h>
 #include <VLCQtWidgets/WidgetVolumeSlider.h>
+
+#include "h261Tab.h"
+#include "h264Tab.h"
+#include "h265Tab.h"
+#include "mjpegTab.h"
+#include "mpeg1Tab.h"
+#include "mpeg2Tab.h"
+
+#define CODECS_NUMBER 6
 
 
 namespace Ui {
@@ -25,9 +34,8 @@ class CodecComparisonWindow : public QMainWindow
 {
     Q_OBJECT
     QProcess process;
-    QProcess framesProbe;
 
-private:
+public:
     VlcInstance *vlcInstance;
     VlcMedia *vlcMedia;
     VlcMediaPlayer *vlcPlayer;
@@ -38,8 +46,10 @@ private:
     VlcMediaPlayer *vlcPlayerEncoded;
     VlcWidgetVolumeSlider *vlcVolumeEncoded;
 
-    QQueue<char> typesOfFrames;
-
+    QTabWidget *tabWidget;
+    QString file = NULL;
+    Codec **codecs;
+    bool first = true;
 
 public:
     explicit CodecComparisonWindow(QWidget *parent = 0);
@@ -48,16 +58,14 @@ public:
     void openLocal();
     void openCamera();
     void closeEvent(QCloseEvent *event);
-
+    void initCodecs();
 
 private slots:
     void on_actionOpen_file_triggered();
-
     void on_actionOpen_camera_triggered();
+    void tabSelected();
 
-    void readOutput();
-
-
+    void on_AVC_destroyed();
 
 private:
     Ui::CodecComparisonWindow *ui;

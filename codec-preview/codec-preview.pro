@@ -24,9 +24,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        codeccomparisonwindow.cpp
+        codeccomparisonwindow.cpp \
+    codecTab.cpp \
+    h261Tab.cpp \
+    h264Tab.cpp \
+    h265Tab.cpp \
+    mjpegTab.cpp \
+    mpeg1Tab.cpp \
+    mpeg2Tab.cpp
 
-HEADERS  += codeccomparisonwindow.h
+HEADERS  += codeccomparisonwindow.h \
+    codecTab.h \
+    h261Tab.h \
+    h264Tab.h \
+    h265Tab.h \
+    mjpegTab.h \
+    mpeg1Tab.h \
+    mpeg2Tab.h
 
 FORMS    += codeccomparisonwindow.ui
 
@@ -34,7 +48,7 @@ FORMS    += codeccomparisonwindow.ui
 
 	
 win32 {
-VLCQT_PATH = D:\programming-tools\vlc-qt
+VLCQT_PATH = C:\vlc-qt
 
 INCLUDEPATH += $$VLCQT_PATH\include
 
