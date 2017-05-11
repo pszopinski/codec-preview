@@ -173,3 +173,24 @@ void CodecComparisonWindow::readOutput()
         }
    }
 }
+
+
+void CodecComparisonWindow::broadcast(QString command) {
+    vlcPlayerRaw->stop();
+    vlcPlayerEncoded->stop();
+
+    qDebug() << "Killing current ffmpeg process...";
+    encodingProcess.kill();
+
+    qDebug() << "Running the following command...";
+    qDebug() << command;
+    encodingProcess.start(command);
+
+    // DELETE THE BELOW
+    vlcMediaRaw = new VlcMedia("udp://@localhost:3000", false, vlcInstance);
+    vlcPlayerRaw->open(vlcMediaRaw);
+    // DELETE THE ABOVE
+
+//    vlcPlayer->open(vlcMedia);
+//    vlcPlayerEncoded->open(vlcMediaEncoded);
+}

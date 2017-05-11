@@ -33,6 +33,7 @@ class CodecComparisonWindow : public QMainWindow
     QProcess encodingProcess;
     QProcess probeProcess;
 
+
 private:
     VlcInstance *vlcInstance;
 
@@ -50,6 +51,7 @@ private:
 
     Codec **codecs;
 
+
 public:
     explicit CodecComparisonWindow(QWidget *parent = 0);
     ~CodecComparisonWindow();
@@ -58,6 +60,7 @@ public:
     void openCamera();
     void closeEvent(QCloseEvent *event);
     void initCodecs();
+    void broadcast(QString command);
 
 private slots:
     void on_actionOpen_file_triggered();
