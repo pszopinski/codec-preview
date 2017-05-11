@@ -1,7 +1,7 @@
 #ifndef MPEG2_H
 #define MPEG2_H
 
-#include "codecTab.h"
+#include "codectab.h"
 
 #include "constants.h"
 

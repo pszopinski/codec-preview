@@ -1,7 +1,7 @@
 #ifndef MPEG1_H
 #define MPEG1_H
 
-#include "codecTab.h"
+#include "codectab.h"
 
 #include "constants.h"
 

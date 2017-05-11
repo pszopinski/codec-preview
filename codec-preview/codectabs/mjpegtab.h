@@ -1,7 +1,7 @@
 #ifndef MJPEG_H
 #define MJPEG_H
 
-#include "codecTab.h"
+#include "codectab.h"
 
 #include "constants.h"
 
