@@ -51,6 +51,9 @@ private:
 
     Codec **codecs;
 
+    QString buildEncodingCommand(QString inputParameters, QString inputLocation, QVector<QString> outputPrameters, QVector<QString> outputLocations);
+    QString buildProbeCommand(QString location);
+
 
 public:
     explicit CodecComparisonWindow(QWidget *parent = 0);
@@ -60,7 +63,7 @@ public:
     void openCamera();
     void closeEvent(QCloseEvent *event);
     void initCodecs();
-    void broadcast(QString command);
+    void broadcast(QString parameters);
 
 private slots:
     void on_actionOpen_file_triggered();

@@ -32,7 +32,7 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent) :
 
 
 
-    vlcMediaEncoded = new VlcMedia("udp://@localhost:" + QString::number(ENCODED_VIDEO_PORT), vlcInstance);
+    vlcMediaEncoded = new VlcMedia("udp://@localhost:" + ENCODED_VIDEO_PORT, vlcInstance);
     vlcPlayerEncoded->open(vlcMediaEncoded);
 
     connect(&probeProcess, &QProcess::readyRead, this, &CodecComparisonWindow::readOutput);
@@ -82,7 +82,7 @@ void CodecComparisonWindow::openLocal()
     codecs[ui->tabWidget->currentIndex()]->start(encodingProcess, file);
 
     // Start the probe
-    probeProcess.start("ffprobe udp://localhost:" + QString::number(VIDEO_PROBE_PORT) + " -show_frames");
+    probeProcess.start("ffprobe udp://localhost:" + VIDEO_PROBE_PORT + " -show_frames");
 }
 
 void CodecComparisonWindow::openCamera()
@@ -91,10 +91,10 @@ void CodecComparisonWindow::openCamera()
     QString command;
     #ifdef Q_OS_WIN
     QString cameraName = "Lenovo EasyCamera";
-    command = "ffmpeg -f dshow -i video=\"" + cameraName + "\" -q 50 -f mpegts udp://localhost:" + QString::number(ENCODED_VIDEO_PORT);
+    command = "ffmpeg -f dshow -i video=\"" + cameraName + "\" -q 50 -f mpegts udp://localhost:" + ENCODED_VIDEO_PORT;
     #else
     QString devicePath = QString("/dev/video0");
-    command = "ffmpeg -i \"" + devicePath + "\" -q 50 -f mpegts udp://localhost:" + QString::number(ENCODED_VIDEO_PORT) + " -vcodec copy -f nut udp://localhost:2005";
+    command = "ffmpeg -i \"" + devicePath + "\" -q 50 -f mpegts udp://localhost:" + ENCODED_VIDEO_PORT + " -vcodec copy -f nut udp://localhost:2005";
     #endif
 
     // Run the command
@@ -102,15 +102,15 @@ void CodecComparisonWindow::openCamera()
     encodingProcess.start(command);
 
     // Start displaying raw video
-    vlcMediaRaw = new VlcMedia("udp://@localhost:" + QString::number(RAW_VIDEO_PORT), false, vlcInstance);
+    vlcMediaRaw = new VlcMedia("udp://@localhost:" + RAW_VIDEO_PORT, false, vlcInstance);
     vlcPlayerRaw->open(vlcMediaRaw);
 
     // Start displaying encoded video
-    vlcMediaEncoded = new VlcMedia("udp://@localhost:" + QString::number(ENCODED_VIDEO_PORT), vlcInstance);
+    vlcMediaEncoded = new VlcMedia("udp://@localhost:" + ENCODED_VIDEO_PORT, vlcInstance);
     vlcPlayerEncoded->open(vlcMediaEncoded);
 
     // Start the probe
-    probeProcess.start("ffprobe udp://localhost:" + QString::number(VIDEO_PROBE_PORT) + " -show_frames");
+    probeProcess.start("ffprobe udp://localhost:" + VIDEO_PROBE_PORT + " -show_frames");
 }
 
 void CodecComparisonWindow::on_actionOpen_file_triggered()
@@ -174,23 +174,63 @@ void CodecComparisonWindow::readOutput()
    }
 }
 
+QString CodecComparisonWindow::buildEncodingCommand(QString inputParameters, QString inputLocation, QVector<QString> outputPrameters, QVector<QString> outputLocations) {
+    QStringList list;
+    list << FFMPEG;
+    list << inputParameters;
+    list << "-i" << inputLocation;
+    for (int i = 0; i < outputPrameters.length() && i < outputLocations.length(); i++) {
+        list << outputPrameters[i] << outputLocations[i];
+    }
 
-void CodecComparisonWindow::broadcast(QString command) {
+    QString command = list.join(" ");
+    qDebug() << "Produced the following encoding command: " << command;
+    return command;
+}
+
+QString CodecComparisonWindow::buildProbeCommand(QString location) {
+    QStringList list;
+    list << FFPROBE;
+    list << location;
+    list << "-show-frames";
+
+    QString command = list.join(" ");
+    qDebug() << "Produced the following probe command: " << command;
+    return command;
+}
+
+void CodecComparisonWindow::broadcast(QString encodingParameters) {
+    qDebug() << "Stopping the players.";
     vlcPlayerRaw->stop();
     vlcPlayerEncoded->stop();
 
-    qDebug() << "Killing current ffmpeg process...";
+    qDebug() << "Killing current encoding and probe processes...";
     encodingProcess.kill();
+    probeProcess.kill();
 
-    qDebug() << "Running the following command...";
-    qDebug() << command;
-    encodingProcess.start(command);
+    qDebug() << "Starting the encoding process...";
+    QString encodingCommand = buildEncodingCommand(
+        "-f v4l2",
+        "/dev/video0",
+        {
+            "-c:v copy -an -f nut",
+            encodingParameters
+        },
+        {
+            RAW_VIDEO_PROTOCOL + "://" + RAW_VIDEO_HOST + ":" + RAW_VIDEO_PORT,
+            ENCODED_VIDEO_PROTOCOL + "://" + ENCODED_VIDEO_HOST + ":" + ENCODED_VIDEO_PORT
+        }
+    );
+    encodingProcess.start(encodingCommand);
 
-    // DELETE THE BELOW
-    vlcMediaRaw = new VlcMedia("udp://@localhost:3000", false, vlcInstance);
+    qDebug() << "Starting the probe process...";
+    QString probeCommand = buildProbeCommand(ENCODED_VIDEO_PROTOCOL + "://" + ENCODED_VIDEO_HOST + ":" + ENCODED_VIDEO_PORT);
+    probeProcess.start(probeCommand);
+
+    qDebug() << "Starting the players.";
+            // DELETE THIS LATER!
+            vlcMediaRaw = new VlcMedia(RAW_VIDEO_PROTOCOL + "://@" + RAW_VIDEO_HOST + ":" + RAW_VIDEO_PORT , false, vlcInstance);
+            vlcMediaEncoded =  new VlcMedia(ENCODED_VIDEO_PROTOCOL + "://@" + ENCODED_VIDEO_HOST + ":" + ENCODED_VIDEO_PORT , false, vlcInstance);
     vlcPlayerRaw->open(vlcMediaRaw);
-    // DELETE THE ABOVE
-
-//    vlcPlayer->open(vlcMedia);
-//    vlcPlayerEncoded->open(vlcMediaEncoded);
+    vlcPlayerEncoded->open(vlcMediaEncoded);
 }

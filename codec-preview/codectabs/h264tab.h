@@ -12,5 +12,4 @@ public:
     void start(QProcess &process, QString file);
 };
 
-
 #endif // H264_H
