@@ -58,18 +58,17 @@ private:
 public:
     explicit CodecComparisonWindow(QWidget *parent = 0);
     ~CodecComparisonWindow();
-
-    void openLocal();
-    void openCamera();
     void closeEvent(QCloseEvent *event);
     void initCodecs();
     void broadcast(QString inputParameters, QString inputLocation, QString encodingParameters);
 
 private slots:
-    void on_actionOpen_file_triggered();
-    void on_actionOpen_camera_triggered();
     void tabSelected();
     void readOutput();
+
+    void on_actionOpenFile_triggered();
+
+    void on_actionOpenCamera_triggered();
 
 private:
     Ui::CodecComparisonWindow *ui;

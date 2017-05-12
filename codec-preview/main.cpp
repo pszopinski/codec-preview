@@ -7,7 +7,5 @@ int main(int argc, char *argv[])
     CodecComparisonWindow w;
     w.show();
 
-    //w.broadcast("-c:v libx265 -preset ultrafast -q 10 -an -f matroska");
-
     return a.exec();
 }
