@@ -1,14 +1,14 @@
 #ifndef MJPEG_H
 #define MJPEG_H
 
-#include "codectab.h"
+#include "codecmanager.h"
 
 #include "constants.h"
 
-class MJPEG : public Codec
+class MJPEGManager : public CodecManager
 {
 public:
-    MJPEG();
+    MJPEGManager();
     void start(QProcess &process, QString file);
 };
 

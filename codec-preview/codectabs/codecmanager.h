@@ -4,7 +4,7 @@
 #include <QProcess>
 
 
-class Codec
+class CodecManager
 {
 public:
     virtual void start(QProcess &process, QString file) = 0;

@@ -9,23 +9,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         codeccomparisonwindow.cpp \
-    codectabs/codectab.cpp \
-    codectabs/h261tab.cpp \
-    codectabs/h264tab.cpp \
-    codectabs/h265tab.cpp \
-    codectabs/mjpegtab.cpp \
-    codectabs/mpeg1tab.cpp \
-    codectabs/mpeg2tab.cpp
+    codectabs/codecmanager.cpp \
+    codectabs/h261manager.cpp \
+    codectabs/h264manager.cpp \
+    codectabs/mjpegmanager.cpp \
+    codectabs/mpeg1manager.cpp \
+    codectabs/mpeg2manager.cpp \
+    codectabs/h265manager.cpp
 
 HEADERS  += codeccomparisonwindow.h \
-    codectabs/codectab.h \
-    codectabs/h261tab.h \
-    codectabs/h264tab.h \
-    codectabs/h265tab.h \
-    codectabs/mjpegtab.h \
-    codectabs/mpeg1tab.h \
-    codectabs/mpeg2tab.h \
-    constants.h
+    constants.h \
+    codectabs/h261manager.h \
+    codectabs/codecmanager.h \
+    codectabs/h264manager.h \
+    codectabs/h265manager.h \
+    codectabs/mjpegmanager.h \
+    codectabs/mpeg2manager.h \
+    codectabs/mpeg1manager.h
 
 FORMS    += codeccomparisonwindow.ui
 	
