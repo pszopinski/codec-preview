@@ -3,8 +3,6 @@
 
 CodecComparisonWindow::CodecComparisonWindow(QWidget *parent) :
     QMainWindow(parent),
-    vlcMediaRaw(0),
-    vlcMediaEncoded(0),
     ui(new Ui::CodecComparisonWindow)
 {
     ui->setupUi(this);
@@ -32,8 +30,10 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent) :
     vlcMediaEncoded =  new VlcMedia(ENCODED_VIDEO_PROTOCOL + "://@" + ENCODED_VIDEO_HOST + ":" + ENCODED_VIDEO_PORT , false, vlcInstance);
     vlcPlayerEncoded->openOnly(vlcMediaEncoded);
 
+    connect(this, &CodecComparisonWindow::settingsChanged, this, &CodecComparisonWindow::broadcast);
 
     connect(&probeProcess, &QProcess::readyRead, this, &CodecComparisonWindow::readOutput);
+
 
     // Provide debug info for raw player
     connect(vlcPlayerRaw, &VlcMediaPlayer::stopped, [] () {
@@ -91,13 +91,9 @@ void CodecComparisonWindow::closeEvent(QCloseEvent *event)
 
 void CodecComparisonWindow::tabSelected()
 {
-    if(file != NULL)
-    {
-        encodingProcess.kill();
-        vlcMediaRaw = new VlcMedia(file, true, vlcInstance);
-        vlcPlayerRaw->open(vlcMediaRaw);
-        codecs[ui->tabWidget->currentIndex()]->start(encodingProcess, file);
-    }
+    // TODO: get this from the tab object
+    encodingParameters = "-r 25 -c:v mpeg1video -q:v 31 -f matroska";
+    settingsChanged();
 }
 
 void CodecComparisonWindow::initCodecs()
@@ -158,7 +154,12 @@ QString CodecComparisonWindow::buildProbeCommand(QString location) {
     return command;
 }
 
-void CodecComparisonWindow::broadcast(QString inputParameters, QString inputLocation, QString encodingParameters) {
+void CodecComparisonWindow::broadcast() {
+    // Do not broadcast if some parameters are missing
+    if (inputLocation.isEmpty() || inputParameters.isNull() || encodingParameters.isNull()) {
+        return;
+    }
+
     qDebug() << "Stopping the players...";
     vlcPlayerRaw->stop();
     vlcPlayerEncoded->stop();
@@ -193,25 +194,23 @@ void CodecComparisonWindow::broadcast(QString inputParameters, QString inputLoca
     vlcPlayerEncoded->play();
 }
 
-void CodecComparisonWindow::on_actionOpenFile_triggered()
-{
-    QString inputParameters = "-re";
-    QString encodingParameters = "-r 25 -c:v mpeg1video -q:v 31 -f matroska"; // TODO: get encodingParameters from the active codec tab
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath(), tr("Multimedia files (*)"));
-    if (!fileName.isEmpty()) {
-        broadcast(inputParameters, '"' + fileName + '"', encodingParameters);
+void CodecComparisonWindow::on_actionOpenFile_triggered() {
+    QString filePath = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath(), tr("Multimedia files (*)"));
+    if (!filePath.isEmpty()) {
+        inputParameters = "-re";
+        inputLocation = filePath;
+        settingsChanged();
     }
 }
 
-void CodecComparisonWindow::on_actionOpenCamera_triggered()
-{
+void CodecComparisonWindow::on_actionOpenCamera_triggered() {
     #ifdef Q_OS_WIN
-    QString inputParameters = "-f dshow";
-    QString inputLocation = "video=\"Lenovo EasyCamera\"";
+    inputParameters = "-f dshow";
+    inputLocation = "video=\"Lenovo EasyCamera\"";
+    inputChanged();
     #else
-    QString inputParameters = "-f v4l2";
-    QString inputLocation = "/dev/video0";
+    inputParameters = "-f v4l2";
+    inputLocation = "/dev/video0";
+    settingsChanged();
     #endif
-    QString encodingParameters = "-r 25 -c:v mpeg1video -q:v 31 -f matroska"; // TODO: get encodingParameters from active codec tab
-    broadcast(inputParameters, inputLocation, encodingParameters);
 }

@@ -37,6 +37,7 @@ class CodecComparisonWindow : public QMainWindow
 
 
 private:
+    Ui::CodecComparisonWindow *ui;
     VlcInstance *vlcInstance;
 
     VlcMedia *vlcMediaRaw;
@@ -47,7 +48,9 @@ private:
 
     QQueue<char> typesOfFrames;
 
-    QString file;
+    QString inputParameters;
+    QString inputLocation;
+    QString encodingParameters;
 
     CodecManager **codecs;
 
@@ -60,7 +63,7 @@ public:
     ~CodecComparisonWindow();
     void closeEvent(QCloseEvent *event);
     void initCodecs();
-    void broadcast(QString inputParameters, QString inputLocation, QString encodingParameters);
+    void broadcast();
 
 private slots:
     void tabSelected();
@@ -70,8 +73,8 @@ private slots:
 
     void on_actionOpenCamera_triggered();
 
-private:
-    Ui::CodecComparisonWindow *ui;
+signals:
+    void settingsChanged();
 };
 
 #endif // CODECCOMPARISONWINDOW_H

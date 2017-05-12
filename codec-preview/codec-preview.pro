@@ -8,7 +8,7 @@ TEMPLATE = app
 DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
-        codeccomparisonwindow.cpp \
+    codeccomparisonwindow.cpp \
     codectabs/codecmanager.cpp \
     codectabs/h261manager.cpp \
     codectabs/h264manager.cpp \
