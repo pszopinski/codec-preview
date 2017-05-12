@@ -10,7 +10,8 @@
 #include <VLCQtCore/Instance.h>
 #include <VLCQtCore/Media.h>
 #include <VLCQtCore/MediaPlayer.h>
-#include <VLCQtWidgets/WidgetVolumeSlider.h>
+#include <VLCQtCore/Audio.h>
+
 
 #include "codectabs/h261manager.h"
 #include "codectabs/h264manager.h"
@@ -39,11 +40,9 @@ private:
 
     VlcMedia *vlcMediaRaw;
     VlcMediaPlayer *vlcPlayerRaw;
-    VlcWidgetVolumeSlider *vlcVolumeRaw;
 
     VlcMedia *vlcMediaEncoded;
     VlcMediaPlayer *vlcPlayerEncoded;
-    VlcWidgetVolumeSlider *vlcVolumeEncoded;
 
     QQueue<char> typesOfFrames;
 
@@ -51,8 +50,8 @@ private:
 
     CodecManager **codecs;
 
-    QString buildEncodingCommand(QString inputParameters, QString inputLocation, QVector<QString> outputPrameters, QVector<QString> outputLocations);
-    QString buildProbeCommand(QString location);
+    static QString buildEncodingCommand(QString inputParameters, QString inputLocation, QVector<QString> outputPrameters, QVector<QString> outputLocations);
+    static QString buildProbeCommand(QString location);
 
 
 public:
@@ -63,7 +62,7 @@ public:
     void openCamera();
     void closeEvent(QCloseEvent *event);
     void initCodecs();
-    void broadcast(QString parameters);
+    void broadcast(QString inputParameters, QString inputLocation, QString encodingParameters);
 
 private slots:
     void on_actionOpen_file_triggered();

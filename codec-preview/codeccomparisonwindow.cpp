@@ -15,25 +15,22 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent) :
 
     vlcInstance = new VlcInstance(VlcCommon::args(), NULL);
 
+    // Initialise raw video display
     vlcPlayerRaw = new VlcMediaPlayer(vlcInstance);
     vlcPlayerRaw->setVideoWidget(ui->rawVideo);
     ui->rawVideo->setMediaPlayer(vlcPlayerRaw);
-    vlcVolumeRaw = new VlcWidgetVolumeSlider();
-    vlcVolumeRaw->setMediaPlayer(vlcPlayerRaw);
-    vlcVolumeRaw->mute();
+    vlcMediaRaw = new VlcMedia(RAW_VIDEO_PROTOCOL + "://@" + RAW_VIDEO_HOST + ":" + RAW_VIDEO_PORT , false, vlcInstance);
+    vlcPlayerRaw->openOnly(vlcMediaRaw);
+    vlcPlayerRaw->audio()->setMute(true);
 
-
+    // Initialise encoded video display
     vlcPlayerEncoded = new VlcMediaPlayer(vlcInstance);
     vlcPlayerEncoded->setVideoWidget(ui->encodedVideo);
     ui->encodedVideo->setMediaPlayer(vlcPlayerEncoded);
-    vlcVolumeEncoded = new VlcWidgetVolumeSlider();
-    vlcVolumeEncoded->setMediaPlayer(vlcPlayerEncoded);
-    vlcVolumeEncoded->mute();
+    vlcMediaEncoded =  new VlcMedia(ENCODED_VIDEO_PROTOCOL + "://@" + ENCODED_VIDEO_HOST + ":" + ENCODED_VIDEO_PORT , false, vlcInstance);
+    vlcPlayerEncoded->openOnly(vlcMediaEncoded);
+    vlcPlayerEncoded->audio()->setMute(true);
 
-
-
-    vlcMediaEncoded = new VlcMedia("udp://@localhost:" + ENCODED_VIDEO_PORT, vlcInstance);
-    vlcPlayerEncoded->open(vlcMediaEncoded);
 
     connect(&probeProcess, &QProcess::readyRead, this, &CodecComparisonWindow::readOutput);
 
@@ -67,6 +64,7 @@ CodecComparisonWindow::~CodecComparisonWindow()
 
 void CodecComparisonWindow::openLocal()
 {
+    /*
     //kill existing streaming process
     encodingProcess.kill();
 
@@ -83,6 +81,14 @@ void CodecComparisonWindow::openLocal()
 
     // Start the probe
     probeProcess.start("ffprobe udp://localhost:" + VIDEO_PROBE_PORT + " -show_frames");
+    */
+
+
+    QString encodingParameters = "-c:v mjpeg -q:v 31 -f matroska";
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath(), tr("Multimedia files (*)"));
+    if (!fileName.isEmpty()) {
+        broadcast("-re", fileName, encodingParameters);
+    }
 }
 
 void CodecComparisonWindow::openCamera()
@@ -178,7 +184,7 @@ QString CodecComparisonWindow::buildEncodingCommand(QString inputParameters, QSt
     QStringList list;
     list << FFMPEG;
     list << inputParameters;
-    list << "-i" << inputLocation;
+    list << "-i" << '"' + inputLocation + '"';
     for (int i = 0; i < outputPrameters.length() && i < outputLocations.length(); i++) {
         list << outputPrameters[i] << outputLocations[i];
     }
@@ -199,7 +205,7 @@ QString CodecComparisonWindow::buildProbeCommand(QString location) {
     return command;
 }
 
-void CodecComparisonWindow::broadcast(QString encodingParameters) {
+void CodecComparisonWindow::broadcast(QString inputParameters, QString inputLocation, QString encodingParameters) {
     qDebug() << "Stopping the players.";
     vlcPlayerRaw->stop();
     vlcPlayerEncoded->stop();
@@ -210,8 +216,8 @@ void CodecComparisonWindow::broadcast(QString encodingParameters) {
 
     qDebug() << "Starting the encoding process...";
     QString encodingCommand = buildEncodingCommand(
-        "-f v4l2",
-        "/dev/video0",
+        inputParameters,
+        inputLocation,
         {
             "-c:v copy -an -f nut",
             encodingParameters
@@ -228,9 +234,6 @@ void CodecComparisonWindow::broadcast(QString encodingParameters) {
     probeProcess.start(probeCommand);
 
     qDebug() << "Starting the players.";
-            // DELETE THIS LATER!
-            vlcMediaRaw = new VlcMedia(RAW_VIDEO_PROTOCOL + "://@" + RAW_VIDEO_HOST + ":" + RAW_VIDEO_PORT , false, vlcInstance);
-            vlcMediaEncoded =  new VlcMedia(ENCODED_VIDEO_PROTOCOL + "://@" + ENCODED_VIDEO_HOST + ":" + ENCODED_VIDEO_PORT , false, vlcInstance);
-    vlcPlayerRaw->open(vlcMediaRaw);
-    vlcPlayerEncoded->open(vlcMediaEncoded);
+    vlcPlayerRaw->play();
+    vlcPlayerEncoded->play();
 }
