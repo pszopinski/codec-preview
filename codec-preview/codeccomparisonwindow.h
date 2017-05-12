@@ -11,6 +11,7 @@
 #include <VLCQtCore/Media.h>
 #include <VLCQtCore/MediaPlayer.h>
 #include <VLCQtCore/Audio.h>
+#include <VLCQtCore/Stats.h>
 
 
 #include "codectabs/h261manager.h"

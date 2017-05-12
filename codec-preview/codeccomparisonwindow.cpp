@@ -18,21 +18,42 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent) :
     // Initialise raw video display
     vlcPlayerRaw = new VlcMediaPlayer(vlcInstance);
     vlcPlayerRaw->setVideoWidget(ui->rawVideo);
+    vlcPlayerRaw->audio()->setMute(true);
     ui->rawVideo->setMediaPlayer(vlcPlayerRaw);
     vlcMediaRaw = new VlcMedia(RAW_VIDEO_PROTOCOL + "://@" + RAW_VIDEO_HOST + ":" + RAW_VIDEO_PORT , false, vlcInstance);
     vlcPlayerRaw->openOnly(vlcMediaRaw);
-    vlcPlayerRaw->audio()->setMute(true);
+
 
     // Initialise encoded video display
     vlcPlayerEncoded = new VlcMediaPlayer(vlcInstance);
     vlcPlayerEncoded->setVideoWidget(ui->encodedVideo);
+    vlcPlayerEncoded->audio()->setMute(true);
     ui->encodedVideo->setMediaPlayer(vlcPlayerEncoded);
     vlcMediaEncoded =  new VlcMedia(ENCODED_VIDEO_PROTOCOL + "://@" + ENCODED_VIDEO_HOST + ":" + ENCODED_VIDEO_PORT , false, vlcInstance);
     vlcPlayerEncoded->openOnly(vlcMediaEncoded);
-    vlcPlayerEncoded->audio()->setMute(true);
 
 
     connect(&probeProcess, &QProcess::readyRead, this, &CodecComparisonWindow::readOutput);
+
+    // Provide debug info for raw player
+    connect(vlcPlayerRaw, &VlcMediaPlayer::stopped, [] () {
+        qDebug() << "\tvlcPlayerRaw stopped";
+    });
+    connect(vlcPlayerRaw, &VlcMediaPlayer::playing, [] () {
+        qDebug() << "\tvlcPlayerRaw playing";
+    });
+    connect(vlcPlayerRaw, &VlcMediaPlayer::paused, [] () {
+        qDebug() << "\tvlcPlayerRaw paused";
+    });
+    connect(vlcPlayerRaw, &VlcMediaPlayer::end, [] () {
+        qDebug() << "\tvlcPlayerRaw end";
+    });
+    connect(vlcPlayerRaw, &VlcMediaPlayer::error, [] () {
+        qDebug() << "\tvlcPlayerRaw error";
+    });
+    connect(vlcPlayerRaw, &VlcMediaPlayer::opening, [] () {
+        qDebug() << "\tvlcPlayerRaw opening";
+    });
 
     //prints probe output to standard output
     //framesProbe.setProcessChannelMode(QProcess::ForwardedChannels);
@@ -62,61 +83,25 @@ CodecComparisonWindow::~CodecComparisonWindow()
 }
 
 
-void CodecComparisonWindow::openLocal()
-{
-    /*
-    //kill existing streaming process
-    encodingProcess.kill();
-
-    //get file directory from user prompt
-    file = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath(), tr("Multimedia files(*)"));
-
-    if (file.isEmpty()) return;
-
-    vlcMediaRaw = new VlcMedia(file, true, vlcInstance);
-
-    vlcPlayerRaw->open(vlcMediaRaw);
-
-    codecs[ui->tabWidget->currentIndex()]->start(encodingProcess, file);
-
-    // Start the probe
-    probeProcess.start("ffprobe udp://localhost:" + VIDEO_PROBE_PORT + " -show_frames");
-    */
-
-
-    QString encodingParameters = "-c:v mjpeg -q:v 31 -f matroska";
+void CodecComparisonWindow::openLocal() {
+    QString inputParameters = "-re";
+    QString encodingParameters = "-c:v mpeg1video -q:v 31 -f matroska"; // TODO: get encodingParameters from the active codec tab
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath(), tr("Multimedia files (*)"));
     if (!fileName.isEmpty()) {
-        broadcast("-re", fileName, encodingParameters);
+        broadcast(inputParameters, '"' + fileName + '"', encodingParameters);
     }
 }
 
-void CodecComparisonWindow::openCamera()
-{
-    // Create OS-dependent vlcMedia and command objects
-    QString command;
+void CodecComparisonWindow::openCamera() {
     #ifdef Q_OS_WIN
-    QString cameraName = "Lenovo EasyCamera";
-    command = "ffmpeg -f dshow -i video=\"" + cameraName + "\" -q 50 -f mpegts udp://localhost:" + ENCODED_VIDEO_PORT;
+    QString inputParameters = "-f dshow";
+    QString inputLocation = "video=\"Lenovo EasyCamera\"";
     #else
-    QString devicePath = QString("/dev/video0");
-    command = "ffmpeg -i \"" + devicePath + "\" -q 50 -f mpegts udp://localhost:" + ENCODED_VIDEO_PORT + " -vcodec copy -f nut udp://localhost:2005";
+    QString inputParameters = "-f v4l2";
+    QString inputLocation = "/dev/video0";
     #endif
-
-    // Run the command
-    qDebug() << command;
-    encodingProcess.start(command);
-
-    // Start displaying raw video
-    vlcMediaRaw = new VlcMedia("udp://@localhost:" + RAW_VIDEO_PORT, false, vlcInstance);
-    vlcPlayerRaw->open(vlcMediaRaw);
-
-    // Start displaying encoded video
-    vlcMediaEncoded = new VlcMedia("udp://@localhost:" + ENCODED_VIDEO_PORT, vlcInstance);
-    vlcPlayerEncoded->open(vlcMediaEncoded);
-
-    // Start the probe
-    probeProcess.start("ffprobe udp://localhost:" + VIDEO_PROBE_PORT + " -show_frames");
+    QString encodingParameters = "-c:v mpeg1video -q:v 31 -f matroska"; // TODO: get encodingParameters from active codec tab
+    broadcast(inputParameters, inputLocation, encodingParameters);
 }
 
 void CodecComparisonWindow::on_actionOpen_file_triggered()
@@ -184,7 +169,7 @@ QString CodecComparisonWindow::buildEncodingCommand(QString inputParameters, QSt
     QStringList list;
     list << FFMPEG;
     list << inputParameters;
-    list << "-i" << '"' + inputLocation + '"';
+    list << "-i" << inputLocation;
     for (int i = 0; i < outputPrameters.length() && i < outputLocations.length(); i++) {
         list << outputPrameters[i] << outputLocations[i];
     }
@@ -206,9 +191,9 @@ QString CodecComparisonWindow::buildProbeCommand(QString location) {
 }
 
 void CodecComparisonWindow::broadcast(QString inputParameters, QString inputLocation, QString encodingParameters) {
-    qDebug() << "Stopping the players.";
-    vlcPlayerRaw->stop();
-    vlcPlayerEncoded->stop();
+    //qDebug() << "Stopping the players...";
+    //vlcPlayerRaw->stop();
+    //vlcPlayerEncoded->stop();
 
     qDebug() << "Killing current encoding and probe processes...";
     encodingProcess.kill();
@@ -233,7 +218,9 @@ void CodecComparisonWindow::broadcast(QString inputParameters, QString inputLoca
     QString probeCommand = buildProbeCommand(ENCODED_VIDEO_PROTOCOL + "://" + ENCODED_VIDEO_HOST + ":" + ENCODED_VIDEO_PORT);
     probeProcess.start(probeCommand);
 
-    qDebug() << "Starting the players.";
-    vlcPlayerRaw->play();
-    vlcPlayerEncoded->play();
+    qDebug() << "Starting the players...";
+    vlcPlayerRaw->setTime(0);
+    vlcPlayerEncoded->setTime(0);
+
+    qDebug() << "\t" << vlcPlayerRaw->state();
 }
