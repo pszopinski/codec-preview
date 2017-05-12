@@ -1,14 +1,14 @@
 #ifndef MPEG1_H
 #define MPEG1_H
 
-#include "codectab.h"
+#include "codecmanager.h"
 
 #include "constants.h"
 
-class MPEG1 : public Codec
+class MPEG1Manager : public CodecManager
 {
 public:
-    MPEG1();
+    MPEG1Manager();
     void start(QProcess &process, QString file);
 };
 
