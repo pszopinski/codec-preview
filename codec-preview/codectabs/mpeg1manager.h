@@ -3,9 +3,8 @@
 
 #include "codecmanager.h"
 
-class MPEG1Manager : public CodecManager
-{
-public:
+class MPEG1Manager : public CodecManager {
+  public:
     MPEG1Manager();
 };
 

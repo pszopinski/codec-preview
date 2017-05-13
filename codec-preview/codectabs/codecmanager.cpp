@@ -2,7 +2,4 @@
 
 CodecManager::CodecManager() : streamingParameters() {}
 
-QString CodecManager::getStreamingParameters()
-{
-    return streamingParameters;
-}
+QString CodecManager::getStreamingParameters() { return streamingParameters; }

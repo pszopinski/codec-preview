@@ -3,9 +3,8 @@
 
 #include "codecmanager.h"
 
-class H264Manager : public CodecManager
-{
-public:
+class H264Manager : public CodecManager {
+  public:
     H264Manager();
 };
 

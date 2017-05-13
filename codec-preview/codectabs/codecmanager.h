@@ -3,16 +3,14 @@
 
 #include <QProcess>
 
-
-class CodecManager
-{
-protected:
+class CodecManager {
+  protected:
     QString streamingParameters;
-public:
+
+  public:
     CodecManager();
 
     QString getStreamingParameters();
-
 };
 
 #endif // CODEC_H

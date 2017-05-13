@@ -3,9 +3,8 @@
 
 #include "codecmanager.h"
 
-class H265Manager : public CodecManager
-{
-public:
+class H265Manager : public CodecManager {
+  public:
     H265Manager();
 };
 

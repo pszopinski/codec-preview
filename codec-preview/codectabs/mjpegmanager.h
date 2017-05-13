@@ -3,9 +3,8 @@
 
 #include "codecmanager.h"
 
-class MJPEGManager : public CodecManager
-{
-public:
+class MJPEGManager : public CodecManager {
+  public:
     MJPEGManager();
 };
 
