@@ -2,5 +2,5 @@
 
 MPEG2Manager::MPEG2Manager()
 {
-    encodingParameters = "-c:v mpeg2video -preset ultrafast -f matroska";
+    streamingParameters = "-c:v mpeg2video -preset ultrafast -f matroska";
 }

@@ -6,9 +6,13 @@
 
 class CodecManager
 {
+protected:
+    QString streamingParameters;
 public:
     CodecManager();
-    QString encodingParameters;
+
+    QString getStreamingParameters();
+
 };
 
 #endif // CODEC_H

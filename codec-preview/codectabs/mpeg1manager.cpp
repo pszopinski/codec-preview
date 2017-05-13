@@ -2,5 +2,5 @@
 
 MPEG1Manager::MPEG1Manager()
 {
-    encodingParameters = "-c:v mpeg1video -preset ultrafast -f matroska";
+    streamingParameters = "-c:v mpeg1video -preset ultrafast -f matroska";
 }

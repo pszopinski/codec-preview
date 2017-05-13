@@ -85,19 +85,18 @@ CodecComparisonWindow::~CodecComparisonWindow()
 void CodecComparisonWindow::closeEvent(QCloseEvent *event)
 {
     (void)event; //silence annoying warning
-    encodingProcess.kill();
+    streamingProcess.kill();
     probeProcess.kill();
 }
 
 void CodecComparisonWindow::initCodecs()
 {
-    codecs = new CodecManager*[NUMBER_OF_CODECS];
-    codecs[0] = new MJPEGManager();
-    codecs[1] = new H261Manager();
-    codecs[2] = new MPEG1Manager();
-    codecs[3] = new MPEG2Manager();
-    codecs[4] = new H264Manager();
-    codecs[5] = new H265Manager();
+    codecManagers.push_back(new MJPEGManager());
+    codecManagers.push_back(new H261Manager());
+    codecManagers.push_back(new MPEG1Manager());
+    codecManagers.push_back(new MPEG2Manager());
+    codecManagers.push_back(new H264Manager());
+    codecManagers.push_back(new H265Manager());
 }
 
 void CodecComparisonWindow::readOutput()
@@ -122,11 +121,11 @@ void CodecComparisonWindow::readOutput()
    }
 }
 
-QString CodecComparisonWindow::buildEncodingCommand(QString inputParameters, QString inputLocation, QVector<QString> outputPrameters, QVector<QString> outputLocations) {
+QString CodecComparisonWindow::buildStreamingCommand(QString inputParameters, QString inputLocation, QVector<QString> outputPrameters, QVector<QString> outputLocations) {
     QStringList list;
     list << FFMPEG;
     list << inputParameters;
-    list << "-i" << inputLocation;
+    list << "-i " << inputLocation;
     for (int i = 0; i < outputPrameters.length() && i < outputLocations.length(); i++) {
         list << outputPrameters[i] << outputLocations[i];
     }
@@ -156,8 +155,8 @@ void CodecComparisonWindow::broadcast() {
         qDebug() << "Input parameters are missing!";
         return;
     }
-    QString encodingParameters = codecs[ui->tabWidget->currentIndex()]->encodingParameters;
-    if (encodingParameters.isEmpty()) {
+    QString streamingParameters = codecManagers.at(ui->tabWidget->currentIndex())->getStreamingParameters();
+    if (streamingParameters.isEmpty()) {
         qDebug() << "Encoding parameters are missing!";
         return;
     }
@@ -167,23 +166,23 @@ void CodecComparisonWindow::broadcast() {
     vlcPlayerEncoded->stop();
 
     qDebug() << "Killing current encoding and probe processes...";
-    encodingProcess.kill();
+    streamingProcess.kill();
     probeProcess.kill();
 
     qDebug() << "Starting the encoding process...";
-    QString encodingCommand = buildEncodingCommand(
+    QString streamingCommand = buildStreamingCommand(
         inputParameters,
         inputLocation,
         {
             "-r 25 -c:v copy -f nut",
-            encodingParameters
+            streamingParameters
         },
         {
             RAW_VIDEO_PROTOCOL + "://" + RAW_VIDEO_HOST + ":" + RAW_VIDEO_PORT,
             ENCODED_VIDEO_PROTOCOL + "://" + ENCODED_VIDEO_HOST + ":" + ENCODED_VIDEO_PORT
         }
     );
-    encodingProcess.start(encodingCommand);
+    streamingProcess.start(streamingCommand);
 
     qDebug() << "Starting the probe process...";
     QString probeCommand = buildProbeCommand(ENCODED_VIDEO_PROTOCOL + "://" + ENCODED_VIDEO_HOST + ":" + ENCODED_VIDEO_PORT);
@@ -200,7 +199,7 @@ void CodecComparisonWindow::on_actionOpenFile_triggered() {
     QString filePath = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath(), tr("Multimedia files (*)"));
     if (!filePath.isEmpty()) {
         inputParameters = "-re";
-        inputLocation = filePath;
+        inputLocation = "\"" + filePath + "\"";
         settingsChanged();
     }
 }
@@ -209,7 +208,7 @@ void CodecComparisonWindow::on_actionOpenCamera_triggered() {
     #ifdef Q_OS_WIN
     inputParameters = "-f dshow";
     inputLocation = "video=\"Lenovo EasyCamera\"";
-    inputChanged();
+    settingsChanged();
     #else
     inputParameters = "-f v4l2";
     inputLocation = "/dev/video0";

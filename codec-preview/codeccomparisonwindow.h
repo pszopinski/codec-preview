@@ -5,6 +5,7 @@
 #include <QQueue>
 #include <QFileDialog>
 #include <QDebug>
+#include <QVector>
 
 #include <VLCQtCore/Common.h>
 #include <VLCQtCore/Instance.h>
@@ -32,7 +33,7 @@ class CodecComparisonWindow;
 class CodecComparisonWindow : public QMainWindow
 {
     Q_OBJECT
-    QProcess encodingProcess;
+    QProcess streamingProcess;
     QProcess probeProcess;
 
 
@@ -51,9 +52,10 @@ private:
     QString inputParameters;
     QString inputLocation;
 
-    CodecManager **codecs;
+    //CodecManager **codecs;
+    QVector<CodecManager*> codecManagers;
 
-    static QString buildEncodingCommand(QString inputParameters, QString inputLocation, QVector<QString> outputPrameters, QVector<QString> outputLocations);
+    static QString buildStreamingCommand(QString inputParameters, QString inputLocation, QVector<QString> outputPrameters, QVector<QString> outputLocations);
     static QString buildProbeCommand(QString location);
 
 
