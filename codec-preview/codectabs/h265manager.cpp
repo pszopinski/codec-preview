@@ -2,7 +2,7 @@
 
 H265Manager::H265Manager()
 {
-
+    encodingParameters = "-c:v libx265 -preset ultrafast -f matroska";
 }
 
 void H265Manager::start(QProcess &process, QString file)

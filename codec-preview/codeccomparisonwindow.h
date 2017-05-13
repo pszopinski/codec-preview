@@ -50,7 +50,6 @@ private:
 
     QString inputParameters;
     QString inputLocation;
-    QString encodingParameters;
 
     CodecManager **codecs;
 
@@ -63,15 +62,12 @@ public:
     ~CodecComparisonWindow();
     void closeEvent(QCloseEvent *event);
     void initCodecs();
-    void broadcast();
 
 private slots:
-    void tabSelected();
     void readOutput();
-
     void on_actionOpenFile_triggered();
-
     void on_actionOpenCamera_triggered();
+    void broadcast();
 
 signals:
     void settingsChanged();

@@ -7,7 +7,8 @@
 class CodecManager
 {
 public:
-    virtual void start(QProcess &process, QString file) = 0;
+    CodecManager();
+    QString encodingParameters;
 };
 
 #endif // CODEC_H

@@ -2,7 +2,7 @@
 
 MJPEGManager::MJPEGManager()
 {
-
+    encodingParameters = "-c:v libx265 -preset ultrafast -f matroska";
 }
 
 void MJPEGManager::start(QProcess &process, QString file)

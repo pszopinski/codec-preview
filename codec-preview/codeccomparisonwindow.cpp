@@ -9,7 +9,8 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent) :
 
     initCodecs();
 
-    connect(ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabSelected()));
+
+    connect(&probeProcess, &QProcess::readyRead, this, &CodecComparisonWindow::readOutput);
 
     vlcInstance = new VlcInstance(VlcCommon::args(), NULL);
 
@@ -31,8 +32,7 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent) :
     vlcPlayerEncoded->openOnly(vlcMediaEncoded);
 
     connect(this, &CodecComparisonWindow::settingsChanged, this, &CodecComparisonWindow::broadcast);
-
-    connect(&probeProcess, &QProcess::readyRead, this, &CodecComparisonWindow::readOutput);
+    connect(ui->tabWidget, &QTabWidget::currentChanged, this, &CodecComparisonWindow::broadcast);
 
 
     // Provide debug info for raw player
@@ -87,13 +87,6 @@ void CodecComparisonWindow::closeEvent(QCloseEvent *event)
     (void)event; //silence annoying warning
     encodingProcess.kill();
     probeProcess.kill();
-}
-
-void CodecComparisonWindow::tabSelected()
-{
-    // TODO: get this from the tab object
-    encodingParameters = "-r 25 -c:v mpeg1video -q:v 31 -f matroska";
-    settingsChanged();
 }
 
 void CodecComparisonWindow::initCodecs()
@@ -155,8 +148,17 @@ QString CodecComparisonWindow::buildProbeCommand(QString location) {
 }
 
 void CodecComparisonWindow::broadcast() {
-    // Do not broadcast if some parameters are missing
-    if (inputLocation.isEmpty() || inputParameters.isNull() || encodingParameters.isNull()) {
+    if (inputLocation.isEmpty()) {
+        qDebug() << "Input location is missing!";
+        return;
+    }
+    if (inputParameters.isEmpty()) {
+        qDebug() << "Input parameters are missing!";
+        return;
+    }
+    QString encodingParameters = codecs[ui->tabWidget->currentIndex()]->encodingParameters;
+    if (encodingParameters.isEmpty()) {
+        qDebug() << "Encoding parameters are missing!";
         return;
     }
 
@@ -173,7 +175,7 @@ void CodecComparisonWindow::broadcast() {
         inputParameters,
         inputLocation,
         {
-            "-r 25 -c:v copy -an -f nut",
+            "-r 25 -c:v copy -f nut",
             encodingParameters
         },
         {

@@ -2,7 +2,7 @@
 
 MPEG2Manager::MPEG2Manager()
 {
-
+    encodingParameters = "-c:v mpeg2video -preset ultrafast -f matroska";
 }
 
 void MPEG2Manager::start(QProcess &process, QString file)
