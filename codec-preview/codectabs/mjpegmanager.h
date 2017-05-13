@@ -3,13 +3,10 @@
 
 #include "codecmanager.h"
 
-#include "constants.h"
-
 class MJPEGManager : public CodecManager
 {
 public:
     MJPEGManager();
-    void start(QProcess &process, QString file);
 };
 
 #endif // MJPEG_H
