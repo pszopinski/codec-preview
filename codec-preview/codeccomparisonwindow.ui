@@ -200,37 +200,37 @@
   <customwidget>
    <class>MPEG1Manager</class>
    <extends>QWidget</extends>
-   <header>mpeg1manager.h</header>
+   <header>codectabs/mpeg1manager.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>MJPEGManager</class>
    <extends>QWidget</extends>
-   <header>mjpegmanager.h</header>
+   <header>codectabs/mjpegmanager.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>MPEG2Manager</class>
    <extends>QWidget</extends>
-   <header>mpeg2manager.h</header>
+   <header>codectabs/mpeg2manager.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>H261Manager</class>
    <extends>QWidget</extends>
-   <header>h261manager.h</header>
+   <header>codectabs/h261manager.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>H264Manager</class>
    <extends>QWidget</extends>
-   <header>h264manager.h</header>
+   <header>codectabs/h264manager.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>H265Manager</class>
    <extends>QWidget</extends>
-   <header>h265manager.h</header>
+   <header>codectabs/h265manager.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
