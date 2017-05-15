@@ -1,5 +1,6 @@
 #include "codecmanager.h"
 
-CodecManager::CodecManager() : streamingParameters() {}
+CodecManager::CodecManager(QWidget *parent)
+    : QWidget(parent), streamingParameters() {}
 
 QString CodecManager::getStreamingParameters() { return streamingParameters; }

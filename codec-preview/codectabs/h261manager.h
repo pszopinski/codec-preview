@@ -1,11 +1,23 @@
-#ifndef H261_H
-#define H261_H
+#ifndef H261MANAGER_H
+#define H261MANAGER_H
+
+#include <QWidget>
 
 #include "codecmanager.h"
 
+namespace Ui {
+class H261Manager;
+}
+
 class H261Manager : public CodecManager {
+    Q_OBJECT
+
   public:
-    H261Manager();
+    explicit H261Manager(QWidget *parent = 0);
+    ~H261Manager();
+
+  private:
+    Ui::H261Manager *ui;
 };
 
-#endif // H261_H
+#endif // H261MANAGER_H

@@ -83,7 +83,7 @@
               <enum>QTabWidget::South</enum>
              </property>
              <property name="currentIndex">
-              <number>0</number>
+              <number>5</number>
              </property>
              <widget class="QWidget" name="MJPEG">
               <attribute name="title">
@@ -91,7 +91,7 @@
               </attribute>
               <layout class="QVBoxLayout" name="verticalLayout_7">
                <item>
-                <widget class="QWidget" name="mjpegtab" native="true"/>
+                <widget class="MJPEGManager" name="mjpegtab" native="true"/>
                </item>
               </layout>
              </widget>
@@ -101,25 +101,7 @@
               </attribute>
               <layout class="QHBoxLayout" name="horizontalLayout_2">
                <item>
-                <widget class="QWidget" name="h261tab" native="true">
-                 <widget class="QTextEdit" name="textEdit">
-                  <property name="geometry">
-                   <rect>
-                    <x>50</x>
-                    <y>10</y>
-                    <width>291</width>
-                    <height>111</height>
-                   </rect>
-                  </property>
-                  <property name="html">
-                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Cantarell'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.1pt;&quot;&gt;HELLO@@@@@&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                  </property>
-                 </widget>
-                </widget>
+                <widget class="H261Manager" name="h261tab" native="true"/>
                </item>
               </layout>
              </widget>
@@ -129,7 +111,7 @@ p, li { white-space: pre-wrap; }
               </attribute>
               <layout class="QHBoxLayout" name="horizontalLayout_3">
                <item>
-                <widget class="QWidget" name="mpeg1tab" native="true"/>
+                <widget class="MPEG1Manager" name="mpeg1tab" native="true"/>
                </item>
               </layout>
              </widget>
@@ -139,7 +121,7 @@ p, li { white-space: pre-wrap; }
               </attribute>
               <layout class="QHBoxLayout" name="horizontalLayout_4">
                <item>
-                <widget class="QWidget" name="mpeg2tab" native="true"/>
+                <widget class="MPEG2Manager" name="mpeg2tab" native="true"/>
                </item>
               </layout>
              </widget>
@@ -149,7 +131,7 @@ p, li { white-space: pre-wrap; }
               </attribute>
               <layout class="QHBoxLayout" name="horizontalLayout_5">
                <item>
-                <widget class="QWidget" name="h264tab" native="true"/>
+                <widget class="H264Manager" name="h264tab" native="true"/>
                </item>
               </layout>
              </widget>
@@ -159,7 +141,7 @@ p, li { white-space: pre-wrap; }
               </attribute>
               <layout class="QHBoxLayout" name="horizontalLayout_6">
                <item>
-                <widget class="QWidget" name="h265tab" native="true"/>
+                <widget class="H265Manager" name="h265tab" native="true"/>
                </item>
               </layout>
              </widget>
@@ -180,7 +162,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>1165</width>
-     <height>25</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -214,6 +196,42 @@ p, li { white-space: pre-wrap; }
     <signal>fullscreen()</signal>
     <slot>toggleFullscreen()</slot>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>MPEG1Manager</class>
+   <extends>QWidget</extends>
+   <header>mpeg1manager.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MJPEGManager</class>
+   <extends>QWidget</extends>
+   <header>mjpegmanager.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MPEG2Manager</class>
+   <extends>QWidget</extends>
+   <header>mpeg2manager.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>H261Manager</class>
+   <extends>QWidget</extends>
+   <header>h261manager.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>H264Manager</class>
+   <extends>QWidget</extends>
+   <header>h264manager.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>H265Manager</class>
+   <extends>QWidget</extends>
+   <header>h265manager.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

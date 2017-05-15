@@ -1,16 +1,22 @@
-#ifndef CODEC_H
-#define CODEC_H
+#ifndef CODECMANAGER_H
+#define CODECMANAGER_H
 
-#include <QProcess>
+#include <QWidget>
 
-class CodecManager {
+class CodecManager : public QWidget {
+    Q_OBJECT
+
   protected:
     QString streamingParameters;
 
   public:
-    CodecManager();
+    explicit CodecManager(QWidget *parent = 0);
 
     QString getStreamingParameters();
+
+  signals:
+
+  public slots:
 };
 
-#endif // CODEC_H
+#endif // CODECMANAGER_H

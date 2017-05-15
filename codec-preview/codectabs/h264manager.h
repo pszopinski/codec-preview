@@ -1,11 +1,23 @@
-#ifndef H264_H
-#define H264_H
+#ifndef H264MANAGER_H
+#define H264MANAGER_H
+
+#include <QWidget>
 
 #include "codecmanager.h"
 
+namespace Ui {
+class H264Manager;
+}
+
 class H264Manager : public CodecManager {
+    Q_OBJECT
+
   public:
-    H264Manager();
+    explicit H264Manager(QWidget *parent = 0);
+    ~H264Manager();
+
+  private:
+    Ui::H264Manager *ui;
 };
 
-#endif // H264_H
+#endif // H264MANAGER_H

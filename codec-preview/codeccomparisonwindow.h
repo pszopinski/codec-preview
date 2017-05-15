@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QMainWindow>
+#include <QProcess>
 #include <QQueue>
 #include <QVector>
 
