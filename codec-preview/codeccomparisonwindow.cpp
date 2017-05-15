@@ -167,6 +167,9 @@ void CodecComparisonWindow::broadcast() {
     streamingProcess.kill();
     probeProcess.kill();
 
+    streamingProcess.waitForFinished();
+    probeProcess.waitForFinished();
+
     qDebug() << "Starting the encoding process...";
     QString streamingCommand = buildStreamingCommand(
         inputParameters, inputLocation,

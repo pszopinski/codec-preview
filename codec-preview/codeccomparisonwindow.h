@@ -48,7 +48,6 @@ class CodecComparisonWindow : public QMainWindow {
     QString inputParameters;
     QString inputLocation;
 
-    // CodecManager **codecs;
     QVector<CodecManager *> codecManagers;
 
     static QString buildStreamingCommand(QString inputParameters,
