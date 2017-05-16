@@ -13,14 +13,17 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QDial" name="dial">
+  <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>70</x>
-     <y>20</y>
-     <width>141</width>
-     <height>101</height>
+     <x>10</x>
+     <y>10</y>
+     <width>381</width>
+     <height>141</height>
     </rect>
+   </property>
+   <property name="text">
+    <string>Insert encoder controls here</string>
    </property>
   </widget>
  </widget>

@@ -10,7 +10,7 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent)
     connectSlots();
 
     // prints probe output to standard output
-    // framesProbe.setProcessChannelMode(QProcess::ForwardedChannels);
+    //probeProcess.setProcessChannelMode(QProcess::ForwardedChannels);
 
     ui->frameTypes->setReadOnly(true);
     ui->tabWidget->setCurrentIndex(0);
@@ -71,7 +71,7 @@ QString CodecComparisonWindow::buildProbeCommand(QString location) {
     QStringList list;
     list << FFPROBE;
     list << location;
-    list << "-show-frames";
+    list << "-show_frames";
 
     QString command = list.join(" ");
     qDebug() << "Produced the following probe command:\n"
@@ -95,6 +95,9 @@ void CodecComparisonWindow::broadcast() {
         qDebug() << "Encoding parameters are missing! Not starting player.";
         return;
     }
+
+    typesOfFrames.clear();
+    ui->frameTypes->setText("");
 
     qDebug() << "Stopping the players...";
     vlcPlayerRaw->stop();

@@ -13,17 +13,17 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QCheckBox" name="checkBox">
+  <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>20</y>
-     <width>221</width>
-     <height>101</height>
+     <x>10</x>
+     <y>10</y>
+     <width>381</width>
+     <height>141</height>
     </rect>
    </property>
    <property name="text">
-    <string>CheckBox</string>
+    <string>Insert encoder controls here</string>
    </property>
   </widget>
  </widget>

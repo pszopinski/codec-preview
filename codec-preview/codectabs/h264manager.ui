@@ -13,17 +13,17 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QScrollBar" name="verticalScrollBar">
+  <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>20</y>
-     <width>191</width>
-     <height>201</height>
+     <x>10</x>
+     <y>10</y>
+     <width>381</width>
+     <height>141</height>
     </rect>
    </property>
-   <property name="orientation">
-    <enum>Qt::Vertical</enum>
+   <property name="text">
+    <string>Insert encoder controls here</string>
    </property>
   </widget>
  </widget>

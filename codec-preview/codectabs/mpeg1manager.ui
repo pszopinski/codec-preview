@@ -17,13 +17,13 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>0</y>
-     <width>171</width>
+     <y>10</y>
+     <width>381</width>
      <height>141</height>
     </rect>
    </property>
    <property name="text">
-    <string>xD</string>
+    <string>Insert encoder controls here</string>
    </property>
   </widget>
  </widget>
