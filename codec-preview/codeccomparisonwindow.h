@@ -10,11 +10,11 @@
 
 #include <VLCQtCore/Audio.h>
 #include <VLCQtCore/Common.h>
+#include <VLCQtCore/Enums.h>
 #include <VLCQtCore/Instance.h>
 #include <VLCQtCore/Media.h>
 #include <VLCQtCore/MediaPlayer.h>
 #include <VLCQtCore/Stats.h>
-#include <VLCQtCore/Enums.h>
 
 #include "codectabs/h261manager.h"
 #include "codectabs/h264manager.h"

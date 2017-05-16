@@ -13,7 +13,7 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent)
     // framesProbe.setProcessChannelMode(QProcess::ForwardedChannels);
 
     ui->frameTypes->setReadOnly(true);
-    ui->tabWidget->setCurrentIndex(1);
+    ui->tabWidget->setCurrentIndex(0);
 }
 
 CodecComparisonWindow::~CodecComparisonWindow() { delete ui; }
@@ -62,7 +62,8 @@ QString CodecComparisonWindow::buildStreamingCommand(
     }
 
     QString command = list.join(" ");
-    qDebug() << "Produced the following encoding command:\n" << command.toUtf8().constData();
+    qDebug() << "Produced the following encoding command:\n"
+             << command.toUtf8().constData();
     return command;
 }
 
@@ -73,7 +74,8 @@ QString CodecComparisonWindow::buildProbeCommand(QString location) {
     list << "-show-frames";
 
     QString command = list.join(" ");
-    qDebug() << "Produced the following probe command:\n" << command.toUtf8().constData();
+    qDebug() << "Produced the following probe command:\n"
+             << command.toUtf8().constData();
     return command;
 }
 
@@ -129,7 +131,8 @@ void CodecComparisonWindow::broadcast() {
 
 void CodecComparisonWindow::on_actionOpenFile_triggered() {
     QString filePath = QFileDialog::getOpenFileName(
-        this, tr("Open file"), QDir::homePath(), tr("Multimedia files (*)"), Q_NULLPTR, QFileDialog::DontUseNativeDialog);
+        this, tr("Open file"), QDir::homePath(), tr("Multimedia files (*)"),
+        Q_NULLPTR, QFileDialog::DontUseNativeDialog);
     if (!filePath.isEmpty()) {
         inputParameters = "-re";
         inputLocation = "\"" + filePath + "\"";
@@ -160,7 +163,7 @@ void CodecComparisonWindow::initCodecs() {
 
 void CodecComparisonWindow::initVlc() {
     vlcInstance = new VlcInstance(VlcCommon::args(), NULL);
-    //vlcInstance->setLogLevel(Vlc::DisabledLevel);
+    // vlcInstance->setLogLevel(Vlc::DisabledLevel);
 
     // Initialise raw video display
     vlcPlayerRaw = new VlcMediaPlayer(vlcInstance);

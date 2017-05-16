@@ -8,6 +8,7 @@ class CodecManager : public QWidget {
 
   protected:
     QString encoderParameter;
+    QString pixelFormatParameter;
     QString crfParameter;
     QString filterParameter;
     QString presetParameter;

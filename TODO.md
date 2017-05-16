@@ -1,7 +1,8 @@
 Codec Preview's Todo List:
 
-* [ ] add getCodec(), getFormat(), getCodecParameters() methods
-* [ ] split codeccomparisonwindow into multiple classes, make it less of a god class
+
+* [ ] make separate class for probe logic
+* [ ] fix probe command (doesnt seem to work anymore)
 * [x] add mjpeg command (currently it is a h265 command, lol)
 * [x] make local video files streamed to the network and read from there
 * [x] finish broadcast method and make it universal for streaming from ffmpeg command
