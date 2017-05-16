@@ -14,6 +14,7 @@
 #include <VLCQtCore/Media.h>
 #include <VLCQtCore/MediaPlayer.h>
 #include <VLCQtCore/Stats.h>
+#include <VLCQtCore/Enums.h>
 
 #include "codectabs/h261manager.h"
 #include "codectabs/h264manager.h"
@@ -61,6 +62,8 @@ class CodecComparisonWindow : public QMainWindow {
     ~CodecComparisonWindow();
     void closeEvent(QCloseEvent *event);
     void initCodecs();
+    void initVlc();
+    void connectSlots();
 
   private slots:
     void readOutput();

@@ -3,7 +3,7 @@
 
 MPEG2Manager::MPEG2Manager(QWidget *parent)
     : CodecManager(parent), ui(new Ui::MPEG2Manager) {
-    streamingParameters = "-c:v mpeg2video -preset ultrafast -f matroska";
+    encoderParameter = "mpeg2video";
     ui->setupUi(this);
 }
 

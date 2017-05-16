@@ -7,7 +7,11 @@ class CodecManager : public QWidget {
     Q_OBJECT
 
   protected:
-    QString streamingParameters;
+    QString encoderParameter;
+    QString crfParameter;
+    QString filterParameter;
+    QString presetParameter;
+    QString formatParameter;
 
   public:
     explicit CodecManager(QWidget *parent = 0);

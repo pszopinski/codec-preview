@@ -13,8 +13,6 @@ const QString ENCODED_VIDEO_HOST = "localhost";
 const QString ENCODED_VIDEO_PORT = "41296";
 
 const QString VIDEO_PROBE_HOST = "localhost";
-const QString VIDEO_PROBE_PORT = "41299";
-
-const int NUMBER_OF_CODECS = 6;
+const QString VIDEO_PROBE_PORT = "41324";
 
 #endif // CONSTANTS_H

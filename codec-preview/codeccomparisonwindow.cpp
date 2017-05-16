@@ -6,90 +6,25 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent)
     ui->setupUi(this);
 
     initCodecs();
-
-    connect(&probeProcess, &QProcess::readyRead, this,
-            &CodecComparisonWindow::readOutput);
-
-    vlcInstance = new VlcInstance(VlcCommon::args(), NULL);
-
-    // Initialise raw video display
-    vlcPlayerRaw = new VlcMediaPlayer(vlcInstance);
-    vlcPlayerRaw->setVideoWidget(ui->rawVideo);
-    vlcPlayerRaw->audio()->setMute(true);
-    ui->rawVideo->setMediaPlayer(vlcPlayerRaw);
-    vlcMediaRaw = new VlcMedia(RAW_VIDEO_PROTOCOL + "://@" + RAW_VIDEO_HOST +
-                                   ":" + RAW_VIDEO_PORT,
-                               false, vlcInstance);
-    vlcPlayerRaw->openOnly(vlcMediaRaw);
-
-    // Initialise encoded video display
-    vlcPlayerEncoded = new VlcMediaPlayer(vlcInstance);
-    vlcPlayerEncoded->setVideoWidget(ui->encodedVideo);
-    vlcPlayerEncoded->audio()->setMute(true);
-    ui->encodedVideo->setMediaPlayer(vlcPlayerEncoded);
-    vlcMediaEncoded =
-        new VlcMedia(ENCODED_VIDEO_PROTOCOL + "://@" + ENCODED_VIDEO_HOST +
-                         ":" + ENCODED_VIDEO_PORT,
-                     false, vlcInstance);
-    vlcPlayerEncoded->openOnly(vlcMediaEncoded);
-
-    connect(this, &CodecComparisonWindow::settingsChanged, this,
-            &CodecComparisonWindow::broadcast);
-    connect(ui->tabWidget, &QTabWidget::currentChanged, this,
-            &CodecComparisonWindow::broadcast);
-
-    // Provide debug info for raw player
-    connect(vlcPlayerRaw, &VlcMediaPlayer::stopped,
-            []() { qDebug() << "\tvlcPlayerRaw stopped"; });
-    connect(vlcPlayerRaw, &VlcMediaPlayer::playing,
-            []() { qDebug() << "\tvlcPlayerRaw playing"; });
-    connect(vlcPlayerRaw, &VlcMediaPlayer::paused,
-            []() { qDebug() << "\tvlcPlayerRaw paused"; });
-    connect(vlcPlayerRaw, &VlcMediaPlayer::end,
-            []() { qDebug() << "\tvlcPlayerRaw end"; });
-    connect(vlcPlayerRaw, &VlcMediaPlayer::error,
-            []() { qDebug() << "\tvlcPlayerRaw error"; });
-    connect(vlcPlayerRaw, &VlcMediaPlayer::opening,
-            []() { qDebug() << "\tvlcPlayerRaw opening"; });
+    initVlc();
+    connectSlots();
 
     // prints probe output to standard output
     // framesProbe.setProcessChannelMode(QProcess::ForwardedChannels);
 
     ui->frameTypes->setReadOnly(true);
+    ui->tabWidget->setCurrentIndex(1);
 }
 
-CodecComparisonWindow::~CodecComparisonWindow() {
-    delete ui;
-
-    // TODO: manage memory clearup, simply deleting causes tons of errors
-
-    /*
-    delete vlcPlayer;
-    delete vlcMedia;
-    delete vlcInstance;
-
-    delete vlcPlayerEncoded;
-    delete vlcMediaEncoded;
-    delete vlcInstanceEncoded;
-    */
-
-    // for(int i=0;i<CODECS_NUMBER;i++) delete codecs[i];
-    // delete[] codecs;
-}
+CodecComparisonWindow::~CodecComparisonWindow() { delete ui; }
 
 void CodecComparisonWindow::closeEvent(QCloseEvent *event) {
     (void)event; // silence annoying warning
     streamingProcess.kill();
     probeProcess.kill();
-}
 
-void CodecComparisonWindow::initCodecs() {
-    codecManagers.push_back(new MJPEGManager());
-    codecManagers.push_back(new H261Manager());
-    codecManagers.push_back(new MPEG1Manager());
-    codecManagers.push_back(new MPEG2Manager());
-    codecManagers.push_back(new H264Manager());
-    codecManagers.push_back(new H265Manager());
+    streamingProcess.waitForFinished();
+    probeProcess.waitForFinished();
 }
 
 void CodecComparisonWindow::readOutput() {
@@ -127,7 +62,7 @@ QString CodecComparisonWindow::buildStreamingCommand(
     }
 
     QString command = list.join(" ");
-    qDebug() << "Produced the following encoding command: " << command;
+    qDebug() << "Produced the following encoding command:\n" << command.toUtf8().constData();
     return command;
 }
 
@@ -138,24 +73,24 @@ QString CodecComparisonWindow::buildProbeCommand(QString location) {
     list << "-show-frames";
 
     QString command = list.join(" ");
-    qDebug() << "Produced the following probe command: " << command;
+    qDebug() << "Produced the following probe command:\n" << command.toUtf8().constData();
     return command;
 }
 
 void CodecComparisonWindow::broadcast() {
     if (inputLocation.isEmpty()) {
-        qDebug() << "Input location is missing!";
+        qDebug() << "Input location is missing! Not starting player.";
         return;
     }
     if (inputParameters.isEmpty()) {
-        qDebug() << "Input parameters are missing!";
+        qDebug() << "Input parameters are missing! Not starting player.";
         return;
     }
     QString streamingParameters =
         codecManagers.at(ui->tabWidget->currentIndex())
             ->getStreamingParameters();
     if (streamingParameters.isEmpty()) {
-        qDebug() << "Encoding parameters are missing!";
+        qDebug() << "Encoding parameters are missing! Not starting player.";
         return;
     }
 
@@ -194,7 +129,7 @@ void CodecComparisonWindow::broadcast() {
 
 void CodecComparisonWindow::on_actionOpenFile_triggered() {
     QString filePath = QFileDialog::getOpenFileName(
-        this, tr("Open file"), QDir::homePath(), tr("Multimedia files (*)"));
+        this, tr("Open file"), QDir::homePath(), tr("Multimedia files (*)"), Q_NULLPTR, QFileDialog::DontUseNativeDialog);
     if (!filePath.isEmpty()) {
         inputParameters = "-re";
         inputLocation = "\"" + filePath + "\"";
@@ -212,4 +147,78 @@ void CodecComparisonWindow::on_actionOpenCamera_triggered() {
     inputLocation = "/dev/video0";
     settingsChanged();
 #endif
+}
+
+void CodecComparisonWindow::initCodecs() {
+    codecManagers.push_back(new MJPEGManager());
+    codecManagers.push_back(new H261Manager());
+    codecManagers.push_back(new MPEG1Manager());
+    codecManagers.push_back(new MPEG2Manager());
+    codecManagers.push_back(new H264Manager());
+    codecManagers.push_back(new H265Manager());
+}
+
+void CodecComparisonWindow::initVlc() {
+    vlcInstance = new VlcInstance(VlcCommon::args(), NULL);
+    //vlcInstance->setLogLevel(Vlc::DisabledLevel);
+
+    // Initialise raw video display
+    vlcPlayerRaw = new VlcMediaPlayer(vlcInstance);
+    vlcPlayerRaw->setVideoWidget(ui->rawVideo);
+    vlcPlayerRaw->audio()->setMute(true);
+    ui->rawVideo->setMediaPlayer(vlcPlayerRaw);
+    vlcMediaRaw = new VlcMedia(RAW_VIDEO_PROTOCOL + "://@" + RAW_VIDEO_HOST +
+                                   ":" + RAW_VIDEO_PORT,
+                               false, vlcInstance);
+    vlcPlayerRaw->openOnly(vlcMediaRaw);
+
+    // Initialise encoded video display
+    vlcPlayerEncoded = new VlcMediaPlayer(vlcInstance);
+    vlcPlayerEncoded->setVideoWidget(ui->encodedVideo);
+    vlcPlayerEncoded->audio()->setMute(true);
+    ui->encodedVideo->setMediaPlayer(vlcPlayerEncoded);
+    vlcMediaEncoded =
+        new VlcMedia(ENCODED_VIDEO_PROTOCOL + "://@" + ENCODED_VIDEO_HOST +
+                         ":" + ENCODED_VIDEO_PORT,
+                     false, vlcInstance);
+    vlcPlayerEncoded->openOnly(vlcMediaEncoded);
+}
+
+void CodecComparisonWindow::connectSlots() {
+
+    connect(this, &CodecComparisonWindow::settingsChanged, this,
+            &CodecComparisonWindow::broadcast);
+    connect(ui->tabWidget, &QTabWidget::currentChanged, this,
+            &CodecComparisonWindow::broadcast);
+
+    // Provide debug info for raw player
+    connect(vlcPlayerRaw, &VlcMediaPlayer::stopped,
+            []() { qDebug() << "vlcPlayerRaw stopped"; });
+    connect(vlcPlayerRaw, &VlcMediaPlayer::playing,
+            []() { qDebug() << "vlcPlayerRaw playing"; });
+    connect(vlcPlayerRaw, &VlcMediaPlayer::paused,
+            []() { qDebug() << "vlcPlayerRaw paused"; });
+    connect(vlcPlayerRaw, &VlcMediaPlayer::end,
+            []() { qDebug() << "vlcPlayerRaw end"; });
+    connect(vlcPlayerRaw, &VlcMediaPlayer::error,
+            []() { qDebug() << "vlcPlayerRaw error"; });
+    connect(vlcPlayerRaw, &VlcMediaPlayer::opening,
+            []() { qDebug() << "vlcPlayerRaw opening"; });
+
+    // Provide debug info for encoded player
+    connect(vlcPlayerEncoded, &VlcMediaPlayer::stopped,
+            []() { qDebug() << "vlcPlayerEncoded stopped"; });
+    connect(vlcPlayerEncoded, &VlcMediaPlayer::playing,
+            []() { qDebug() << "vlcPlayerEncoded playing"; });
+    connect(vlcPlayerEncoded, &VlcMediaPlayer::paused,
+            []() { qDebug() << "vlcPlayerEncoded paused"; });
+    connect(vlcPlayerEncoded, &VlcMediaPlayer::end,
+            []() { qDebug() << "vlcPlayerEncoded end"; });
+    connect(vlcPlayerEncoded, &VlcMediaPlayer::error,
+            []() { qDebug() << "vlcPlayerEncoded error"; });
+    connect(vlcPlayerEncoded, &VlcMediaPlayer::opening,
+            []() { qDebug() << "vlcPlayerEncoded opening"; });
+
+    connect(&probeProcess, &QProcess::readyRead, this,
+            &CodecComparisonWindow::readOutput);
 }

@@ -3,7 +3,7 @@
 
 MJPEGManager::MJPEGManager(QWidget *parent)
     : CodecManager(parent), ui(new Ui::MJPEGManager) {
-    streamingParameters = "-c:v mjpeg -preset ultrafast -f matroska";
+    encoderParameter = "mjpeg";
     ui->setupUi(this);
 }
 
