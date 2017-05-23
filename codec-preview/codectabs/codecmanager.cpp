@@ -4,7 +4,7 @@ CodecManager::CodecManager(QWidget *parent) : QWidget(parent) {
     crfParameter = "38";
     pixelFormatParameter = "yuv420p";
     filterParameter = "";
-    presetParameter = "ultrafast";
+    presetParameter = "";
     formatParameter = "matroska";
 }
 
