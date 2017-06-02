@@ -113,16 +113,16 @@ void CodecComparisonWindow::broadcast() {
     qDebug() << "Starting the encoding process...";
     QString streamingCommand = buildStreamingCommand(
         inputParameters, inputLocation,
-        {"-r 25 -c:v copy -f nut", streamingParameters},
+        {"-c:v copy -f nut -an", streamingParameters},
         {RAW_VIDEO_PROTOCOL + "://" + RAW_VIDEO_HOST + ":" + RAW_VIDEO_PORT,
          ENCODED_VIDEO_PROTOCOL + "://" + ENCODED_VIDEO_HOST + ":" +
-             ENCODED_VIDEO_PORT});
+             ENCODED_VIDEO_PORT, VIDEO_PROBE_PROTOCOL + "://" + VIDEO_PROBE_HOST + ":" + VIDEO_PROBE_PORT});
     streamingProcess.start(streamingCommand);
 
     qDebug() << "Starting the probe process...";
     QString probeCommand =
-        buildProbeCommand(ENCODED_VIDEO_PROTOCOL + "://" + ENCODED_VIDEO_HOST +
-                          ":" + ENCODED_VIDEO_PORT);
+        buildProbeCommand(VIDEO_PROBE_PROTOCOL + "://" + VIDEO_PROBE_HOST +
+                          ":" + VIDEO_PROBE_PORT);
     probeProcess.start(probeCommand);
 
     qDebug() << "Starting the players...";
