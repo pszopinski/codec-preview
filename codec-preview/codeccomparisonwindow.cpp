@@ -46,8 +46,25 @@ void CodecComparisonWindow::readOutput() {
 
             ui->frameTypes->setText(currentFrameTypes);
         }
+
+        if(output.startsWith("width=")) {
+            ui->frameWidth->setText(output.mid(6,output.length()));
+        }
+        if(output.startsWith("height=")) {
+            ui->frameHeight->setText(output.mid(7,output.length()));
+        }
     }
+
+
 }
+
+/*void CodecComparisonWindow::readOutput2() {
+    while (streamingProcess.canReadLine()) {
+        qDebug() << "reading";
+        QString output = streamingProcess.readLine();
+        qDebug() << output;
+    }
+}*/
 
 QString CodecComparisonWindow::buildStreamingCommand(
     QString inputParameters, QString inputLocation,
@@ -227,4 +244,5 @@ void CodecComparisonWindow::connectSlots() {
 
     connect(&probeProcess, &QProcess::readyRead, this,
             &CodecComparisonWindow::readOutput);
+    //connect(&streamingProcess, &QProcess::readyRead, this, &CodecComparisonWindow::readOutput2);
 }

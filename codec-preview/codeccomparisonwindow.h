@@ -67,6 +67,7 @@ class CodecComparisonWindow : public QMainWindow {
 
   private slots:
     void readOutput();
+    //void readOutput2();
     void on_actionOpenFile_triggered();
     void on_actionOpenCamera_triggered();
     void broadcast();
