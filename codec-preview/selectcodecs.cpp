@@ -27,8 +27,7 @@ void SelectCodecs::on_MPEG1_clicked()
 
 void SelectCodecs::on_MPEG2_clicked()
 {
-    if(!bMpeg2 && count<2) bMpeg2 = !bMpeg2;
-    else c2.setCheckState(false);
+    bMpeg2 = !bMpeg2;
 }
 
 void SelectCodecs::on_MJPEG_clicked()

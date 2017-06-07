@@ -50,12 +50,12 @@ private:
     bool bH264 = false;
     bool bH265 = false;
 
-    QCheckBox c1;
-    QCheckBox c2;
-    QCheckBox c3;
-    QCheckBox c4;
-    QCheckBox c5;
-    QCheckBox c6;
+    QCheckBox* c1;
+    QCheckBox* c2;
+    QCheckBox* c3;
+    QCheckBox* c4;
+    QCheckBox* c5;
+    QCheckBox* c6;
 
     int count;
 
