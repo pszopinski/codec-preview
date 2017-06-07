@@ -7,6 +7,7 @@
 #include <QProcess>
 #include <QQueue>
 #include <QVector>
+#include <QPushButton>
 
 #include <VLCQtCore/Audio.h>
 #include <VLCQtCore/Common.h>
@@ -23,6 +24,7 @@
 #include "codectabs/mpeg1manager.h"
 #include "codectabs/mpeg2manager.h"
 
+
 #include "constants.h"
 
 namespace Ui {
@@ -31,10 +33,11 @@ class CodecComparisonWindow;
 
 class CodecComparisonWindow : public QMainWindow {
     Q_OBJECT
+public:
     QProcess streamingProcess;
     QProcess probeProcess;
 
-  private:
+  public:
     Ui::CodecComparisonWindow *ui;
     VlcInstance *vlcInstance;
 
@@ -48,9 +51,11 @@ class CodecComparisonWindow : public QMainWindow {
 
     QString inputParameters;
     QString inputLocation;
+    bool selectedCodecs[6];
+    //ShowCodecs ShowCodecs;
 
     QVector<CodecManager *> codecManagers;
-
+public:
     static QString buildStreamingCommand(QString inputParameters,
                                          QString inputLocation,
                                          QVector<QString> outputPrameters,
@@ -64,6 +69,8 @@ class CodecComparisonWindow : public QMainWindow {
     void initCodecs();
     void initVlc();
     void connectSlots();
+    void setSelectedCodecs(bool b[]);
+    QVector<CodecManager *> getCodecManagers();
 
   private slots:
     void readOutput();
@@ -72,7 +79,9 @@ class CodecComparisonWindow : public QMainWindow {
     void on_actionOpenCamera_triggered();
     void broadcast();
 
-  signals:
+    void on_compareCodecs_clicked();
+
+signals:
     void settingsChanged();
 };
 

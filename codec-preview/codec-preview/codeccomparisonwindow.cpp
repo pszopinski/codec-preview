@@ -1,5 +1,7 @@
 #include "codeccomparisonwindow.h"
 #include "ui_codeccomparisonwindow.h"
+#include "selectcodecs.h"
+#include "showcodecs.h"
 
 CodecComparisonWindow::CodecComparisonWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::CodecComparisonWindow) {
@@ -246,3 +248,41 @@ void CodecComparisonWindow::connectSlots() {
             &CodecComparisonWindow::readOutput);
     //connect(&streamingProcess, &QProcess::readyRead, this, &CodecComparisonWindow::readOutput2);
 }
+
+
+void CodecComparisonWindow::on_compareCodecs_clicked()
+{
+    qDebug() << "Clicked!\n";
+    SelectCodecs selectCodecs;
+    selectCodecs.setMainWindowHandler(this);
+    selectCodecs.setModal(true);
+    selectCodecs.exec();
+
+}
+
+void CodecComparisonWindow::setSelectedCodecs(bool b[])
+{
+    int first = -1;
+    int second = -1;
+    for(int i=0;i<6;i++)
+    {
+        selectedCodecs[i] = b[i];
+        if(b[i] && first==-1) first = i;
+        else if(second==-1) second = i;
+        qDebug() << b[i] << "\n";
+    }
+    ShowCodecs showCodecs;
+    showCodecs.setMainWindowHandler(this);
+    showCodecs.setCodecInd(first, second);
+    inputLocation = "C:/Users/Professional/Desktop/Pulpit-mniej-wazne/test.mp4";
+    showCodecs.setInputLocation(inputLocation);
+    showCodecs.broadcast();
+    showCodecs.show();
+}
+
+QVector<CodecManager *> CodecComparisonWindow::getCodecManagers()
+{
+    return codecManagers;
+}
+
+

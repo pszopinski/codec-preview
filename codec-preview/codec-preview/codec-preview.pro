@@ -15,7 +15,9 @@ SOURCES += main.cpp\
     codectabs/h265manager.cpp \
     codectabs/mjpegmanager.cpp \
     codectabs/mpeg1manager.cpp \
-    codectabs/mpeg2manager.cpp
+    codectabs/mpeg2manager.cpp \
+    selectcodecs.cpp \
+    showcodecs.cpp
 
 
 HEADERS  += constants.h \
@@ -26,7 +28,9 @@ HEADERS  += constants.h \
     codectabs/h265manager.h \
     codectabs/mjpegmanager.h \
     codectabs/mpeg1manager.h \
-    codectabs/mpeg2manager.h
+    codectabs/mpeg2manager.h \
+    selectcodecs.h \
+    showcodecs.h
 
 FORMS    += codeccomparisonwindow.ui \
     codectabs/mpeg1manager.ui \
@@ -34,10 +38,12 @@ FORMS    += codeccomparisonwindow.ui \
     codectabs/h265manager.ui \
     codectabs/h264manager.ui \
     codectabs/h261manager.ui \
-    codectabs/mjpegmanager.ui
+    codectabs/mjpegmanager.ui \
+    selectcodecs.ui \
+    showcodecs.ui
 	
 win32 {
-VLCQT_PATH = D:\programming-tools\vlc-qt
+VLCQT_PATH = C:\vlc-qt
 
 INCLUDEPATH += $$VLCQT_PATH\include
 
