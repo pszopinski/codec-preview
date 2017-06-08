@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>247</width>
-    <height>82</height>
+    <width>618</width>
+    <height>205</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>-110</x>
-     <y>50</y>
+     <x>260</x>
+     <y>170</y>
      <width>341</width>
      <height>32</height>
     </rect>
@@ -32,10 +32,10 @@
   <widget class="QCheckBox" name="MPEG1">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>80</x>
      <y>0</y>
-     <width>70</width>
-     <height>17</height>
+     <width>175</width>
+     <height>43</height>
     </rect>
    </property>
    <property name="text">
@@ -45,10 +45,10 @@
   <widget class="QCheckBox" name="MPEG2">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>20</y>
-     <width>70</width>
-     <height>17</height>
+     <x>80</x>
+     <y>50</y>
+     <width>175</width>
+     <height>43</height>
     </rect>
    </property>
    <property name="text">
@@ -58,8 +58,8 @@
   <widget class="QCheckBox" name="H261">
    <property name="geometry">
     <rect>
-     <x>90</x>
-     <y>20</y>
+     <x>260</x>
+     <y>60</y>
      <width>70</width>
      <height>17</height>
     </rect>
@@ -71,10 +71,10 @@
   <widget class="QCheckBox" name="MJPEG">
    <property name="geometry">
     <rect>
-     <x>90</x>
-     <y>0</y>
-     <width>70</width>
-     <height>17</height>
+     <x>440</x>
+     <y>50</y>
+     <width>175</width>
+     <height>43</height>
     </rect>
    </property>
    <property name="text">
@@ -84,10 +84,10 @@
   <widget class="QCheckBox" name="H265">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>20</y>
-     <width>70</width>
-     <height>17</height>
+     <x>440</x>
+     <y>0</y>
+     <width>175</width>
+     <height>43</height>
     </rect>
    </property>
    <property name="text">
@@ -97,10 +97,10 @@
   <widget class="QCheckBox" name="H264">
    <property name="geometry">
     <rect>
-     <x>160</x>
+     <x>260</x>
      <y>0</y>
-     <width>70</width>
-     <height>17</height>
+     <width>175</width>
+     <height>43</height>
     </rect>
    </property>
    <property name="text">
