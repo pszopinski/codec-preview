@@ -54,18 +54,18 @@ void ShowCodecs::broadcast(QString streamingCommand1, QProcess* streamingProcess
    // qDebug() << "player1 "<<vlcPlayerEncoded1;
     vlcPlayerEncoded1->stop();
     vlcPlayerEncoded2->stop();
-    vlcPlayerEncoded->stop();
+    //vlcPlayerEncoded->stop();
 
     qDebug() << "Killing current encoding and probe processes...";
     streamingProcess1.kill();
-    streamingProcess->kill();
-    probeProcess->kill();
+    //streamingProcess->kill();
+    //probeProcess->kill();
     //streamingProcess2.kill();
     //probeProcess.kill();
 
     streamingProcess1.waitForFinished();
-    streamingProcess->waitForFinished();
-    probeProcess->waitForFinished();
+    //streamingProcess->waitForFinished();
+    //probeProcess->waitForFinished();
 
     qDebug() << "Starting the encoding process...";
 

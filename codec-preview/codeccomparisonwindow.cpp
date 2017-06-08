@@ -279,7 +279,6 @@ void CodecComparisonWindow::setSelectedCodecs(bool b[])
         return;
     }
 
-    inputLocation = "C:/Users/Professional/Desktop/Pulpit-mniej-wazne/test.mp4";
     showCodecs.setInputLocation(inputLocation);
     QString streamingCommand1 = buildStreamingCommand(
         "",inputLocation,
