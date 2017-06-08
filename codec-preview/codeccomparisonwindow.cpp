@@ -1,5 +1,6 @@
 #include "codeccomparisonwindow.h"
 #include "ui_codeccomparisonwindow.h"
+#include "selectcodecs.h"
 
 CodecComparisonWindow::CodecComparisonWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::CodecComparisonWindow) {
@@ -246,3 +247,55 @@ void CodecComparisonWindow::connectSlots() {
             &CodecComparisonWindow::readOutput);
     //connect(&streamingProcess, &QProcess::readyRead, this, &CodecComparisonWindow::readOutput2);
 }
+
+
+void CodecComparisonWindow::on_compareCodecs_clicked()
+{
+    qDebug() << "Clicked!\n";
+    SelectCodecs selectCodecs;
+    selectCodecs.setMainWindowHandler(this);
+    selectCodecs.setModal(true);
+    selectCodecs.exec();
+
+}
+
+void CodecComparisonWindow::setSelectedCodecs(bool b[])
+{
+    int first = -1;
+    int second = -1;
+    for(int i=0;i<6;i++)
+    {
+        selectedCodecs[i] = b[i];
+        if(b[i] && first==-1) first = i;
+        else if(second==-1) second = i;
+        qDebug() << b[i] << "\n";
+    }
+    qDebug() << first << "\n";
+    QString streamingParameters1 =
+        codecManagers.at(first)
+            ->getStreamingParameters();
+    if (streamingParameters1.isEmpty()) {
+        qDebug() << "Encoding parameters are missing! Not starting player.";
+        return;
+    }
+
+    inputLocation = "C:/Users/Professional/Desktop/Pulpit-mniej-wazne/test.mp4";
+    showCodecs.setInputLocation(inputLocation);
+    QString streamingCommand1 = buildStreamingCommand(
+        "",inputLocation,
+        {"-c:v copy -f nut -an", streamingParameters1, streamingParameters1},
+        {ENCODED_VIDEO_PROTOCOL1 + "://" + ENCODED_VIDEO_HOST1 + ":" + ENCODED_VIDEO_PORT1,
+         ENCODED_VIDEO_PROTOCOL2 + "://" + ENCODED_VIDEO_HOST2 + ":" + ENCODED_VIDEO_PORT2,
+         VIDEO_PROBE_PROTOCOL1 + "://" + VIDEO_PROBE_HOST1 + ":" + VIDEO_PROBE_PORT1});
+    showCodecs.show();
+    QProcess* sP = &streamingProcess;
+    QProcess* pP = &probeProcess;
+    showCodecs.broadcast(streamingCommand1, sP, pP, vlcPlayerEncoded);
+}
+
+QVector<CodecManager *> CodecComparisonWindow::getCodecManagers()
+{
+    return codecManagers;
+}
+
+
