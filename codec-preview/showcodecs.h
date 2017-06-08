@@ -32,7 +32,7 @@ public:
     void initVlc();
     void setInputLocation(QString location);
     void setCodecInd(int first, int second);
-    void broadcast(QString streamingCommand, QProcess* streamingProcess, QProcess* probeProcess, VlcMediaPlayer *vlcPlayerEncoded);
+    void broadcast(QString streamingCommand1, QString streamingCommand2, QProcess* streamingProcess, QProcess* probeProcess, VlcMediaPlayer *vlcPlayerEncoded);
 
 
 private:

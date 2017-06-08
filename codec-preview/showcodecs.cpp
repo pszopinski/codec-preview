@@ -43,7 +43,7 @@ void ShowCodecs::initVlc()
     vlcPlayerEncoded2->openOnly(vlcMediaEncoded2);
 }
 
-void ShowCodecs::broadcast(QString streamingCommand1, QProcess* streamingProcess, QProcess* probeProcess, VlcMediaPlayer* vlcPlayerEncoded)
+void ShowCodecs::broadcast(QString streamingCommand1, QString streamingCommand2, QProcess* streamingProcess, QProcess* probeProcess, VlcMediaPlayer* vlcPlayerEncoded)
 {
     if (inputLocation.isEmpty())
     {
@@ -60,16 +60,18 @@ void ShowCodecs::broadcast(QString streamingCommand1, QProcess* streamingProcess
     streamingProcess1.kill();
     //streamingProcess->kill();
     //probeProcess->kill();
-    //streamingProcess2.kill();
+    streamingProcess2.kill();
     //probeProcess.kill();
 
     streamingProcess1.waitForFinished();
+    streamingProcess2.waitForFinished();
     //streamingProcess->waitForFinished();
     //probeProcess->waitForFinished();
 
     qDebug() << "Starting the encoding process...";
 
     streamingProcess1.start(streamingCommand1);
+    streamingProcess2.start(streamingCommand2);
 
 
     qDebug() << "Starting the players...";

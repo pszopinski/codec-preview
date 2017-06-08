@@ -278,18 +278,27 @@ void CodecComparisonWindow::setSelectedCodecs(bool b[])
         qDebug() << "Encoding parameters are missing! Not starting player.";
         return;
     }
+    QString streamingParameters2 =
+        codecManagers.at(second)
+            ->getStreamingParameters();
+    if (streamingParameters2.isEmpty()) {
+        qDebug() << "Encoding parameters are missing! Not starting player.";
+        return;
+    }
 
     showCodecs.setInputLocation(inputLocation);
     QString streamingCommand1 = buildStreamingCommand(
-        "",inputLocation,
+        inputParameters,inputLocation,
         {"-c:v copy -f nut -an", streamingParameters1, streamingParameters1},
-        {ENCODED_VIDEO_PROTOCOL1 + "://" + ENCODED_VIDEO_HOST1 + ":" + ENCODED_VIDEO_PORT1,
-         ENCODED_VIDEO_PROTOCOL2 + "://" + ENCODED_VIDEO_HOST2 + ":" + ENCODED_VIDEO_PORT2,
-         VIDEO_PROBE_PROTOCOL1 + "://" + VIDEO_PROBE_HOST1 + ":" + VIDEO_PROBE_PORT1});
+        {ENCODED_VIDEO_PROTOCOL1 + "://" + ENCODED_VIDEO_HOST1 + ":" + ENCODED_VIDEO_PORT1});
+    QString streamingCommand2 = buildStreamingCommand(
+        inputParameters,inputLocation,
+        {"-c:v copy -f nut -an", streamingParameters2, streamingParameters2},
+        {ENCODED_VIDEO_PROTOCOL2 + "://" + ENCODED_VIDEO_HOST2 + ":" + ENCODED_VIDEO_PORT2});
     showCodecs.show();
     QProcess* sP = &streamingProcess;
     QProcess* pP = &probeProcess;
-    showCodecs.broadcast(streamingCommand1, sP, pP, vlcPlayerEncoded);
+    showCodecs.broadcast(streamingCommand1, streamingCommand2, sP, pP, vlcPlayerEncoded);
 }
 
 QVector<CodecManager *> CodecComparisonWindow::getCodecManagers()
