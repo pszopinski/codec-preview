@@ -24,21 +24,15 @@ class ShowCodecs : public QWidget {
   public:
     explicit ShowCodecs(QWidget *parent = 0);
     ~ShowCodecs();
-    void setInputLocation(QString location);
-    void broadcast(QString streamingCommand1, QString streamingCommand2);
+    void broadcast(QString streamingCommand1, QString streamingCommand2,
+                   QString streamingCommand3, QString streamingCommand4);
 
   private:
     Ui::ShowCodecs *ui;
-    VlcMedia *vlcMediaEncoded1;
-    VlcMediaPlayer *vlcPlayerEncoded1;
-    VlcMedia *vlcMediaEncoded2;
-    VlcMediaPlayer *vlcPlayerEncoded2;
     VlcInstance *vlcInstance;
-    QString inputLocation;
-    int firstCodecIndex;
-    int secondCodecIndex;
-    QProcess streamingProcess1;
-    QProcess streamingProcess2;
+    VlcMedia *vlcMedia[4];
+    VlcMediaPlayer *vlcMediaPlayers[4];
+    QProcess streamingProcesses[4];
 };
 
 #endif // SHOWCODECS_H

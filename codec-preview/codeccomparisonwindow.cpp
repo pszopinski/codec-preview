@@ -257,41 +257,46 @@ void CodecComparisonWindow::on_compareCodecs_clicked() {
     selectCodecs.exec();
 }
 
-void CodecComparisonWindow::setSelectedCodecs(bool b[]) {
-    int first = -1;
-    int second = -1;
-    for (int i = 0; i < 6; i++) {
-        selectedCodecs[i] = b[i];
-        if (b[i] && first == -1)
-            first = i;
-        else if (second == -1)
-            second = i;
-        qDebug() << b[i] << "\n";
-    }
-    qDebug() << first << "\n";
-    QString streamingParameters1 =
-        codecManagers.at(first)->getStreamingParameters();
-    if (streamingParameters1.isEmpty()) {
-        qDebug() << "Encoding parameters are missing! Not starting player.";
-        return;
-    }
+void CodecComparisonWindow::setSelectedCodecs(int first, int second,
+                                              int third) {
+    qDebug() << "Selected codecs: " << first << ", " << second << ", " << third;
+
+    QString streamingParameters1 = "-c:v copy -f nut -an";
     QString streamingParameters2 =
+        codecManagers.at(first)->getStreamingParameters();
+    QString streamingParameters3 =
         codecManagers.at(second)->getStreamingParameters();
-    if (streamingParameters2.isEmpty()) {
-        qDebug() << "Encoding parameters are missing! Not starting player.";
-        return;
-    }
+    QString streamingParameters4 =
+        codecManagers.at(third)->getStreamingParameters();
+
+    qDebug() << "Streaming parameters:";
+    qDebug() << streamingParameters1;
+    qDebug() << streamingParameters2;
+    qDebug() << streamingParameters3;
+    qDebug() << streamingParameters4;
 
     QString streamingCommand1 = buildStreamingCommand(
         inputParameters, inputLocation, {streamingParameters1},
-        {ENCODED_VIDEO_PROTOCOL1 + "://" + ENCODED_VIDEO_HOST1 + ":" +
-         ENCODED_VIDEO_PORT1});
+        {VIDEO_PROTOCOLS[0] + "://" + VIDEO_HOSTS[0] + ":" + VIDEO_PORTS[0]});
     QString streamingCommand2 = buildStreamingCommand(
         inputParameters, inputLocation, {streamingParameters2},
-        {ENCODED_VIDEO_PROTOCOL2 + "://" + ENCODED_VIDEO_HOST2 + ":" +
-         ENCODED_VIDEO_PORT2});
+        {VIDEO_PROTOCOLS[1] + "://" + VIDEO_HOSTS[1] + ":" + VIDEO_PORTS[1]});
+    QString streamingCommand3 = buildStreamingCommand(
+        inputParameters, inputLocation, {streamingParameters3},
+        {VIDEO_PROTOCOLS[2] + "://" + VIDEO_HOSTS[2] + ":" + VIDEO_PORTS[2]});
+    QString streamingCommand4 = buildStreamingCommand(
+        inputParameters, inputLocation, {streamingParameters4},
+        {VIDEO_PROTOCOLS[3] + "://" + VIDEO_HOSTS[3] + ":" + VIDEO_PORTS[3]});
+
+    qDebug() << "Streaming commands:";
+    qDebug() << streamingCommand1;
+    qDebug() << streamingCommand2;
+    qDebug() << streamingCommand3;
+    qDebug() << streamingCommand4;
+
     showCodecs.show();
-    showCodecs.broadcast(streamingCommand1, streamingCommand2);
+    showCodecs.broadcast(streamingCommand1, streamingCommand2,
+                         streamingCommand3, streamingCommand4);
 }
 
 QVector<CodecManager *> CodecComparisonWindow::getCodecManagers() {

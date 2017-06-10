@@ -6,59 +6,51 @@ ShowCodecs::ShowCodecs(QWidget *parent)
     ui->setupUi(this);
 
     vlcInstance = new VlcInstance(VlcCommon::args(), NULL);
-    // vlcInstance->setLogLevel(Vlc::DisabledLevel);
 
-    // Initialise raw video display
-    vlcPlayerEncoded1 = new VlcMediaPlayer(vlcInstance);
-    vlcPlayerEncoded1->setVideoWidget(ui->encodedVideo1);
-    vlcPlayerEncoded1->audio()->setMute(true);
-    ui->encodedVideo1->setMediaPlayer(vlcPlayerEncoded1);
-    vlcMediaEncoded1 =
-        new VlcMedia(ENCODED_VIDEO_PROTOCOL1 + "://@" + ENCODED_VIDEO_HOST1 +
-                         ":" + ENCODED_VIDEO_PORT1,
-                     false, vlcInstance);
-    vlcPlayerEncoded1->openOnly(vlcMediaEncoded1);
+    for (int i = 0; i < 4; i++) {
+        // Initialise media objects
+        vlcMedia[i] = new VlcMedia(VIDEO_PROTOCOLS[i] + "://@" +
+                                       VIDEO_HOSTS[i] + ":" + VIDEO_PORTS[i],
+                                   false, vlcInstance);
 
-    // Initialise encoded video display
-    vlcPlayerEncoded2 = new VlcMediaPlayer(vlcInstance);
-    vlcPlayerEncoded2->setVideoWidget(ui->encodedVideo2);
-    vlcPlayerEncoded2->audio()->setMute(true);
-    ui->encodedVideo2->setMediaPlayer(vlcPlayerEncoded2);
-    vlcMediaEncoded2 =
-        new VlcMedia(ENCODED_VIDEO_PROTOCOL2 + "://@" + ENCODED_VIDEO_HOST2 +
-                         ":" + ENCODED_VIDEO_PORT2,
-                     false, vlcInstance);
-    vlcPlayerEncoded2->openOnly(vlcMediaEncoded2);
+        // Initialise video displays
+        vlcMediaPlayers[i] = new VlcMediaPlayer(vlcInstance);
+        vlcMediaPlayers[i]->audio()->setMute(true);
+        vlcMediaPlayers[i]->openOnly(vlcMedia[i]);
+    }
+
+    // Connect video widgets
+    vlcMediaPlayers[0]->setVideoWidget(ui->rawVideo);
+    ui->rawVideo->setMediaPlayer(vlcMediaPlayers[0]);
+    vlcMediaPlayers[1]->setVideoWidget(ui->encodedVideo1);
+    ui->encodedVideo1->setMediaPlayer(vlcMediaPlayers[1]);
+    vlcMediaPlayers[2]->setVideoWidget(ui->encodedVideo2);
+    ui->encodedVideo2->setMediaPlayer(vlcMediaPlayers[2]);
+    vlcMediaPlayers[3]->setVideoWidget(ui->encodedVideo3);
+    ui->encodedVideo3->setMediaPlayer(vlcMediaPlayers[3]);
 }
 
 ShowCodecs::~ShowCodecs() { delete ui; }
 
-void ShowCodecs::broadcast(QString streamingCommand1,
-                           QString streamingCommand2) {
-    qDebug() << "Stopping the players...";
-    // qDebug() << "player1 "<<vlcPlayerEncoded1;
-    vlcPlayerEncoded1->stop();
-    vlcPlayerEncoded2->stop();
-    // vlcPlayerEncoded->stop();
+void ShowCodecs::broadcast(QString streamingCommand1, QString streamingCommand2,
+                           QString streamingCommand3,
+                           QString streamingCommand4) {
+    for (int i = 0; i < 4; i++) {
+        // Stop the player
+        vlcMediaPlayers[i]->stop();
+        // Kill streaming process
+        streamingProcesses[i].kill();
+        streamingProcesses[i].waitForFinished();
+    }
 
-    qDebug() << "Killing current encoding and probe processes...";
-    streamingProcess1.kill();
-    // streamingProcess->kill();
-    // probeProcess->kill();
-    streamingProcess2.kill();
-    // probeProcess.kill();
-
-    streamingProcess1.waitForFinished();
-    streamingProcess2.waitForFinished();
-    // streamingProcess->waitForFinished();
-    // probeProcess->waitForFinished();
-
-    qDebug() << "Starting the encoding process...";
-
-    streamingProcess1.start(streamingCommand1);
-    streamingProcess2.start(streamingCommand2);
+    // Start streaming processes
+    streamingProcesses[0].start(streamingCommand1);
+    streamingProcesses[1].start(streamingCommand2);
+    streamingProcesses[2].start(streamingCommand3);
+    streamingProcesses[3].start(streamingCommand4);
 
     qDebug() << "Starting the players...";
-    vlcPlayerEncoded1->play();
-    vlcPlayerEncoded2->play();
+    for (int i = 0; i < 4; i++) {
+        vlcMediaPlayers[i]->play();
+    }
 }
