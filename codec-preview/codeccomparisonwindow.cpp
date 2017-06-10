@@ -259,7 +259,7 @@ void CodecComparisonWindow::on_compareCodecs_clicked() {
 
 void CodecComparisonWindow::setSelectedCodecs(int first, int second,
                                               int third) {
-    qDebug() << "Selected codecs: " << first << ", " << second << ", " << third;
+    qDebug() << "Selected codecs: " << first << second << third;
 
     QString streamingParameters1 = "-c:v copy -f nut -an";
     QString streamingParameters2 =
