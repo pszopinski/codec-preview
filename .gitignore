@@ -1,4 +1,4 @@
 *.user
-build-codec-preview-*-Debug
+build-codec-*-Debug
 *.h.gch
 *.autosave
