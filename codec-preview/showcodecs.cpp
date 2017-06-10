@@ -4,12 +4,7 @@
 ShowCodecs::ShowCodecs(QWidget *parent)
     : QWidget(parent), ui(new Ui::ShowCodecs) {
     ui->setupUi(this);
-    initVlc();
-}
 
-ShowCodecs::~ShowCodecs() { delete ui; }
-
-void ShowCodecs::initVlc() {
     vlcInstance = new VlcInstance(VlcCommon::args(), NULL);
     // vlcInstance->setLogLevel(Vlc::DisabledLevel);
 
@@ -36,12 +31,10 @@ void ShowCodecs::initVlc() {
     vlcPlayerEncoded2->openOnly(vlcMediaEncoded2);
 }
 
+ShowCodecs::~ShowCodecs() { delete ui; }
+
 void ShowCodecs::broadcast(QString streamingCommand1,
                            QString streamingCommand2) {
-    if (inputLocation.isEmpty()) {
-        qDebug() << "Input location is missing! Not starting player.";
-        return;
-    }
     qDebug() << "Stopping the players...";
     // qDebug() << "player1 "<<vlcPlayerEncoded1;
     vlcPlayerEncoded1->stop();
@@ -68,13 +61,4 @@ void ShowCodecs::broadcast(QString streamingCommand1,
     qDebug() << "Starting the players...";
     vlcPlayerEncoded1->play();
     vlcPlayerEncoded2->play();
-}
-
-void ShowCodecs::setCodecInd(int first, int second) {
-    firstCodecIndex = first;
-    secondCodecIndex = second;
-}
-
-void ShowCodecs::setInputLocation(QString location) {
-    inputLocation = location;
 }

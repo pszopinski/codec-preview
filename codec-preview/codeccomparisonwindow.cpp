@@ -282,7 +282,6 @@ void CodecComparisonWindow::setSelectedCodecs(bool b[]) {
         return;
     }
 
-    showCodecs.setInputLocation(inputLocation);
     QString streamingCommand1 = buildStreamingCommand(
         inputParameters, inputLocation, {streamingParameters1},
         {ENCODED_VIDEO_PROTOCOL1 + "://" + ENCODED_VIDEO_HOST1 + ":" +

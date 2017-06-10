@@ -24,10 +24,7 @@ class ShowCodecs : public QWidget {
   public:
     explicit ShowCodecs(QWidget *parent = 0);
     ~ShowCodecs();
-    void initVideos();
-    void initVlc();
     void setInputLocation(QString location);
-    void setCodecInd(int first, int second);
     void broadcast(QString streamingCommand1, QString streamingCommand2);
 
   private:
