@@ -1,4 +1,5 @@
 #include "codeccomparisonwindow.h"
+#include "selectcodecs.h"
 #include "ui_codeccomparisonwindow.h"
 
 CodecComparisonWindow::CodecComparisonWindow(QWidget *parent)
@@ -10,7 +11,7 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent)
     connectSlots();
 
     // prints probe output to standard output
-    //probeProcess.setProcessChannelMode(QProcess::ForwardedChannels);
+    // probeProcess.setProcessChannelMode(QProcess::ForwardedChannels);
 
     ui->frameTypes->setReadOnly(true);
     ui->tabWidget->setCurrentIndex(0);
@@ -47,15 +48,13 @@ void CodecComparisonWindow::readOutput() {
             ui->frameTypes->setText(currentFrameTypes);
         }
 
-        if(output.startsWith("width=")) {
-            ui->frameWidth->setText(output.mid(6,output.length()));
+        if (output.startsWith("width=")) {
+            ui->frameWidth->setText(output.mid(6, output.length()));
         }
-        if(output.startsWith("height=")) {
-            ui->frameHeight->setText(output.mid(7,output.length()));
+        if (output.startsWith("height=")) {
+            ui->frameHeight->setText(output.mid(7, output.length()));
         }
     }
-
-
 }
 
 /*void CodecComparisonWindow::readOutput2() {
@@ -132,8 +131,10 @@ void CodecComparisonWindow::broadcast() {
         inputParameters, inputLocation,
         {"-c:v copy -f nut -an", streamingParameters, streamingParameters},
         {RAW_VIDEO_PROTOCOL + "://" + RAW_VIDEO_HOST + ":" + RAW_VIDEO_PORT,
-         ENCODED_VIDEO_PROTOCOL + "://" + ENCODED_VIDEO_HOST + ":" + ENCODED_VIDEO_PORT,
-         VIDEO_PROBE_PROTOCOL + "://" + VIDEO_PROBE_HOST + ":" + VIDEO_PROBE_PORT});
+         ENCODED_VIDEO_PROTOCOL + "://" + ENCODED_VIDEO_HOST + ":" +
+             ENCODED_VIDEO_PORT,
+         VIDEO_PROBE_PROTOCOL + "://" + VIDEO_PROBE_HOST + ":" +
+             VIDEO_PROBE_PORT});
     streamingProcess.start(streamingCommand);
 
     qDebug() << "Starting the probe process...";
@@ -244,5 +245,60 @@ void CodecComparisonWindow::connectSlots() {
 
     connect(&probeProcess, &QProcess::readyRead, this,
             &CodecComparisonWindow::readOutput);
-    //connect(&streamingProcess, &QProcess::readyRead, this, &CodecComparisonWindow::readOutput2);
+    // connect(&streamingProcess, &QProcess::readyRead, this,
+    // &CodecComparisonWindow::readOutput2);
+}
+
+void CodecComparisonWindow::on_compareCodecs_clicked() {
+    qDebug() << "Clicked!\n";
+    SelectCodecs selectCodecs;
+    selectCodecs.setMainWindowHandler(this);
+    selectCodecs.setModal(true);
+    selectCodecs.exec();
+}
+
+void CodecComparisonWindow::setSelectedCodecs(int first, int second,
+                                              int third) {
+    qDebug() << "Selected codecs: " << first << second << third;
+
+    QString streamingParameters1 = "-c:v copy -f nut -an";
+    QString streamingParameters2 =
+        codecManagers.at(first)->getStreamingParameters();
+    QString streamingParameters3 =
+        codecManagers.at(second)->getStreamingParameters();
+    QString streamingParameters4 =
+        codecManagers.at(third)->getStreamingParameters();
+
+    qDebug() << "Streaming parameters:";
+    qDebug() << streamingParameters1;
+    qDebug() << streamingParameters2;
+    qDebug() << streamingParameters3;
+    qDebug() << streamingParameters4;
+
+    QString streamingCommand1 = buildStreamingCommand(
+        inputParameters, inputLocation, {streamingParameters1},
+        {VIDEO_PROTOCOLS[0] + "://" + VIDEO_HOSTS[0] + ":" + VIDEO_PORTS[0]});
+    QString streamingCommand2 = buildStreamingCommand(
+        inputParameters, inputLocation, {streamingParameters2},
+        {VIDEO_PROTOCOLS[1] + "://" + VIDEO_HOSTS[1] + ":" + VIDEO_PORTS[1]});
+    QString streamingCommand3 = buildStreamingCommand(
+        inputParameters, inputLocation, {streamingParameters3},
+        {VIDEO_PROTOCOLS[2] + "://" + VIDEO_HOSTS[2] + ":" + VIDEO_PORTS[2]});
+    QString streamingCommand4 = buildStreamingCommand(
+        inputParameters, inputLocation, {streamingParameters4},
+        {VIDEO_PROTOCOLS[3] + "://" + VIDEO_HOSTS[3] + ":" + VIDEO_PORTS[3]});
+
+    qDebug() << "Streaming commands:";
+    qDebug() << streamingCommand1;
+    qDebug() << streamingCommand2;
+    qDebug() << streamingCommand3;
+    qDebug() << streamingCommand4;
+
+    showCodecs.show();
+    showCodecs.broadcast(streamingCommand1, streamingCommand2,
+                         streamingCommand3, streamingCommand4);
+}
+
+QVector<CodecManager *> CodecComparisonWindow::getCodecManagers() {
+    return codecManagers;
 }

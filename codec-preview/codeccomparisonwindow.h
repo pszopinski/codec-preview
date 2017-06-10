@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QMainWindow>
 #include <QProcess>
+#include <QPushButton>
 #include <QQueue>
 #include <QVector>
 
@@ -22,6 +23,7 @@
 #include "codectabs/mjpegmanager.h"
 #include "codectabs/mpeg1manager.h"
 #include "codectabs/mpeg2manager.h"
+#include "showcodecs.h"
 
 #include "constants.h"
 
@@ -31,10 +33,11 @@ class CodecComparisonWindow;
 
 class CodecComparisonWindow : public QMainWindow {
     Q_OBJECT
+  public:
     QProcess streamingProcess;
     QProcess probeProcess;
 
-  private:
+  public:
     Ui::CodecComparisonWindow *ui;
     VlcInstance *vlcInstance;
 
@@ -48,9 +51,12 @@ class CodecComparisonWindow : public QMainWindow {
 
     QString inputParameters;
     QString inputLocation;
+    bool selectedCodecs[6];
+    ShowCodecs showCodecs;
 
     QVector<CodecManager *> codecManagers;
 
+  public:
     static QString buildStreamingCommand(QString inputParameters,
                                          QString inputLocation,
                                          QVector<QString> outputPrameters,
@@ -64,13 +70,17 @@ class CodecComparisonWindow : public QMainWindow {
     void initCodecs();
     void initVlc();
     void connectSlots();
+    void setSelectedCodecs(int first, int second, int third);
+    QVector<CodecManager *> getCodecManagers();
 
   private slots:
     void readOutput();
-    //void readOutput2();
+    // void readOutput2();
     void on_actionOpenFile_triggered();
     void on_actionOpenCamera_triggered();
     void broadcast();
+
+    void on_compareCodecs_clicked();
 
   signals:
     void settingsChanged();
