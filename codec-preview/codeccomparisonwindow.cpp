@@ -292,10 +292,7 @@ void CodecComparisonWindow::setSelectedCodecs(bool b[]) {
         {ENCODED_VIDEO_PROTOCOL2 + "://" + ENCODED_VIDEO_HOST2 + ":" +
          ENCODED_VIDEO_PORT2});
     showCodecs.show();
-    QProcess *sP = &streamingProcess;
-    QProcess *pP = &probeProcess;
-    showCodecs.broadcast(streamingCommand1, streamingCommand2, sP, pP,
-                         vlcPlayerEncoded);
+    showCodecs.broadcast(streamingCommand1, streamingCommand2);
 }
 
 QVector<CodecManager *> CodecComparisonWindow::getCodecManagers() {
