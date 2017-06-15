@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1165</width>
-    <height>788</height>
+    <width>1433</width>
+    <height>988</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -144,6 +144,122 @@
                  <string>compareCodecs</string>
                 </property>
                </widget>
+               <widget class="QWidget" name="layoutWidget_3">
+                <property name="geometry">
+                 <rect>
+                  <x>10</x>
+                  <y>120</y>
+                  <width>181</width>
+                  <height>101</height>
+                 </rect>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_10" stretch="0,0">
+                 <item>
+                  <widget class="QLabel" name="label_4">
+                   <property name="text">
+                    <string>Aspect ratio:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="aspectRatio">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="layoutWidget_4">
+                <property name="geometry">
+                 <rect>
+                  <x>200</x>
+                  <y>120</y>
+                  <width>181</width>
+                  <height>101</height>
+                 </rect>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_11" stretch="0,0">
+                 <item>
+                  <widget class="QLabel" name="label_5">
+                   <property name="text">
+                    <string>Bit rate:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="bitRate">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="layoutWidget_5">
+                <property name="geometry">
+                 <rect>
+                  <x>390</x>
+                  <y>120</y>
+                  <width>181</width>
+                  <height>101</height>
+                 </rect>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_12" stretch="0,0">
+                 <item>
+                  <widget class="QLabel" name="label_6">
+                   <property name="text">
+                    <string>Codec name:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="codecName">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="layoutWidget_6">
+                <property name="geometry">
+                 <rect>
+                  <x>620</x>
+                  <y>10</y>
+                  <width>161</width>
+                  <height>101</height>
+                 </rect>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_13">
+                 <item>
+                  <widget class="QLabel" name="label_7">
+                   <property name="text">
+                    <string>Frame rate:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="frameRate">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
               </widget>
              </item>
             </layout>
@@ -232,8 +348,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1165</width>
-     <height>21</height>
+     <width>1433</width>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

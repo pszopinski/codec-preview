@@ -1,6 +1,8 @@
 #ifndef CODECCOMPARISONWINDOW_H
 #define CODECCOMPARISONWINDOW_H
 
+#include <fstream>
+
 #include <QDebug>
 #include <QFileDialog>
 #include <QMainWindow>
@@ -8,6 +10,7 @@
 #include <QPushButton>
 #include <QQueue>
 #include <QVector>
+#include <QThread>
 
 #include <VLCQtCore/Audio.h>
 #include <VLCQtCore/Common.h>
@@ -35,7 +38,8 @@ class CodecComparisonWindow : public QMainWindow {
     Q_OBJECT
   public:
     QProcess streamingProcess;
-    QProcess probeProcess;
+    QProcess frameProbeProcess;
+    QProcess streamProbeProcess;
 
   public:
     Ui::CodecComparisonWindow *ui;
@@ -61,7 +65,7 @@ class CodecComparisonWindow : public QMainWindow {
                                          QString inputLocation,
                                          QVector<QString> outputPrameters,
                                          QVector<QString> outputLocations);
-    static QString buildProbeCommand(QString location);
+    static QString buildProbeCommand(QString location, QString params);
 
   public:
     explicit CodecComparisonWindow(QWidget *parent = 0);
@@ -75,10 +79,11 @@ class CodecComparisonWindow : public QMainWindow {
 
   private slots:
     void readOutput();
-    // void readOutput2();
+
     void on_actionOpenFile_triggered();
     void on_actionOpenCamera_triggered();
     void broadcast();
+    void onFinished(int a, QProcess::ExitStatus b);
 
     void on_compareCodecs_clicked();
 

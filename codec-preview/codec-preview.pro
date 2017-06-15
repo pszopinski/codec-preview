@@ -43,7 +43,7 @@ FORMS    += codeccomparisonwindow.ui \
     showcodecs.ui
 	
 win32 {
-VLCQT_PATH = C:\vlc-qt
+VLCQT_PATH = D:\programming-tools\vlc-qt
 
 INCLUDEPATH += $$VLCQT_PATH\include
 
