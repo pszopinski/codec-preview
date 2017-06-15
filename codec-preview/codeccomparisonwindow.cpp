@@ -11,8 +11,16 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent)
 
     // prints probe output to standard output
     //probeProcess.setProcessChannelMode(QProcess::ForwardedChannels);
+   // streamProbeProcess.setProcessChannelMode(QProcess::SeparateChannels);
+    streamProbeProcess.setStandardOutputFile("output_stream.txt");
+    //streamingProcess.setStandardOutputFile("main_output.txt");
 
     ui->frameTypes->setReadOnly(true);
+    ui->frameWidth->setReadOnly(true);
+    ui->frameHeight->setReadOnly(true);
+    ui->codecName->setReadOnly(true);
+    ui->bitRate->setReadOnly(true);
+    ui->aspectRatio->setReadOnly(true);
     ui->tabWidget->setCurrentIndex(0);
 }
 
@@ -21,15 +29,17 @@ CodecComparisonWindow::~CodecComparisonWindow() { delete ui; }
 void CodecComparisonWindow::closeEvent(QCloseEvent *event) {
     (void)event; // silence annoying warning
     streamingProcess.kill();
-    probeProcess.kill();
+    frameProbeProcess.kill();
+    streamProbeProcess.kill();
 
     streamingProcess.waitForFinished();
-    probeProcess.waitForFinished();
+    frameProbeProcess.waitForFinished();
+    streamProbeProcess.waitForFinished();
 }
 
-void CodecComparisonWindow::readOutput() {
-    while (probeProcess.canReadLine()) {
-        QString output = probeProcess.readLine();
+void CodecComparisonWindow::readFrameOutput() {
+    while (frameProbeProcess.canReadLine()) {
+        QString output = frameProbeProcess.readLine();
 
         if (output.startsWith("pict_type=")) {
             typesOfFrames.enqueue(output.toUtf8().constData()[10]);
@@ -58,11 +68,17 @@ void CodecComparisonWindow::readOutput() {
 
 }
 
-/*void CodecComparisonWindow::readOutput2() {
-    while (streamingProcess.canReadLine()) {
-        qDebug() << "reading";
+/*void CodecComparisonWindow::readStreamOutput() {
+    //qDebug() << "getting stream probe output";
+    while (streamProbeProcess.canReadLine()) {
+        //qDebug() << "in loop";
         QString output = streamingProcess.readLine();
-        qDebug() << output;
+        if(output.isEmpty()) continue;
+        //if(output.startsWith("avg_frame_rate=")) {
+        //    qDebug() << "got some output for frame rate";
+        //    ui->frameRate->setText(output);
+        //}
+        qDebug() << "show streams output: " +  output;
     }
 }*/
 
@@ -84,11 +100,11 @@ QString CodecComparisonWindow::buildStreamingCommand(
     return command;
 }
 
-QString CodecComparisonWindow::buildProbeCommand(QString location) {
+QString CodecComparisonWindow::buildProbeCommand(QString location, QString params) {
     QStringList list;
     list << FFPROBE;
     list << location;
-    list << "-show_frames";
+    list << params;
 
     QString command = list.join(" ");
     qDebug() << "Produced the following probe command:\n"
@@ -122,25 +138,61 @@ void CodecComparisonWindow::broadcast() {
 
     qDebug() << "Killing current encoding and probe processes...";
     streamingProcess.kill();
-    probeProcess.kill();
+    frameProbeProcess.kill();
+    streamProbeProcess.kill();
 
     streamingProcess.waitForFinished();
-    probeProcess.waitForFinished();
+    frameProbeProcess.waitForFinished();
+    streamProbeProcess.waitForFinished();
+
+
 
     qDebug() << "Starting the encoding process...";
     QString streamingCommand = buildStreamingCommand(
         inputParameters, inputLocation,
-        {"-c:v copy -f nut -an", streamingParameters, streamingParameters},
+        {"-c:v copy -f nut -an", streamingParameters, streamingParameters, streamingParameters},
         {RAW_VIDEO_PROTOCOL + "://" + RAW_VIDEO_HOST + ":" + RAW_VIDEO_PORT,
          ENCODED_VIDEO_PROTOCOL + "://" + ENCODED_VIDEO_HOST + ":" + ENCODED_VIDEO_PORT,
-         VIDEO_PROBE_PROTOCOL + "://" + VIDEO_PROBE_HOST + ":" + VIDEO_PROBE_PORT});
+         VIDEO_PROBE_PROTOCOL + "://" + VIDEO_PROBE_HOST + ":" + VIDEO_PROBE_PORT,
+         STREAM_PROBE_PROTOCOL + "://" + STREAM_PROBE_HOST + ":" + STREAM_PROBE_PORT       });
     streamingProcess.start(streamingCommand);
 
     qDebug() << "Starting the probe process...";
-    QString probeCommand =
+
+    QString frameProbeCommand =
         buildProbeCommand(VIDEO_PROBE_PROTOCOL + "://" + VIDEO_PROBE_HOST +
-                          ":" + VIDEO_PROBE_PORT);
-    probeProcess.start(probeCommand);
+                          ":" + VIDEO_PROBE_PORT, "-show_frames -show_entries frame=pict_type,width,height");
+
+
+    frameProbeProcess.start(frameProbeCommand);
+
+    QString streamProbeCommand =
+            buildProbeCommand(STREAM_PROBE_PROTOCOL + "://" + STREAM_PROBE_HOST +
+                              ":" + STREAM_PROBE_PORT, "-show_streams -select_streams v:0");
+
+    streamProbeProcess.start(streamProbeCommand);
+    qDebug() << "starteeeed";
+    //streamProbeProcess.moveToThread(new QThread());
+    //streamProbeProcess.waitForBytesWritten(10000);
+    //streamProbeProcess.kill();
+    //streamProbeProcess.moveToThread(new QThread( ));
+
+    //QThread::msleep(700);
+    //QFile inputFile("output_stream.txt");
+
+
+    //streamProbeProcess.waitForFinished(500);
+    //streamProbeProcess.kill();
+
+    //std::ifstream ifs("D", std::ios::binary);
+    //std::ofstream ofs("copy.txt", std::ios::binary);
+
+   // ofs << ifs.rdbuf();
+
+
+
+
+
 
     qDebug() << "Starting the players...";
     vlcPlayerRaw->setTime(0);
@@ -207,6 +259,51 @@ void CodecComparisonWindow::initVlc() {
     vlcPlayerEncoded->openOnly(vlcMediaEncoded);
 }
 
+void CodecComparisonWindow::onFinished(int a, QProcess::ExitStatus b) {
+    qDebug() << "start reading";
+    std::ifstream myReadFile;
+    myReadFile.open("output_stream.txt");
+    char output[100];
+    if (myReadFile.is_open()) {
+        while (!myReadFile.eof()) {
+
+
+           myReadFile >> output;
+           qDebug() << output;
+
+           QString fileOutput = QString(output);
+
+           if(fileOutput.startsWith("avg_frame_rate=")) {
+               //qDebug() << "got some output for frame rate";
+               ui->frameRate->setText(fileOutput.mid(15,fileOutput.length()));
+
+           }
+
+           if(fileOutput.startsWith("codec_name=")) {
+               ui->codecName->setText(fileOutput.mid(11,fileOutput.length()));
+
+           }
+
+           if(fileOutput.startsWith("bit_rate=")) {
+               ui->bitRate->setText(fileOutput.mid(9,fileOutput.length()));
+
+           }
+
+           if(fileOutput.startsWith("display_aspect_ratio=")) {
+               ui->aspectRatio->setText(fileOutput.mid(21,fileOutput.length()));
+
+           }
+
+
+        }
+    }
+    else {
+        qDebug() << "cannot access file";
+    }
+    myReadFile.close();
+    qDebug() << "stop reading";
+}
+
 void CodecComparisonWindow::connectSlots() {
 
     connect(this, &CodecComparisonWindow::settingsChanged, this,
@@ -242,7 +339,9 @@ void CodecComparisonWindow::connectSlots() {
     connect(vlcPlayerEncoded, &VlcMediaPlayer::opening,
             []() { qDebug() << "vlcPlayerEncoded opening"; });
 
-    connect(&probeProcess, &QProcess::readyRead, this,
-            &CodecComparisonWindow::readOutput);
-    //connect(&streamingProcess, &QProcess::readyRead, this, &CodecComparisonWindow::readOutput2);
+    connect(&frameProbeProcess, &QProcess::readyRead, this,
+            &CodecComparisonWindow::readFrameOutput);
+    //connect(&streamProbeProcess, &QProcess::readyRead, this,
+            //&CodecComparisonWindow::readStreamOutput);
+    connect(&streamProbeProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(onFinished(int,QProcess::ExitStatus)));
 }
