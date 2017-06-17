@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>VideoInfoWidget</class>
+ <widget class="QWidget" name="VideoInfoWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>934</width>
+    <height>459</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QWidget" name="widget_2" native="true">
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>261</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Frame types:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="frameTypes">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>10</y>
+        <width>161</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_9">
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Frame height:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="frameHeight">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_3">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>10</y>
+        <width>161</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_8">
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Frame width:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="frameWidth">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QPushButton" name="compareCodecs">
+      <property name="geometry">
+       <rect>
+        <x>950</x>
+        <y>10</y>
+        <width>321</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Compare multiple codecs</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_4">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>120</y>
+        <width>181</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_10" stretch="0,0">
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Aspect ratio:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="aspectRatio">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_5">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>120</y>
+        <width>181</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_11" stretch="0,0">
+       <item>
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Bit rate:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="bitRate">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_6">
+      <property name="geometry">
+       <rect>
+        <x>390</x>
+        <y>120</y>
+        <width>181</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_12" stretch="0,0">
+       <item>
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Codec name:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="codecName">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_7">
+      <property name="geometry">
+       <rect>
+        <x>620</x>
+        <y>10</y>
+        <width>161</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_13">
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Frame rate:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="frameRate">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

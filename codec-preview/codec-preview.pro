@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     codectabs/mpeg1manager.cpp \
     codectabs/mpeg2manager.cpp \
     selectcodecs.cpp \
-    showcodecs.cpp
+    showcodecs.cpp \
+    videoinfowidget.cpp
 
 
 HEADERS  += constants.h \
@@ -30,7 +31,8 @@ HEADERS  += constants.h \
     codectabs/mpeg1manager.h \
     codectabs/mpeg2manager.h \
     selectcodecs.h \
-    showcodecs.h
+    showcodecs.h \
+    videoinfowidget.h
 
 FORMS    += codeccomparisonwindow.ui \
     codectabs/mpeg1manager.ui \
@@ -40,7 +42,8 @@ FORMS    += codeccomparisonwindow.ui \
     codectabs/h261manager.ui \
     codectabs/mjpegmanager.ui \
     selectcodecs.ui \
-    showcodecs.ui
+    showcodecs.ui \
+    videoinfowidget.ui
 	
 win32 {
 VLCQT_PATH = D:\programming-tools\vlc-qt
