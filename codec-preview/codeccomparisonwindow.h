@@ -26,6 +26,7 @@
 #include "codectabs/mjpegmanager.h"
 #include "codectabs/mpeg1manager.h"
 #include "codectabs/mpeg2manager.h"
+
 #include "showcodecs.h"
 
 #include "constants.h"
@@ -60,6 +61,8 @@ class CodecComparisonWindow : public QMainWindow {
 
     QVector<CodecManager *> codecManagers;
 
+    static QString parametersToString(QMap<QString, QString> parameters);
+
   public:
     static QString buildStreamingCommand(QString inputParameters,
                                          QString inputLocation,
@@ -87,7 +90,12 @@ class CodecComparisonWindow : public QMainWindow {
 
     void on_compareCodecs_clicked();
 
-  signals:
+
+    void on_crf_returnPressed();
+
+    void on_crf_editingFinished();
+
+signals:
     void settingsChanged();
 };
 

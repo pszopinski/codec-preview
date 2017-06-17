@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>238</width>
-    <height>150</height>
+    <width>608</width>
+    <height>236</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>Original footage</string>
+        <string>Original video feed</string>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -80,6 +80,9 @@
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Minimum</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>

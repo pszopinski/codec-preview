@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1433</width>
-    <height>988</height>
+    <width>1472</width>
+    <height>1068</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,7 +39,7 @@
        <widget class="QWidget" name="widget" native="true">
         <layout class="QVBoxLayout" name="verticalLayout_6">
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_5" stretch="5,5">
+          <layout class="QVBoxLayout" name="verticalLayout_5" stretch="5">
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
@@ -134,14 +134,14 @@
                <widget class="QPushButton" name="compareCodecs">
                 <property name="geometry">
                  <rect>
-                  <x>980</x>
-                  <y>0</y>
-                  <width>141</width>
-                  <height>41</height>
+                  <x>950</x>
+                  <y>10</y>
+                  <width>321</width>
+                  <height>81</height>
                  </rect>
                 </property>
                 <property name="text">
-                 <string>compareCodecs</string>
+                 <string>Compare multiple codecs</string>
                 </property>
                </widget>
                <widget class="QWidget" name="layoutWidget_3">
@@ -264,6 +264,43 @@
              </item>
             </layout>
            </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,1">
+           <item>
+            <widget class="QWidget" name="commonParams" native="true">
+             <widget class="QWidget" name="layoutWidget_7">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>181</width>
+                <height>101</height>
+               </rect>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_15" stretch="0,0">
+               <item>
+                <widget class="QLabel" name="label_9">
+                 <property name="text">
+                  <string>CRF:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="crf">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+           </item>
            <item>
             <widget class="QTabWidget" name="tabWidget">
              <property name="tabPosition">
@@ -276,7 +313,7 @@
               <attribute name="title">
                <string>MJPEG</string>
               </attribute>
-              <layout class="QVBoxLayout" name="verticalLayout_7">
+              <layout class="QHBoxLayout" name="horizontalLayout_7">
                <item>
                 <widget class="MJPEGManager" name="mjpegtab" native="true"/>
                </item>
@@ -316,11 +353,16 @@
               <attribute name="title">
                <string>H264</string>
               </attribute>
-              <layout class="QHBoxLayout" name="horizontalLayout_5">
-               <item>
-                <widget class="H264Manager" name="h264tab" native="true"/>
-               </item>
-              </layout>
+              <widget class="H264Manager" name="h264tab" native="true">
+               <property name="geometry">
+                <rect>
+                 <x>650</x>
+                 <y>0</y>
+                 <width>161</width>
+                 <height>181</height>
+                </rect>
+               </property>
+              </widget>
              </widget>
              <widget class="QWidget" name="H265">
               <attribute name="title">
@@ -348,7 +390,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1433</width>
+     <width>1472</width>
      <height>19</height>
     </rect>
    </property>

@@ -2,6 +2,7 @@
 #define H261MANAGER_H
 
 #include <QWidget>
+#include <QDebug>
 
 #include "codecmanager.h"
 
@@ -12,11 +13,12 @@ class H261Manager;
 class H261Manager : public CodecManager {
     Q_OBJECT
 
+
   public:
     explicit H261Manager(QWidget *parent = 0);
     ~H261Manager();
 
-  private:
+private:
     Ui::H261Manager *ui;
 };
 

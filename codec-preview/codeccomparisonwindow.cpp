@@ -121,16 +121,22 @@ void CodecComparisonWindow::broadcast() {
         qDebug() << "Input parameters are missing! Not starting player.";
         return;
     }
-    QString streamingParameters =
+    QMap<QString, QString> streamingParametersMap =
         codecManagers.at(ui->tabWidget->currentIndex())
             ->getStreamingParameters();
-    if (streamingParameters.isEmpty()) {
+    if (streamingParametersMap.isEmpty()) {
         qDebug() << "Encoding parameters are missing! Not starting player.";
         return;
     }
 
+    QString streamingParameters = parametersToString(streamingParametersMap) + " -an";
+
+
+
+
     typesOfFrames.clear();
     ui->frameTypes->setText("");
+    ui->crf->setText(codecManagers.at(ui->tabWidget->currentIndex())->getCRF());
 
     qDebug() << "Stopping the players...";
     vlcPlayerRaw->stop();
@@ -144,7 +150,6 @@ void CodecComparisonWindow::broadcast() {
     streamingProcess.waitForFinished();
     frameProbeProcess.waitForFinished();
     streamProbeProcess.waitForFinished();
-
 
 
     qDebug() << "Starting the encoding process...";
@@ -171,7 +176,7 @@ void CodecComparisonWindow::broadcast() {
                               ":" + STREAM_PROBE_PORT, "-show_streams -select_streams v:0");
 
     streamProbeProcess.start(streamProbeCommand);
-    qDebug() << "starteeeed";
+    //qDebug() << "starteeeed";
     //streamProbeProcess.moveToThread(new QThread());
     //streamProbeProcess.waitForBytesWritten(10000);
     //streamProbeProcess.kill();
@@ -260,7 +265,7 @@ void CodecComparisonWindow::initVlc() {
 }
 
 void CodecComparisonWindow::onFinished(int a, QProcess::ExitStatus b) {
-    qDebug() << "start reading";
+    //qDebug() << "start reading";
     std::ifstream myReadFile;
     myReadFile.open("output_stream.txt");
     char output[100];
@@ -269,7 +274,7 @@ void CodecComparisonWindow::onFinished(int a, QProcess::ExitStatus b) {
 
 
            myReadFile >> output;
-           qDebug() << output;
+           //qDebug() << output;
 
            QString fileOutput = QString(output);
 
@@ -311,6 +316,10 @@ void CodecComparisonWindow::connectSlots() {
     connect(ui->tabWidget, &QTabWidget::currentChanged, this,
             &CodecComparisonWindow::broadcast);
 
+//    for(int i = 0; i < codecManagers.size(); i++) {
+//        connect(codecManagers.at(i), &CodecManager::parametersChanged, this, &CodecComparisonWindow::broadcast);
+//    }
+
     // Provide debug info for raw player
     connect(vlcPlayerRaw, &VlcMediaPlayer::stopped,
             []() { qDebug() << "vlcPlayerRaw stopped"; });
@@ -345,6 +354,8 @@ void CodecComparisonWindow::connectSlots() {
     //connect(&streamProbeProcess, &QProcess::readyRead, this,
             //&CodecComparisonWindow::readStreamOutput);
     connect(&streamProbeProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(onFinished(int,QProcess::ExitStatus)));
+
+
 }
 
 void CodecComparisonWindow::on_compareCodecs_clicked() {
@@ -361,11 +372,11 @@ void CodecComparisonWindow::setSelectedCodecs(int first, int second,
 
     QString streamingParameters1 = "-c:v copy -f nut -an";
     QString streamingParameters2 =
-        codecManagers.at(first)->getStreamingParameters();
+        parametersToString(codecManagers.at(first)->getStreamingParameters()) + " -an";
     QString streamingParameters3 =
-        codecManagers.at(second)->getStreamingParameters();
+        parametersToString(codecManagers.at(second)->getStreamingParameters()) + " -an";
     QString streamingParameters4 =
-        codecManagers.at(third)->getStreamingParameters();
+        parametersToString(codecManagers.at(third)->getStreamingParameters()) + " -an";
 
     qDebug() << "Streaming parameters:";
     qDebug() << streamingParameters1;
@@ -399,4 +410,29 @@ void CodecComparisonWindow::setSelectedCodecs(int first, int second,
 
 QVector<CodecManager *> CodecComparisonWindow::getCodecManagers() {
     return codecManagers;
+}
+
+
+
+QString CodecComparisonWindow::parametersToString(QMap<QString, QString> parameters) {
+    QStringList result;
+
+    for(auto key : parameters.keys())
+    {
+      result << "-" + key << parameters.value(key);
+    }
+
+    return result.join(" ");
+}
+
+void CodecComparisonWindow::on_crf_returnPressed()
+{
+    codecManagers.at(ui->tabWidget->currentIndex())->setCRF(ui->crf->text());
+    settingsChanged();
+}
+
+void CodecComparisonWindow::on_crf_editingFinished()
+{
+    codecManagers.at(ui->tabWidget->currentIndex())->setCRF(ui->crf->text());
+    settingsChanged();
 }
