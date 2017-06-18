@@ -1,8 +1,8 @@
 #ifndef VIDEOPLAYBACKWIDGET_H
 #define VIDEOPLAYBACKWIDGET_H
 
-#include <QWidget>
 #include <QDebug>
+#include <QWidget>
 
 #include <VLCQtCore/Audio.h>
 #include <VLCQtCore/Common.h>
@@ -18,10 +18,9 @@ namespace Ui {
 class VideoPlaybackWidget;
 }
 
-class VideoPlaybackWidget : public QWidget
-{
+class VideoPlaybackWidget : public QWidget {
     Q_OBJECT
-private:
+  private:
     VlcInstance *vlcInstance;
 
     VlcMedia *vlcMediaRaw;
@@ -30,16 +29,14 @@ private:
     VlcMedia *vlcMediaEncoded;
     VlcMediaPlayer *vlcPlayerEncoded;
 
-public:
+  public:
     explicit VideoPlaybackWidget(QWidget *parent = 0);
     ~VideoPlaybackWidget();
 
     void stopPlayers();
     void startPlayers();
 
-
-
-private:
+  private:
     Ui::VideoPlaybackWidget *ui;
 };
 

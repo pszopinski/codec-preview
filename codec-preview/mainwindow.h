@@ -1,12 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
 #include <QFileDialog>
-
+#include <QMainWindow>
 
 #include "selectcodecs.h"
-
 
 namespace Ui {
 class MainWindow;
@@ -15,7 +13,6 @@ class MainWindow;
 class MainWindow : public QMainWindow {
     Q_OBJECT
   public:
-
   public:
     Ui::MainWindow *ui;
 
@@ -26,7 +23,6 @@ class MainWindow : public QMainWindow {
 
     void broadcast();
 
-
   private slots:
     void on_actionOpen_file_triggered();
 
@@ -34,11 +30,7 @@ class MainWindow : public QMainWindow {
 
     void on_actionCompare_multiple_codecs_triggered();
 
-    void on_crf_editingFinished();
-
-    void on_crf_returnPressed();
-
-signals:
+  signals:
     void settingsChanged();
 };
 

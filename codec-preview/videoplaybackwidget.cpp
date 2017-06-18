@@ -1,10 +1,8 @@
 #include "videoplaybackwidget.h"
 #include "ui_videoplaybackwidget.h"
 
-VideoPlaybackWidget::VideoPlaybackWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::VideoPlaybackWidget)
-{
+VideoPlaybackWidget::VideoPlaybackWidget(QWidget *parent)
+    : QWidget(parent), ui(new Ui::VideoPlaybackWidget) {
     ui->setupUi(this);
 
     vlcInstance = new VlcInstance(VlcCommon::args(), NULL);
@@ -31,10 +29,7 @@ VideoPlaybackWidget::VideoPlaybackWidget(QWidget *parent) :
     vlcPlayerEncoded->openOnly(vlcMediaEncoded);
 }
 
-VideoPlaybackWidget::~VideoPlaybackWidget()
-{
-    delete ui;
-}
+VideoPlaybackWidget::~VideoPlaybackWidget() { delete ui; }
 
 void VideoPlaybackWidget::stopPlayers() {
     vlcPlayerRaw->stop();

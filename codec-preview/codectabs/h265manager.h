@@ -16,6 +16,8 @@ class H265Manager : public CodecManager {
     explicit H265Manager(QWidget *parent = 0);
     ~H265Manager();
 
+    void setCodecTabs(CodecTabsWidget *widget);
+    // CommonParametersWidget* getCommonParams();
   private:
     Ui::H265Manager *ui;
 };

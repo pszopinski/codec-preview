@@ -1,10 +1,8 @@
 #include "videoinfowidget.h"
 #include "ui_videoinfowidget.h"
 
-VideoInfoWidget::VideoInfoWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::VideoInfoWidget)
-{
+VideoInfoWidget::VideoInfoWidget(QWidget *parent)
+    : QWidget(parent), ui(new Ui::VideoInfoWidget) {
     ui->setupUi(this);
     streamProbeProcess.setStandardOutputFile(PROBE_FILE_NAME);
 
@@ -16,17 +14,13 @@ VideoInfoWidget::VideoInfoWidget(QWidget *parent) :
     ui->aspectRatio->setReadOnly(true);
 
     connect(&frameProbeProcess, &QProcess::readyRead, this,
-                     &VideoInfoWidget::parseFrameProbeOutput);
+            &VideoInfoWidget::parseFrameProbeOutput);
 
-    connect(&streamProbeProcess, SIGNAL(finished(int , QProcess::ExitStatus )), this,
-                     SLOT(parseStreamProbeOutput(int , QProcess::ExitStatus )));
-
+    connect(&streamProbeProcess, SIGNAL(finished(int, QProcess::ExitStatus)),
+            this, SLOT(parseStreamProbeOutput(int, QProcess::ExitStatus)));
 }
 
-VideoInfoWidget::~VideoInfoWidget()
-{
-    delete ui;
-}
+VideoInfoWidget::~VideoInfoWidget() { delete ui; }
 
 void VideoInfoWidget::stopProbe() {
     frameProbeProcess.kill();
@@ -71,7 +65,6 @@ void VideoInfoWidget::clearFrameQueue() {
 
 void VideoInfoWidget::startFrameProbe(QString command) {
     frameProbeProcess.start(command);
-
 }
 
 void VideoInfoWidget::startStreamProbe(QString command) {
@@ -82,47 +75,39 @@ void VideoInfoWidget::parseStreamProbeOutput(int a, QProcess::ExitStatus b) {
     (void)a;
     (void)b;
 
-    //qDebug() << "start reading";
+    // qDebug() << "start reading";
     std::ifstream myReadFile;
     myReadFile.open(PROBE_FILE_NAME.toUtf8().data());
     char output[100];
     if (myReadFile.is_open()) {
         while (!myReadFile.eof()) {
 
+            myReadFile >> output;
+            // qDebug() << output;
 
-           myReadFile >> output;
-           //qDebug() << output;
+            QString fileOutput = QString(output);
 
-           QString fileOutput = QString(output);
+            if (fileOutput.startsWith("avg_frame_rate=")) {
+                // qDebug() << "got some output for frame rate";
+                ui->frameRate->setText(fileOutput.mid(15, fileOutput.length()));
+            }
 
-           if(fileOutput.startsWith("avg_frame_rate=")) {
-               //qDebug() << "got some output for frame rate";
-               ui->frameRate->setText(fileOutput.mid(15,fileOutput.length()));
+            if (fileOutput.startsWith("codec_name=")) {
+                ui->codecName->setText(fileOutput.mid(11, fileOutput.length()));
+            }
 
-           }
+            if (fileOutput.startsWith("bit_rate=")) {
+                ui->bitRate->setText(fileOutput.mid(9, fileOutput.length()));
+            }
 
-           if(fileOutput.startsWith("codec_name=")) {
-               ui->codecName->setText(fileOutput.mid(11,fileOutput.length()));
-
-           }
-
-           if(fileOutput.startsWith("bit_rate=")) {
-               ui->bitRate->setText(fileOutput.mid(9,fileOutput.length()));
-
-           }
-
-           if(fileOutput.startsWith("display_aspect_ratio=")) {
-               ui->aspectRatio->setText(fileOutput.mid(21,fileOutput.length()));
-
-           }
-
-
+            if (fileOutput.startsWith("display_aspect_ratio=")) {
+                ui->aspectRatio->setText(
+                    fileOutput.mid(21, fileOutput.length()));
+            }
         }
-    }
-    else {
+    } else {
         qDebug() << "cannot access file";
     }
     myReadFile.close();
     qDebug() << "stop reading";
 }
-

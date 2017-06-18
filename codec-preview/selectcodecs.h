@@ -8,7 +8,6 @@
 
 #include "codectabswidget.h"
 
-
 namespace Ui {
 class SelectCodecs;
 }

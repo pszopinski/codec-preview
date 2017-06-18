@@ -6,26 +6,43 @@ CodecManager::CodecManager(QWidget *parent) : QWidget(parent) {
     filterParameter = "";
     presetParameter = "ultrafast";
     formatParameter = "matroska";
+
+    // connect(codecTabs, &CodecTabsWidget::broadcast, this,
+    // &CodecManager::setCurrentCRF);
 }
 
 QMap<QString, QString> CodecManager::getStreamingParameters() {
     QMap<QString, QString> parameters;
 
-    if (!encoderParameter.isEmpty()) parameters.insert("c:v", encoderParameter);
-    if (!crfParameter.isEmpty()) parameters.insert("crf", crfParameter);
-    if (!pixelFormatParameter.isEmpty()) parameters.insert("pix_fmt", pixelFormatParameter);
-    if (!filterParameter.isEmpty()) parameters.insert("vf", filterParameter);
-    if (!presetParameter.isEmpty()) parameters.insert("preset", presetParameter);
-    if (!formatParameter.isEmpty()) parameters.insert("f", formatParameter);
+    if (!encoderParameter.isEmpty())
+        parameters.insert("c:v", encoderParameter);
+    if (!crfParameter.isEmpty())
+        parameters.insert("crf", crfParameter);
+    if (!pixelFormatParameter.isEmpty())
+        parameters.insert("pix_fmt", pixelFormatParameter);
+    if (!filterParameter.isEmpty())
+        parameters.insert("vf", filterParameter);
+    if (!presetParameter.isEmpty())
+        parameters.insert("preset", presetParameter);
+    if (!formatParameter.isEmpty())
+        parameters.insert("f", formatParameter);
 
     return parameters;
 }
 
+void CodecManager::setCRF(QString value) { crfParameter = value; }
 
-void CodecManager::setCRF(QString value) {
-    crfParameter = value;
-}
+QString CodecManager::getCRF() { return crfParameter; }
 
-QString CodecManager::getCRF() {
-    return crfParameter;
+/*CommonParametersWidget* CodecManager::getCommonParams() {
+    qDebug() << "this SHOULDNT run";
+    return NULL;
+}*/
+
+void CodecManager::setCodecTabs(CodecTabsWidget *widget) {
+    // this->codecTabs = widget;
+    // ui->commonParameters->setCodecTabs(codecTabs);
+    qDebug() << "===============this SHOULDNT run======================";
+
+    (void)widget;
 }

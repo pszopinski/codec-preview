@@ -1,16 +1,14 @@
 #include "codectabswidget.h"
 #include "ui_codectabswidget.h"
 
-CodecTabsWidget::CodecTabsWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::CodecTabsWidget)
-{
+CodecTabsWidget::CodecTabsWidget(QWidget *parent)
+    : QWidget(parent), ui(new Ui::CodecTabsWidget) {
     ui->setupUi(this);
-
 
     ui->tabWidget->setCurrentIndex(0);
 
-    connect(ui->tabWidget, &QTabWidget::currentChanged, this, CodecTabsWidget::onTabChange);
+    connect(ui->tabWidget, &QTabWidget::currentChanged, this,
+            CodecTabsWidget::onTabChange);
 
     codecManagers.push_back(ui->mjpegtab);
     codecManagers.push_back(ui->h261tab);
@@ -19,26 +17,33 @@ CodecTabsWidget::CodecTabsWidget(QWidget *parent) :
     codecManagers.push_back(ui->h264tab);
     codecManagers.push_back(ui->h265tab);
 
+    for (int i = 0; i < codecManagers.size(); i++) {
+        codecManagers.at(i)->setCodecTabs(this);
+    }
+
+    /*commonParamsWidgets.push_back(ui->mjpegtab->getCommonParams());
+    commonParamsWidgets.push_back(ui->h261tab->getCommonParams());
+    commonParamsWidgets.push_back(ui->mpeg1tab->getCommonParams());
+    commonParamsWidgets.push_back(ui->mpeg2tab->getCommonParams());
+    commonParamsWidgets.push_back(ui->h264tab->getCommonParams());
+    commonParamsWidgets.push_back(ui->h265tab->getCommonParams());*/
 }
 
-CodecTabsWidget::~CodecTabsWidget()
-{
-    delete ui;
-}
+CodecTabsWidget::~CodecTabsWidget() { delete ui; }
 
-
-
-void CodecTabsWidget::setSelectedCodecs(int first, int second,
-                                              int third) {
+void CodecTabsWidget::setSelectedCodecs(int first, int second, int third) {
     qDebug() << "Selected codecs: " << first << second << third;
 
     QString streamingParameters1 = "-c:v copy -f nut -an";
     QString streamingParameters2 =
-        parametersToString(codecManagers.at(first)->getStreamingParameters()) + " -an";
+        parametersToString(codecManagers.at(first)->getStreamingParameters()) +
+        " -an";
     QString streamingParameters3 =
-        parametersToString(codecManagers.at(second)->getStreamingParameters()) + " -an";
+        parametersToString(codecManagers.at(second)->getStreamingParameters()) +
+        " -an";
     QString streamingParameters4 =
-        parametersToString(codecManagers.at(third)->getStreamingParameters()) + " -an";
+        parametersToString(codecManagers.at(third)->getStreamingParameters()) +
+        " -an";
 
     qDebug() << "Streaming parameters:";
     qDebug() << streamingParameters1;
@@ -74,12 +79,10 @@ QVector<CodecManager *> CodecTabsWidget::getCodecManagers() {
     return codecManagers;
 }
 
-
 void CodecTabsWidget::stopStreaming() {
     streamingProcess.kill();
     streamingProcess.waitForFinished();
 }
-
 
 QString CodecTabsWidget::buildStreamingCommand(
     QString inputParameters, QString inputLocation,
@@ -114,9 +117,8 @@ QString CodecTabsWidget::buildProbeCommand(QString location, QString params) {
 QString CodecTabsWidget::parametersToString(QMap<QString, QString> parameters) {
     QStringList result;
 
-    for(auto key : parameters.keys())
-    {
-      result << "-" + key << parameters.value(key);
+    for (auto key : parameters.keys()) {
+        result << "-" + key << parameters.value(key);
     }
 
     return result.join(" ");
@@ -131,21 +133,18 @@ void CodecTabsWidget::openFromFile(QString filePath) {
 }
 
 void CodecTabsWidget::openFromCamera() {
-    #ifdef Q_OS_WIN
-        inputParameters = "-f dshow";
-        inputLocation = "video=\"Lenovo EasyCamera\"";
-        settingsChanged();
-    #else
-        inputParameters = "-f v4l2";
-        inputLocation = "/dev/video0";
-        settingsChanged();
-    #endif
+#ifdef Q_OS_WIN
+    inputParameters = "-f dshow";
+    inputLocation = "video=\"Lenovo EasyCamera\"";
+    settingsChanged();
+#else
+    inputParameters = "-f v4l2";
+    inputLocation = "/dev/video0";
+    settingsChanged();
+#endif
 }
 
-void CodecTabsWidget::onTabChange() {
-    currentTabChanged();
-}
-
+void CodecTabsWidget::onTabChange() { currentTabChanged(); }
 
 QString CodecTabsWidget::getStreamingParameters() {
     if (inputLocation.isEmpty()) {
@@ -164,40 +163,44 @@ QString CodecTabsWidget::getStreamingParameters() {
         return "";
     }
 
-    QString streamingParameters = parametersToString(streamingParametersMap) + " -an";
+    QString streamingParameters =
+        parametersToString(streamingParametersMap) + " -an";
 
     return streamingParameters;
 }
-
 
 void CodecTabsWidget::startStreaming(QString streamingParameters) {
     qDebug() << "Starting the encoding process...";
     QString streamingCommand = buildStreamingCommand(
         inputParameters, inputLocation,
-        {"-c:v copy -f nut -an", streamingParameters, streamingParameters, streamingParameters},
+        {"-c:v copy -f nut -an", streamingParameters, streamingParameters,
+         streamingParameters},
         {RAW_VIDEO_PROTOCOL + "://" + RAW_VIDEO_HOST + ":" + RAW_VIDEO_PORT,
-         ENCODED_VIDEO_PROTOCOL + "://" + ENCODED_VIDEO_HOST + ":" + ENCODED_VIDEO_PORT,
-         VIDEO_PROBE_PROTOCOL + "://" + VIDEO_PROBE_HOST + ":" + VIDEO_PROBE_PORT,
-         STREAM_PROBE_PROTOCOL + "://" + STREAM_PROBE_HOST + ":" + STREAM_PROBE_PORT       });
+         ENCODED_VIDEO_PROTOCOL + "://" + ENCODED_VIDEO_HOST + ":" +
+             ENCODED_VIDEO_PORT,
+         VIDEO_PROBE_PROTOCOL + "://" + VIDEO_PROBE_HOST + ":" +
+             VIDEO_PROBE_PORT,
+         STREAM_PROBE_PROTOCOL + "://" + STREAM_PROBE_HOST + ":" +
+             STREAM_PROBE_PORT});
     streamingProcess.start(streamingCommand);
 }
-
 
 QString CodecTabsWidget::getProbeCommand() {
     qDebug() << "Starting the probe process...";
 
-    QString frameProbeCommand =
-        buildProbeCommand(VIDEO_PROBE_PROTOCOL + "://" + VIDEO_PROBE_HOST +
-                          ":" + VIDEO_PROBE_PORT, "-show_frames -show_entries frame=pict_type,width,height");
+    QString frameProbeCommand = buildProbeCommand(
+        VIDEO_PROBE_PROTOCOL + "://" + VIDEO_PROBE_HOST + ":" +
+            VIDEO_PROBE_PORT,
+        "-show_frames -show_entries frame=pict_type,width,height");
 
     return frameProbeCommand;
-
 }
 
 QString CodecTabsWidget::getStreamCommand() {
     QString streamProbeCommand =
-            buildProbeCommand(STREAM_PROBE_PROTOCOL + "://" + STREAM_PROBE_HOST +
-                              ":" + STREAM_PROBE_PORT, "-show_streams -select_streams v:0");
+        buildProbeCommand(STREAM_PROBE_PROTOCOL + "://" + STREAM_PROBE_HOST +
+                              ":" + STREAM_PROBE_PORT,
+                          "-show_streams -select_streams v:0");
 
     return streamProbeCommand;
 }

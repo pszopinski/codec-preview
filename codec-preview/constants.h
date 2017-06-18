@@ -24,7 +24,7 @@ const QString VIDEO_PROBE_HOST = "localhost"; //"231.25.66.0";
 const QString VIDEO_PROBE_PORT = "41297";
 
 const QString STREAM_PROBE_PROTOCOL = "udp";
-const QString STREAM_PROBE_HOST = "localhost";//"231.25.66.0";
+const QString STREAM_PROBE_HOST = "localhost"; //"231.25.66.0";
 const QString STREAM_PROBE_PORT = "41303";
 
 const QString PROBE_FILE_NAME = "PROBEFILE";

@@ -3,13 +3,11 @@
 
 #include <fstream>
 
-
-#include <QWidget>
+#include <QDebug>
 #include <QLineEdit>
 #include <QProcess>
 #include <QQueue>
-#include <QDebug>
-
+#include <QWidget>
 
 #include "constants.h"
 
@@ -17,11 +15,10 @@ namespace Ui {
 class VideoInfoWidget;
 }
 
-class VideoInfoWidget : public QWidget
-{
+class VideoInfoWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit VideoInfoWidget(QWidget *parent = 0);
     ~VideoInfoWidget();
     void stopProbe();
@@ -29,17 +26,17 @@ public:
     void startFrameProbe(QString command);
     void startStreamProbe(QString command);
 
-private:
+  private:
     QProcess frameProbeProcess;
     QProcess streamProbeProcess;
     QQueue<char> framesQueue;
 
-private:
+  private:
     Ui::VideoInfoWidget *ui;
 
-private slots:
-  void parseFrameProbeOutput();
-  void parseStreamProbeOutput(int a, QProcess::ExitStatus b);
+  private slots:
+    void parseFrameProbeOutput();
+    void parseStreamProbeOutput(int a, QProcess::ExitStatus b);
 };
 
 #endif // VIDEOINFOWIDGET_H

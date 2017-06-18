@@ -1,9 +1,9 @@
 #ifndef CODECTABSWIDGET_H
 #define CODECTABSWIDGET_H
 
-#include <QWidget>
-#include <QVector>
 #include <QProcess>
+#include <QVector>
+#include <QWidget>
 
 #include "codectabs/codecmanager.h"
 #include "codectabs/h261manager.h"
@@ -13,30 +13,29 @@
 #include "codectabs/mpeg2manager.h"
 
 #include "showcodecs.h"
+//#include "commonparameterswidget.h"
 
 namespace Ui {
 class CodecTabsWidget;
 }
 
-class CodecTabsWidget : public QWidget
-{
+class CodecTabsWidget : public QWidget {
     Q_OBJECT
 
-private:
+  private:
     QVector<CodecManager *> codecManagers;
+    // QVector<CommonParametersWidget *> commonParamsWidgets;
 
     QProcess streamingProcess;
-        QString inputParameters;
-        QString inputLocation;
-        bool selectedCodecs[6];
-        ShowCodecs showCodecs;
+    QString inputParameters;
+    QString inputLocation;
+    bool selectedCodecs[6];
+    ShowCodecs showCodecs;
 
-
-public:
+  public:
     explicit CodecTabsWidget(QWidget *parent = 0);
     ~CodecTabsWidget();
-    void setSelectedCodecs(int first, int second,
-                                                  int third);
+    void setSelectedCodecs(int first, int second, int third);
     void stopStreaming();
 
     static QString buildStreamingCommand(QString inputParameters,
@@ -61,17 +60,15 @@ public:
 
     void setCRF(QString value);
 
-
-private slots:
+  private slots:
     void onTabChange();
 
-signals:
+  signals:
     void currentTabChanged();
     void settingsChanged();
 
-private:
+  private:
     Ui::CodecTabsWidget *ui;
 };
-
 
 #endif // CODECTABSWIDGET_H

@@ -16,6 +16,8 @@ class MPEG1Manager : public CodecManager {
     explicit MPEG1Manager(QWidget *parent = 0);
     ~MPEG1Manager();
 
+    void setCodecTabs(CodecTabsWidget *widget);
+    // CommonParametersWidget* getCommonParams();
   private:
     Ui::MPEG1Manager *ui;
 };

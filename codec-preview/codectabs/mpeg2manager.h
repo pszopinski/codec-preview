@@ -16,6 +16,8 @@ class MPEG2Manager : public CodecManager {
     explicit MPEG2Manager(QWidget *parent = 0);
     ~MPEG2Manager();
 
+    void setCodecTabs(CodecTabsWidget *widget);
+    // CommonParametersWidget* getCommonParams();
   private:
     Ui::MPEG2Manager *ui;
 };

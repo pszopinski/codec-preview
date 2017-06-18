@@ -1,9 +1,15 @@
 #ifndef CODECMANAGER_H
 #define CODECMANAGER_H
 
-#include <QWidget>
-#include <QMap>
 #include <QDebug>
+#include <QMap>
+#include <QWidget>
+
+//#include "codectabswidget.h"
+
+//#include "commonparameterswidget.h"
+
+class CodecTabsWidget;
 
 class CodecManager : public QWidget {
     Q_OBJECT
@@ -15,6 +21,7 @@ class CodecManager : public QWidget {
     QString filterParameter;
     QString presetParameter;
     QString formatParameter;
+    CodecTabsWidget *codecTabs;
 
   public:
     explicit CodecManager(QWidget *parent = 0);
@@ -23,8 +30,12 @@ class CodecManager : public QWidget {
     void setCRF(QString value);
     QString getCRF();
 
+    virtual void setCodecTabs(CodecTabsWidget *widget);
+
+    // CommonParametersWidget* getCommonParams();
+
   signals:
-//    void parametersChanged();
+    //    void parametersChanged();
   public slots:
 };
 
