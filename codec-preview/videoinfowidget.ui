@@ -103,19 +103,6 @@
        </item>
       </layout>
      </widget>
-     <widget class="QPushButton" name="compareCodecs">
-      <property name="geometry">
-       <rect>
-        <x>950</x>
-        <y>10</y>
-        <width>321</width>
-        <height>81</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Compare multiple codecs</string>
-      </property>
-     </widget>
      <widget class="QWidget" name="layoutWidget_4">
       <property name="geometry">
        <rect>

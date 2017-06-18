@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QMap>
+#include <QDebug>
 
 class CodecManager : public QWidget {
     Q_OBJECT
@@ -14,7 +15,6 @@ class CodecManager : public QWidget {
     QString filterParameter;
     QString presetParameter;
     QString formatParameter;
-    QMap<QString, QString> parameters;
 
   public:
     explicit CodecManager(QWidget *parent = 0);

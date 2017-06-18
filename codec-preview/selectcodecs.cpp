@@ -133,7 +133,7 @@ void SelectCodecs::on_buttonBox_accepted() {
     }
     if (n == 3) {
         // User selected exactly 3 codecs
-        ccw->setSelectedCodecs(indexes[0], indexes[1], indexes[2]);
+        hndl->setSelectedCodecs(indexes[0], indexes[1], indexes[2]);
     } else {
         // User selected too little codecs
         QMessageBox::information(this, "Codec selection",
@@ -142,7 +142,7 @@ void SelectCodecs::on_buttonBox_accepted() {
     }
 }
 
-void SelectCodecs::setMainWindowHandler(CodecComparisonWindow *ccw) {
+void SelectCodecs::setMainWindowHandler(CodecTabsWidget *hndl) {
     qDebug() << "setMain!\n";
-    this->ccw = ccw;
+    this->hndl = hndl;
 }

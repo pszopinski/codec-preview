@@ -8,7 +8,6 @@ TEMPLATE = app
 DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
-    codeccomparisonwindow.cpp \
     codectabs/codecmanager.cpp \
     codectabs/h261manager.cpp \
     codectabs/h264manager.cpp \
@@ -18,11 +17,13 @@ SOURCES += main.cpp\
     codectabs/mpeg2manager.cpp \
     selectcodecs.cpp \
     showcodecs.cpp \
-    videoinfowidget.cpp
+    videoinfowidget.cpp \
+    codectabswidget.cpp \
+    videoplaybackwidget.cpp \
+    mainwindow.cpp
 
 
 HEADERS  += constants.h \
-    codeccomparisonwindow.h \
     codectabs/codecmanager.h \
     codectabs/h261manager.h \
     codectabs/h264manager.h \
@@ -32,9 +33,12 @@ HEADERS  += constants.h \
     codectabs/mpeg2manager.h \
     selectcodecs.h \
     showcodecs.h \
-    videoinfowidget.h
+    videoinfowidget.h \
+    codectabswidget.h \
+    videoplaybackwidget.h \
+    mainwindow.h
 
-FORMS    += codeccomparisonwindow.ui \
+FORMS    += \
     codectabs/mpeg1manager.ui \
     codectabs/mpeg2manager.ui \
     codectabs/h265manager.ui \
@@ -43,7 +47,10 @@ FORMS    += codeccomparisonwindow.ui \
     codectabs/mjpegmanager.ui \
     selectcodecs.ui \
     showcodecs.ui \
-    videoinfowidget.ui
+    videoinfowidget.ui \
+    videoplaybackwidget.ui \
+    codectabswidget.ui \
+    mainwindow.ui
 	
 win32 {
 VLCQT_PATH = D:\programming-tools\vlc-qt

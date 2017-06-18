@@ -1,11 +1,13 @@
 #ifndef SELECTCODECS_H
 #define SELECTCODECS_H
 
-#include "codeccomparisonwindow.h"
 #include <QCheckBox>
 #include <QDebug>
 #include <QDialog>
 #include <QMessageBox>
+
+#include "codectabswidget.h"
+
 
 namespace Ui {
 class SelectCodecs;
@@ -25,7 +27,7 @@ class SelectCodecs : public QDialog {
     bool getbH264();
     bool getbH265();
     bool canCheck();
-    void setMainWindowHandler(CodecComparisonWindow *ccw);
+    void setMainWindowHandler(CodecTabsWidget *hndl);
 
   private slots:
     void on_MPEG1_clicked();
@@ -48,7 +50,7 @@ class SelectCodecs : public QDialog {
     QCheckBox **checkBox;
     int lastChecked;
 
-    CodecComparisonWindow *ccw;
+    CodecTabsWidget *hndl;
 };
 
 #endif // SELECTCODECS_H

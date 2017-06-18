@@ -8,6 +8,12 @@ VideoInfoWidget::VideoInfoWidget(QWidget *parent) :
     ui->setupUi(this);
     streamProbeProcess.setStandardOutputFile(PROBE_FILE_NAME);
 
+    ui->frameTypes->setReadOnly(true);
+    ui->frameWidth->setReadOnly(true);
+    ui->frameHeight->setReadOnly(true);
+    ui->codecName->setReadOnly(true);
+    ui->bitRate->setReadOnly(true);
+    ui->aspectRatio->setReadOnly(true);
 
     connect(&frameProbeProcess, &QProcess::readyRead, this,
                      &VideoInfoWidget::parseFrameProbeOutput);
@@ -73,6 +79,9 @@ void VideoInfoWidget::startStreamProbe(QString command) {
 }
 
 void VideoInfoWidget::parseStreamProbeOutput(int a, QProcess::ExitStatus b) {
+    (void)a;
+    (void)b;
+
     //qDebug() << "start reading";
     std::ifstream myReadFile;
     myReadFile.open(PROBE_FILE_NAME.toUtf8().data());
@@ -116,3 +125,4 @@ void VideoInfoWidget::parseStreamProbeOutput(int a, QProcess::ExitStatus b) {
     myReadFile.close();
     qDebug() << "stop reading";
 }
+
