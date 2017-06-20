@@ -75,9 +75,9 @@ void CodecTabsWidget::setSelectedCodecs(int first, int second, int third) {
                          streamingCommand3, streamingCommand4);
 }
 
-QVector<CodecManager *> CodecTabsWidget::getCodecManagers() {
-    return codecManagers;
-}
+//QVector<CodecManager *> CodecTabsWidget::getCodecManagers() {
+//    return codecManagers;
+//}
 
 void CodecTabsWidget::stopStreaming() {
     streamingProcess.kill();

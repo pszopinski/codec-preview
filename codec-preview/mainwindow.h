@@ -13,7 +13,6 @@ class MainWindow;
 class MainWindow : public QMainWindow {
     Q_OBJECT
   public:
-  public:
     Ui::MainWindow *ui;
 
   public:
