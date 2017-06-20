@@ -7,6 +7,7 @@ CodecManager::CodecManager(QWidget *parent, QString encoder)
     ui->setupUi(this);
 
     streamingParameters->insert("c:v", encoder);
+    streamingParameters->insert("f", "matroska");
 }
 
 CodecManager::~CodecManager() { delete ui; }
