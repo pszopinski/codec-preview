@@ -31,14 +31,11 @@ void CodecTabsWidget::setSelectedCodecs(int first, int second, int third) {
 
     QString streamingParameters1 = "-c:v copy -f nut -an";
     QString streamingParameters2 =
-        parametersToString(codecManagers.at(first)->getStreamingParameters()) +
-        " -an";
+        parametersToString(codecManagers.at(first)->getStreamingParameters());
     QString streamingParameters3 =
-        parametersToString(codecManagers.at(second)->getStreamingParameters()) +
-        " -an";
+        parametersToString(codecManagers.at(second)->getStreamingParameters());
     QString streamingParameters4 =
-        parametersToString(codecManagers.at(third)->getStreamingParameters()) +
-        " -an";
+        parametersToString(codecManagers.at(third)->getStreamingParameters());
 
     qDebug() << "Streaming parameters:";
     qDebug() << streamingParameters1;

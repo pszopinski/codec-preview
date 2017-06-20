@@ -7,7 +7,6 @@ CodecManager::CodecManager(QWidget *parent, QString encoder)
     ui->setupUi(this);
 
     streamingParameters->insert("c:v", encoder);
-    streamingParameters->insert("f", "matroska");
     addParameter("FPS", "r", "30");
     addParameter("Scale", "s", "640:360");
 }
@@ -15,8 +14,11 @@ CodecManager::CodecManager(QWidget *parent, QString encoder)
 CodecManager::~CodecManager() { delete ui; }
 
 QMap<QString, QString> *CodecManager::getStreamingParameters() {
-    // streamingParameters->
-    return streamingParameters;
+    QMap<QString, QString> *parameters(streamingParameters);
+    // Add final parameters
+    parameters->insert("f", "matroska");
+    parameters->insert("an", "");
+    return parameters;
 }
 
 void CodecManager::addParameter(QString label, QString parameter,
