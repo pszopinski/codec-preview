@@ -16,6 +16,12 @@ CodecTabsWidget::CodecTabsWidget(QWidget *parent)
     codecManagers.push_back(ui->mpeg2tab);
     codecManagers.push_back(ui->h264tab);
     codecManagers.push_back(ui->h265tab);
+
+    // Connect codec managers' signals to settingsChanged
+    for (auto codecManager : codecManagers) {
+        connect(codecManager, &CodecManager::parametersChanged, this,
+                &CodecTabsWidget::settingsChanged);
+    }
 }
 
 CodecTabsWidget::~CodecTabsWidget() { delete ui; }
