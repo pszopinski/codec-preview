@@ -33,7 +33,6 @@ CodecTabsWidget::~CodecTabsWidget() { delete ui; }
 
 void CodecTabsWidget::setSelectedCodecs(int first, int second, int third) {
     qDebug() << "Selected codecs: " << first << second << third;
-
     QString streamingParameters1 = "-c:v copy -f nut -an";
     QString streamingParameters2 =
         parametersToString(codecManagers.at(first)->getStreamingParameters()) +
@@ -118,7 +117,7 @@ QString CodecTabsWidget::parametersToString(QMap<QString, QString> parameters) {
     QStringList result;
 
     for (auto key : parameters.keys()) {
-        result << "-" + key << parameters.value(key);
+        if(!parameters.value(key).isEmpty()) result << "-" + key << parameters.value(key);
     }
 
     return result.join(" ");
@@ -146,7 +145,7 @@ void CodecTabsWidget::openFromCamera() {
 
 void CodecTabsWidget::onTabChange() { currentTabChanged(); }
 
-QString CodecTabsWidget::getStreamingParameters() {
+QString CodecTabsWidget::refreshAndgetStreamingParameters() {
     if (inputLocation.isEmpty()) {
         qDebug() << "Input location is missing! Not starting player.";
         return "";
@@ -155,6 +154,7 @@ QString CodecTabsWidget::getStreamingParameters() {
         qDebug() << "Input parameters are missing! Not starting player.";
         return "";
     }
+
     QMap<QString, QString> streamingParametersMap =
         codecManagers.at(ui->tabWidget->currentIndex())
             ->getStreamingParameters();
@@ -206,6 +206,16 @@ QString CodecTabsWidget::getStreamCommand() {
 }
 
 void CodecTabsWidget::setCRF(QString value) {
-    codecManagers.at(ui->tabWidget->currentIndex())->setCRF(value);
+    codecManagers.at(ui->tabWidget->currentIndex())->setParameter("crf", value);
+    settingsChanged();
+}
+
+void CodecTabsWidget::setFrameRate(QString value) {
+    codecManagers.at(ui->tabWidget->currentIndex())->setParameter("r", value);
+    settingsChanged();
+}
+
+void CodecTabsWidget::setScale(QString value) {
+    codecManagers.at(ui->tabWidget->currentIndex())->setParameter("s", value);
     settingsChanged();
 }

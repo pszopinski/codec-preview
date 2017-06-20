@@ -15,20 +15,16 @@ class CodecManager : public QWidget {
     Q_OBJECT
 
   protected:
-    QString encoderParameter;
-    QString pixelFormatParameter;
-    QString crfParameter;
-    QString filterParameter;
-    QString presetParameter;
-    QString formatParameter;
     CodecTabsWidget *codecTabs;
+
+    QMap<QString, QString> parameters;
 
   public:
     explicit CodecManager(QWidget *parent = 0);
 
     QMap<QString, QString> getStreamingParameters();
-    void setCRF(QString value);
-    QString getCRF();
+    void setParameter(QString parameter, QString value);
+    QString getParameter(QString parameter);
 
     virtual void setCodecTabs(CodecTabsWidget *widget);
 

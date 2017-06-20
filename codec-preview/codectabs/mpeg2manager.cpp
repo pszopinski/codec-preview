@@ -3,7 +3,7 @@
 
 MPEG2Manager::MPEG2Manager(QWidget *parent)
     : CodecManager(parent), ui(new Ui::MPEG2Manager) {
-    encoderParameter = "mpeg2video";
+    parameters.insert("c:v", "mpeg2video");
     ui->setupUi(this);
 
     ui->commonParameters->setCodecManager(this);

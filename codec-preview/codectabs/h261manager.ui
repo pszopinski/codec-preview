@@ -20,7 +20,21 @@
       <widget class="CommonParametersWidget" name="commonParameters" native="true"/>
      </item>
      <item>
-      <widget class="QWidget" name="specificParameters" native="true"/>
+      <widget class="QWidget" name="specificParameters" native="true">
+       <widget class="QCheckBox" name="checkBox">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>80</y>
+          <width>161</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>CheckBox</string>
+        </property>
+       </widget>
+      </widget>
      </item>
     </layout>
    </item>
@@ -28,10 +42,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CommonParameters</class>
+   <class>CommonParametersWidget</class>
    <extends>QWidget</extends>
    <header>commonparameterswidget.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

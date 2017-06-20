@@ -56,9 +56,7 @@ void MainWindow::on_actionCompare_multiple_codecs_triggered() {
 void MainWindow::broadcast() {
     qDebug() << "==========BROADCASTING============";
 
-    ui->codecTabs->getStreamingParameters();
-
-    QString streamingParameters = ui->codecTabs->getStreamingParameters();
+    QString streamingParameters = ui->codecTabs->refreshAndgetStreamingParameters();
 
     ui->videoInfo->clearFrameQueue();
 

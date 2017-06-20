@@ -1,38 +1,30 @@
 #include "codecmanager.h"
 
 CodecManager::CodecManager(QWidget *parent) : QWidget(parent) {
-    crfParameter = "38";
-    pixelFormatParameter = "yuv420p";
-    filterParameter = "";
-    presetParameter = "ultrafast";
-    formatParameter = "matroska";
-
-    // connect(codecTabs, &CodecTabsWidget::broadcast, this,
-    // &CodecManager::setCurrentCRF);
+    parameters.insert("crf", "38");
+    parameters.insert("pix_fmt", "yuv420p");
+    parameters.insert("preset", "ultrafast");
+    parameters.insert("vf", "");
+    parameters.insert("f", "matroska");
+    parameters.insert("r", "30");
+    parameters.insert("s", "120:60");
 }
 
 QMap<QString, QString> CodecManager::getStreamingParameters() {
-    QMap<QString, QString> parameters;
-
-    if (!encoderParameter.isEmpty())
-        parameters.insert("c:v", encoderParameter);
-    if (!crfParameter.isEmpty())
-        parameters.insert("crf", crfParameter);
-    if (!pixelFormatParameter.isEmpty())
-        parameters.insert("pix_fmt", pixelFormatParameter);
-    if (!filterParameter.isEmpty())
-        parameters.insert("vf", filterParameter);
-    if (!presetParameter.isEmpty())
-        parameters.insert("preset", presetParameter);
-    if (!formatParameter.isEmpty())
-        parameters.insert("f", formatParameter);
-
     return parameters;
 }
 
-void CodecManager::setCRF(QString value) { crfParameter = value; }
 
-QString CodecManager::getCRF() { return crfParameter; }
+
+
+void CodecManager::setParameter(QString parameter, QString value) {
+    parameters.insert(parameter, value);
+}
+
+QString CodecManager::getParameter(QString parameter) {
+    return parameters.value(parameter);
+}
+
 
 /*CommonParametersWidget* CodecManager::getCommonParams() {
     qDebug() << "this SHOULDNT run";

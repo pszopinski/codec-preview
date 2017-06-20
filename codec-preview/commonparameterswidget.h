@@ -22,11 +22,17 @@ class CommonParametersWidget : public QWidget {
     void setCodecTabs(CodecTabsWidget *widget);
     void setCodecManager(CodecManager *widget);
     void retrieveCRF();
+    void retrieveFrameRate();
+    void retrieveScale();
 
   private slots:
     void on_crf_returnPressed();
 
-  private:
+    void on_frameRate_returnPressed();
+
+    void on_scale_returnPressed();
+
+private:
     Ui::CommonParametersWidget *ui;
 };
 

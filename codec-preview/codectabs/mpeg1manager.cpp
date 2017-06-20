@@ -3,7 +3,8 @@
 
 MPEG1Manager::MPEG1Manager(QWidget *parent)
     : CodecManager(parent), ui(new Ui::MPEG1Manager) {
-    encoderParameter = "mpeg1video";
+    parameters.insert("c:v", "mpeg1video");
+
     ui->setupUi(this);
 
     ui->commonParameters->setCodecManager(this);

@@ -3,7 +3,8 @@
 
 H264Manager::H264Manager(QWidget *parent)
     : CodecManager(parent), ui(new Ui::H264Manager) {
-    encoderParameter = "libx264";
+    parameters.insert("c:v", "libx264");
+
     ui->setupUi(this);
 
     ui->commonParameters->setCodecManager(this);

@@ -3,7 +3,7 @@
 
 MJPEGManager::MJPEGManager(QWidget *parent)
     : CodecManager(parent), ui(new Ui::MJPEGManager) {
-    encoderParameter = "mjpeg";
+    parameters.insert("c:v", "mjpeg");
     ui->setupUi(this);
 
     ui->commonParameters->setCodecManager(this);

@@ -52,13 +52,15 @@ class CodecTabsWidget : public QWidget {
     void openFromCamera();
     void selectMultipleCodecs();
 
-    QString getStreamingParameters();
+    QString refreshAndgetStreamingParameters();
     void startStreaming(QString streamingParameters);
 
     QString getProbeCommand();
     QString getStreamCommand();
 
     void setCRF(QString value);
+    void setFrameRate(QString value);
+    void setScale(QString value);
 
   private slots:
     void onTabChange();
