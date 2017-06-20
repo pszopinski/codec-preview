@@ -11,10 +11,6 @@ class MJPEGManager : public CodecManager {
   public:
     explicit MJPEGManager(QWidget *parent = 0);
     ~MJPEGManager();
-
-    void setCodecTabs(CodecTabsWidget *widget);
-    // CommonParametersWidget* getCommonParams();
-  private:
 };
 
 #endif // MJPEGMANAGER_H

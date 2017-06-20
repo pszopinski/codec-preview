@@ -44,9 +44,9 @@ class CodecTabsWidget : public QWidget {
                                          QVector<QString> outputLocations);
     static QString buildProbeCommand(QString location, QString params);
 
-    static QString parametersToString(QMap<QString, QString> parameters);
+    static QString parametersToString(QMap<QString, QString> *parameters);
 
-    //QVector<CodecManager *> getCodecManagers();
+    // QVector<CodecManager *> getCodecManagers();
 
     void openFromFile(QString filePath);
     void openFromCamera();

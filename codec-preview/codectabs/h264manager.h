@@ -11,10 +11,6 @@ class H264Manager : public CodecManager {
   public:
     explicit H264Manager(QWidget *parent = 0);
     ~H264Manager();
-
-    void setCodecTabs(CodecTabsWidget *widget);
-    // CommonParametersWidget* getCommonParams();
-  private:
 };
 
 #endif // H264MANAGER_H

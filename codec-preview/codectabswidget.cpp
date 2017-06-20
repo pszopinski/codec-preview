@@ -16,17 +16,6 @@ CodecTabsWidget::CodecTabsWidget(QWidget *parent)
     codecManagers.push_back(ui->mpeg2tab);
     codecManagers.push_back(ui->h264tab);
     codecManagers.push_back(ui->h265tab);
-
-    for (int i = 0; i < codecManagers.size(); i++) {
-        codecManagers.at(i)->setCodecTabs(this);
-    }
-
-    /*commonParamsWidgets.push_back(ui->mjpegtab->getCommonParams());
-    commonParamsWidgets.push_back(ui->h261tab->getCommonParams());
-    commonParamsWidgets.push_back(ui->mpeg1tab->getCommonParams());
-    commonParamsWidgets.push_back(ui->mpeg2tab->getCommonParams());
-    commonParamsWidgets.push_back(ui->h264tab->getCommonParams());
-    commonParamsWidgets.push_back(ui->h265tab->getCommonParams());*/
 }
 
 CodecTabsWidget::~CodecTabsWidget() { delete ui; }
@@ -114,11 +103,12 @@ QString CodecTabsWidget::buildProbeCommand(QString location, QString params) {
     return command;
 }
 
-QString CodecTabsWidget::parametersToString(QMap<QString, QString> parameters) {
+QString
+CodecTabsWidget::parametersToString(QMap<QString, QString> *parameters) {
     QStringList result;
 
-    for (auto key : parameters.keys()) {
-        result << "-" + key << parameters.value(key);
+    for (auto key : parameters->keys()) {
+        result << "-" + key << parameters->value(key);
     }
 
     return result.join(" ");
@@ -155,10 +145,10 @@ QString CodecTabsWidget::getStreamingParameters() {
         qDebug() << "Input parameters are missing! Not starting player.";
         return "";
     }
-    QMap<QString, QString> streamingParametersMap =
+    QMap<QString, QString> *streamingParametersMap =
         codecManagers.at(ui->tabWidget->currentIndex())
             ->getStreamingParameters();
-    if (streamingParametersMap.isEmpty()) {
+    if (streamingParametersMap->isEmpty()) {
         qDebug() << "Encoding parameters are missing! Not starting player.";
         return "";
     }

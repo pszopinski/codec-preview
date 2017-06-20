@@ -1,37 +1,27 @@
 #ifndef CODECMANAGER_H
 #define CODECMANAGER_H
 
-#include <QDebug>
 #include <QMap>
+#include <QString>
 #include <QWidget>
 
-//#include "codectabswidget.h"
-
-//#include "commonparameterswidget.h"
-
-class CodecTabsWidget;
+namespace Ui {
+class CodecManager;
+}
 
 class CodecManager : public QWidget {
     Q_OBJECT
 
+  private:
+    Ui::CodecManager *ui;
+
   protected:
-    QString encoderParameter;
-    QString pixelFormatParameter;
-    QString crfParameter;
-    QString filterParameter;
-    QString presetParameter;
-    QString formatParameter;
-    CodecTabsWidget *codecTabs;
+    QMap<QString, QString> *streamingParameters;
 
   public:
-    explicit CodecManager(QWidget *parent = 0);
-
-    QMap<QString, QString> getStreamingParameters();
-
-    virtual void setCodecTabs(CodecTabsWidget *widget);
-
-  signals:
-  public slots:
+    explicit CodecManager(QWidget *parent = 0, QString encoder = "copy");
+    ~CodecManager();
+    QMap<QString, QString> *getStreamingParameters();
 };
 
 #endif // CODECMANAGER_H
