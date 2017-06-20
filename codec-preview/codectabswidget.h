@@ -32,11 +32,6 @@ class CodecTabsWidget : public QWidget {
     bool selectedCodecs[6];
     ShowCodecs showCodecs;
 
-  public:
-    explicit CodecTabsWidget(QWidget *parent = 0);
-    ~CodecTabsWidget();
-    void setSelectedCodecs(int first, int second, int third);
-    void stopStreaming();
 
     static QString buildStreamingCommand(QString inputParameters,
                                          QString inputLocation,
@@ -45,6 +40,13 @@ class CodecTabsWidget : public QWidget {
     static QString buildProbeCommand(QString location, QString params);
 
     static QString parametersToString(QMap<QString, QString> parameters);
+
+  public:
+    explicit CodecTabsWidget(QWidget *parent = 0);
+    ~CodecTabsWidget();
+    void setSelectedCodecs(int first, int second, int third);
+    void stopStreaming();
+
 
     //QVector<CodecManager *> getCodecManagers();
 
@@ -58,9 +60,7 @@ class CodecTabsWidget : public QWidget {
     QString getProbeCommand();
     QString getStreamCommand();
 
-    void setCRF(QString value);
-    void setFrameRate(QString value);
-    void setScale(QString value);
+    void setParameter(QString parameter, QString value);
 
   private slots:
     void onTabChange();

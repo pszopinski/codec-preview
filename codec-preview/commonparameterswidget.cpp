@@ -4,6 +4,10 @@
 CommonParametersWidget::CommonParametersWidget(QWidget *parent)
     : QWidget(parent), ui(new Ui::CommonParametersWidget) {
     ui->setupUi(this);
+
+    parameterFields.insert("crf", this->ui->crf);
+    parameterFields.insert("r", this->ui->frameRate);
+    parameterFields.insert("s", this->ui->scale);
 }
 
 CommonParametersWidget::~CommonParametersWidget() { delete ui; }
@@ -12,43 +16,40 @@ CommonParametersWidget::~CommonParametersWidget() { delete ui; }
 void CommonParametersWidget::setCodecTabs(CodecTabsWidget *widget) {
     this->codecTabs = widget;
     connect(codecTabs, &CodecTabsWidget::settingsChanged, this,
-            &CommonParametersWidget::retrieveCRF);
-    connect(codecTabs, &CodecTabsWidget::settingsChanged, this,
-            &CommonParametersWidget::retrieveFrameRate);
-    connect(codecTabs, &CodecTabsWidget::settingsChanged, this,
-            &CommonParametersWidget::retrieveScale);
+            &CommonParametersWidget::retrieveAllParameters);
 }
 
 void CommonParametersWidget::setCodecManager(CodecManager *widget) {
     this->codecManager = widget;
 }
 
-void CommonParametersWidget::retrieveCRF() {
-    this->ui->crf->setText(codecManager->getParameter("crf"));
-}
-
-void CommonParametersWidget::retrieveFrameRate() {
-    this->ui->frameRate->setText(codecManager->getParameter("r"));
-}
-
-
-void CommonParametersWidget::retrieveScale() {
-    this->ui->scale->setText(codecManager->getParameter("s"));
+void CommonParametersWidget::retrieveParameter(QString parameter) {
+    parameterFields.value(parameter)->setText(codecManager->getParameter(parameter));
 }
 
 void CommonParametersWidget::on_crf_returnPressed() {
-    codecTabs->setCRF(ui->crf->text());
-    codecTabs->settingsChanged();
+    setParameter("crf");
 }
 
 void CommonParametersWidget::on_frameRate_returnPressed()
 {
-    codecTabs->setFrameRate(ui->frameRate->text());
-    codecTabs->settingsChanged();
+    setParameter("r");
 }
 
 void CommonParametersWidget::on_scale_returnPressed()
 {
-    codecTabs->setScale(ui->scale->text());
+    setParameter("s");
+}
+
+void CommonParametersWidget::retrieveAllParameters() {
+    QMap<QString, QLineEdit*>::iterator i;
+    for (i = parameterFields.begin(); i != parameterFields.end(); ++i) {
+        retrieveParameter(i.key());
+    }
+
+}
+
+void CommonParametersWidget::setParameter(QString parameter) {
+    codecTabs->setParameter(parameter, parameterFields.value(parameter)->text());
     codecTabs->settingsChanged();
 }

@@ -2,6 +2,7 @@
 #define COMMONPARAMETERSWIDGET_H
 
 #include <QWidget>
+#include <QLineEdit>
 
 #include "codectabswidget.h"
 
@@ -14,6 +15,9 @@ class CommonParametersWidget : public QWidget {
   private:
     CodecTabsWidget *codecTabs;
     CodecManager *codecManager;
+    QMap<QString, QLineEdit*> parameterFields;
+
+
 
   public:
     explicit CommonParametersWidget(QWidget *parent = 0);
@@ -21,11 +25,16 @@ class CommonParametersWidget : public QWidget {
 
     void setCodecTabs(CodecTabsWidget *widget);
     void setCodecManager(CodecManager *widget);
-    void retrieveCRF();
-    void retrieveFrameRate();
-    void retrieveScale();
+    void retrieveParameter(QString parameter);
+
+    void setParameter(QString parameter);
+
+
+
 
   private slots:
+    void retrieveAllParameters();
+
     void on_crf_returnPressed();
 
     void on_frameRate_returnPressed();

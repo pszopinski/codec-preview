@@ -205,17 +205,8 @@ QString CodecTabsWidget::getStreamCommand() {
     return streamProbeCommand;
 }
 
-void CodecTabsWidget::setCRF(QString value) {
-    codecManagers.at(ui->tabWidget->currentIndex())->setParameter("crf", value);
+void CodecTabsWidget::setParameter(QString parameter, QString value) {
+    codecManagers.at(ui->tabWidget->currentIndex())->setParameter(parameter, value);
     settingsChanged();
 }
 
-void CodecTabsWidget::setFrameRate(QString value) {
-    codecManagers.at(ui->tabWidget->currentIndex())->setParameter("r", value);
-    settingsChanged();
-}
-
-void CodecTabsWidget::setScale(QString value) {
-    codecManagers.at(ui->tabWidget->currentIndex())->setParameter("s", value);
-    settingsChanged();
-}
