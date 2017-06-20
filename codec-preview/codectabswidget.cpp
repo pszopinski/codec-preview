@@ -8,7 +8,7 @@ CodecTabsWidget::CodecTabsWidget(QWidget *parent)
     ui->tabWidget->setCurrentIndex(0);
 
     connect(ui->tabWidget, &QTabWidget::currentChanged, this,
-            CodecTabsWidget::onTabChange);
+            &CodecTabsWidget::onTabChange);
 
     codecManagers.push_back(ui->mjpegtab);
     codecManagers.push_back(ui->h261tab);
@@ -75,7 +75,7 @@ void CodecTabsWidget::setSelectedCodecs(int first, int second, int third) {
                          streamingCommand3, streamingCommand4);
 }
 
-//QVector<CodecManager *> CodecTabsWidget::getCodecManagers() {
+// QVector<CodecManager *> CodecTabsWidget::getCodecManagers() {
 //    return codecManagers;
 //}
 
