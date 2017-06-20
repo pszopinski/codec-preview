@@ -5,10 +5,6 @@
 
 #include "codecmanager.h"
 
-namespace Ui {
-class MPEG1Manager;
-}
-
 class MPEG1Manager : public CodecManager {
     Q_OBJECT
 
@@ -19,7 +15,6 @@ class MPEG1Manager : public CodecManager {
     void setCodecTabs(CodecTabsWidget *widget);
     // CommonParametersWidget* getCommonParams();
   private:
-    Ui::MPEG1Manager *ui;
 };
 
 #endif // MPEG1MANAGER_H

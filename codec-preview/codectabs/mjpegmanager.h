@@ -5,10 +5,6 @@
 
 #include "codecmanager.h"
 
-namespace Ui {
-class MJPEGManager;
-}
-
 class MJPEGManager : public CodecManager {
     Q_OBJECT
 
@@ -19,7 +15,6 @@ class MJPEGManager : public CodecManager {
     void setCodecTabs(CodecTabsWidget *widget);
     // CommonParametersWidget* getCommonParams();
   private:
-    Ui::MJPEGManager *ui;
 };
 
 #endif // MJPEGMANAGER_H

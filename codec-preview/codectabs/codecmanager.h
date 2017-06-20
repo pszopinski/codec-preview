@@ -27,15 +27,10 @@ class CodecManager : public QWidget {
     explicit CodecManager(QWidget *parent = 0);
 
     QMap<QString, QString> getStreamingParameters();
-    void setCRF(QString value);
-    QString getCRF();
 
     virtual void setCodecTabs(CodecTabsWidget *widget);
 
-    // CommonParametersWidget* getCommonParams();
-
   signals:
-    //    void parametersChanged();
   public slots:
 };
 

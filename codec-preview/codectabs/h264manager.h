@@ -5,10 +5,6 @@
 
 #include "codecmanager.h"
 
-namespace Ui {
-class H264Manager;
-}
-
 class H264Manager : public CodecManager {
     Q_OBJECT
 
@@ -19,7 +15,6 @@ class H264Manager : public CodecManager {
     void setCodecTabs(CodecTabsWidget *widget);
     // CommonParametersWidget* getCommonParams();
   private:
-    Ui::H264Manager *ui;
 };
 
 #endif // H264MANAGER_H

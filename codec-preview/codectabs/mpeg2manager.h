@@ -5,10 +5,6 @@
 
 #include "codecmanager.h"
 
-namespace Ui {
-class MPEG2Manager;
-}
-
 class MPEG2Manager : public CodecManager {
     Q_OBJECT
 
@@ -19,7 +15,6 @@ class MPEG2Manager : public CodecManager {
     void setCodecTabs(CodecTabsWidget *widget);
     // CommonParametersWidget* getCommonParams();
   private:
-    Ui::MPEG2Manager *ui;
 };
 
 #endif // MPEG2MANAGER_H

@@ -6,9 +6,6 @@ CodecManager::CodecManager(QWidget *parent) : QWidget(parent) {
     filterParameter = "";
     presetParameter = "ultrafast";
     formatParameter = "matroska";
-
-    // connect(codecTabs, &CodecTabsWidget::broadcast, this,
-    // &CodecManager::setCurrentCRF);
 }
 
 QMap<QString, QString> CodecManager::getStreamingParameters() {
@@ -30,19 +27,8 @@ QMap<QString, QString> CodecManager::getStreamingParameters() {
     return parameters;
 }
 
-void CodecManager::setCRF(QString value) { crfParameter = value; }
-
-QString CodecManager::getCRF() { return crfParameter; }
-
-/*CommonParametersWidget* CodecManager::getCommonParams() {
-    qDebug() << "this SHOULDNT run";
-    return NULL;
-}*/
-
 void CodecManager::setCodecTabs(CodecTabsWidget *widget) {
-    // this->codecTabs = widget;
-    // ui->commonParameters->setCodecTabs(codecTabs);
-    qDebug() << "===============this SHOULDNT run======================";
+    qDebug() << "===============this SHOULDNT run======================"; // WTF?
 
     (void)widget;
 }

@@ -1,15 +1,10 @@
 #include "mjpegmanager.h"
-#include "ui_mjpegmanager.h"
 
-MJPEGManager::MJPEGManager(QWidget *parent)
-    : CodecManager(parent), ui(new Ui::MJPEGManager) {
+MJPEGManager::MJPEGManager(QWidget *parent) : CodecManager(parent) {
     encoderParameter = "mjpeg";
-    ui->setupUi(this);
-
-    ui->commonParameters->setCodecManager(this);
 }
 
-MJPEGManager::~MJPEGManager() { delete ui; }
+MJPEGManager::~MJPEGManager() {}
 
 /*CommonParametersWidget* MJPEGManager::getCommonParams() {
     return ui->commonParameters;
@@ -17,5 +12,4 @@ MJPEGManager::~MJPEGManager() { delete ui; }
 
 void MJPEGManager::setCodecTabs(CodecTabsWidget *widget) {
     this->codecTabs = widget;
-    ui->commonParameters->setCodecTabs(codecTabs);
 }

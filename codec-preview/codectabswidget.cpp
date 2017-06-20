@@ -204,8 +204,3 @@ QString CodecTabsWidget::getStreamCommand() {
 
     return streamProbeCommand;
 }
-
-void CodecTabsWidget::setCRF(QString value) {
-    codecManagers.at(ui->tabWidget->currentIndex())->setCRF(value);
-    settingsChanged();
-}

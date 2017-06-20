@@ -5,10 +5,6 @@
 
 #include "codecmanager.h"
 
-namespace Ui {
-class H265Manager;
-}
-
 class H265Manager : public CodecManager {
     Q_OBJECT
 
@@ -19,7 +15,6 @@ class H265Manager : public CodecManager {
     void setCodecTabs(CodecTabsWidget *widget);
     // CommonParametersWidget* getCommonParams();
   private:
-    Ui::H265Manager *ui;
 };
 
 #endif // H265MANAGER_H

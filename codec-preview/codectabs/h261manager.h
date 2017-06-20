@@ -6,10 +6,6 @@
 
 #include "codecmanager.h"
 
-namespace Ui {
-class H261Manager;
-}
-
 class H261Manager : public CodecManager {
     Q_OBJECT
 
@@ -19,9 +15,6 @@ class H261Manager : public CodecManager {
 
     void setCodecTabs(CodecTabsWidget *widget);
     // CommonParametersWidget* getCommonParams();
-
-  private:
-    Ui::H261Manager *ui;
 };
 
 #endif // H261MANAGER_H

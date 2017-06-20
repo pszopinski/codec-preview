@@ -20,8 +20,7 @@ SOURCES += main.cpp\
     videoinfowidget.cpp \
     codectabswidget.cpp \
     videoplaybackwidget.cpp \
-    mainwindow.cpp \
-    commonparameterswidget.cpp
+    mainwindow.cpp
 
 
 HEADERS  += constants.h \
@@ -37,8 +36,7 @@ HEADERS  += constants.h \
     videoinfowidget.h \
     codectabswidget.h \
     videoplaybackwidget.h \
-    mainwindow.h \
-    commonparameterswidget.h
+    mainwindow.h
 
 FORMS    += \
     codectabs/mpeg1manager.ui \
@@ -52,8 +50,7 @@ FORMS    += \
     videoinfowidget.ui \
     videoplaybackwidget.ui \
     codectabswidget.ui \
-    mainwindow.ui \
-    commonparameterswidget.ui
+    mainwindow.ui
 	
 win32 {
 VLCQT_PATH = D:\programming-tools\vlc-qt
