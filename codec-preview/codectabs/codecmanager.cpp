@@ -8,13 +8,7 @@ CodecManager::CodecManager(QWidget *parent, QString encoder)
 
     streamingParameters->insert("c:v", encoder);
     addParameter("FPS", "r", "");
-    addParameter("Bitrate", "b:v", "");
-    addParameter("Minrate", "minrate", "");
-    addParameter("Maxrate", "maxrate", "");
-    addParameter("Buffer size", "bufsize", "");
-    addParameter("Aspect ratio", "aspect", "");
-    addParameter("Qscale", "qscale:v", "");
-    addParameter("Costant Rate Factor", "crf", "");
+
 }
 
 CodecManager::~CodecManager() { delete ui; }

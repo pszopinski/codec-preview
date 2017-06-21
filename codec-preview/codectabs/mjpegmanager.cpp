@@ -1,7 +1,11 @@
 #include "mjpegmanager.h"
 
 MJPEGManager::MJPEGManager(QWidget *parent) : CodecManager(parent, "mjpeg") {
-    addParameter("Scale", "s", "640:360");
+    addParameter("Scale", "s", "");
+    addParameter("Bitrate", "b:v", "");
+    addParameter("Minrate", "minrate", "");
+    addParameter("Aspect ratio", "aspect", "");
+    addParameter("Qscale", "qscale:v", "");
 }
 
 MJPEGManager::~MJPEGManager() {}
