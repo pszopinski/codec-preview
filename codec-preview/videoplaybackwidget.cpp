@@ -17,7 +17,6 @@ VideoPlaybackWidget::VideoPlaybackWidget(QWidget *parent)
                                    ":" + RAW_VIDEO_PORT,
                                false, vlcInstance);
 
-    vlcMediaRaw->
     vlcPlayerRaw->openOnly(vlcMediaRaw);
 
     // Initialize encoded video display
