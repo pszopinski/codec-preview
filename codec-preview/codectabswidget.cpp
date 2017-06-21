@@ -111,7 +111,7 @@ CodecTabsWidget::parametersToString(QMap<QString, QString> *parameters) {
     QStringList result;
 
     for (auto key : parameters->keys()) {
-        result << "-" + key << parameters->value(key);
+        if(!parameters->value(key).isEmpty()) result << "-" + key << parameters->value(key);
     }
 
     return result.join(" ");
