@@ -22,6 +22,9 @@ class MainWindow : public QMainWindow {
 
     void broadcast();
 
+  private:
+    void resetPlayback();
+
   private slots:
     void on_actionOpen_file_triggered();
 
