@@ -12,9 +12,12 @@ VideoPlaybackWidget::VideoPlaybackWidget(QWidget *parent)
     vlcPlayerRaw->setVideoWidget(ui->rawVideo);
     vlcPlayerRaw->audio()->setMute(true);
     ui->rawVideo->setMediaPlayer(vlcPlayerRaw);
+
     vlcMediaRaw = new VlcMedia(RAW_VIDEO_PROTOCOL + "://@" + RAW_VIDEO_HOST +
                                    ":" + RAW_VIDEO_PORT,
                                false, vlcInstance);
+
+    vlcMediaRaw->
     vlcPlayerRaw->openOnly(vlcMediaRaw);
 
     // Initialize encoded video display

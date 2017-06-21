@@ -4,6 +4,7 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
+    setWindowState(Qt::WindowMaximized);
     ui->setupUi(this);
 
     connect(ui->codecTabs, &CodecTabsWidget::settingsChanged, this,

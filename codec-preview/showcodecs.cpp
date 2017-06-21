@@ -3,6 +3,7 @@
 
 ShowCodecs::ShowCodecs(QWidget *parent)
     : QWidget(parent), ui(new Ui::ShowCodecs) {
+    setWindowState(Qt::WindowMaximized);
     ui->setupUi(this);
 
     vlcInstance = new VlcInstance(VlcCommon::args(), NULL);

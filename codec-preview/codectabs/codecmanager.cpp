@@ -24,7 +24,7 @@ QMap<QString, QString> *CodecManager::getStreamingParameters() {
 void CodecManager::addParameter(QString label, QString parameter,
                                 QString value) {
     // Create a new layout for the parameter
-    QVBoxLayout *layout = new QVBoxLayout(this);
+    QVBoxLayout *layout = new QVBoxLayout();
 
     // Add a QLabel
     QLabel *labelWidget = new QLabel(label, this);
@@ -50,7 +50,7 @@ void CodecManager::addParameter(QString label, QString parameter,
 void CodecManager::addParameter(QString label, QString parameter,
                                 QList<QString> values) {
     // Create a new layout for the parameter
-    QVBoxLayout *layout = new QVBoxLayout(this);
+    QVBoxLayout *layout = new QVBoxLayout();
 
     // Add a QLabel
     QLabel *labelWidget = new QLabel(label, this);
@@ -76,8 +76,8 @@ void CodecManager::addParameter(QString label, QString parameter,
 
 void CodecManager::insertParameter(QLayout *layout) {
     // Calculate position
-    int row = layoutCounter / 5;
-    int column = layoutCounter % 5;
+    int row = layoutCounter / 7;
+    int column = layoutCounter % 7;
 
     // Insert the layout
     ui->mainLayout->addLayout(layout, row, column);
