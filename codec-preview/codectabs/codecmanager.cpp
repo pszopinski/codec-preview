@@ -37,8 +37,10 @@ void CodecManager::addParameter(QString label, QString parameter,
     streamingParameters->insert(parameter, value);
     connect(lineEdit, &QLineEdit::editingFinished, [=] {
         QString newValue = lineEdit->text();
-        streamingParameters->insert(parameter, newValue);
-        emit parametersChanged();
+        if (newValue != streamingParameters->value(parameter)) {
+            streamingParameters->insert(parameter, newValue);
+            emit parametersChanged();
+        }
     });
 
     // Calculate the position of the parameter's layout
