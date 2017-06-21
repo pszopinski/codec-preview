@@ -2,7 +2,7 @@
 
 MPEG1Manager::MPEG1Manager(QWidget *parent)
     : CodecManager(parent, "mpeg1video") {
-    // addParameter(...);
+    addParameter("Scale", "s", "640:360");
 }
 
 MPEG1Manager::~MPEG1Manager() {}

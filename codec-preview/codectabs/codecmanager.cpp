@@ -8,7 +8,6 @@ CodecManager::CodecManager(QWidget *parent, QString encoder)
 
     streamingParameters->insert("c:v", encoder);
     addParameter("FPS", "r", "30");
-    addParameter("Scale", "s", "640:360");
 }
 
 CodecManager::~CodecManager() { delete ui; }
@@ -43,8 +42,8 @@ void CodecManager::addParameter(QString label, QString parameter,
     });
 
     // Calculate the position of the parameter's layout
-    int row = layoutCounter;
-    int column = 0;
+    int row = layoutCounter / 5;
+    int column = layoutCounter % 5;
 
     // Insert the new layout
     ui->mainLayout->addLayout(layout, row, column);
