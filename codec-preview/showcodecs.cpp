@@ -38,28 +38,24 @@ void ShowCodecs::closeEvent(QCloseEvent *event) {
     for (int i = 0; i < 4; i++) {
         // Stop the player
         vlcMediaPlayers[i]->stop();
-        // Kill streaming process
-        streamingProcesses[i].kill();
-        streamingProcesses[i].waitForFinished();
     }
+    // Kill streaming process
+    streamingProcess.kill();
+    streamingProcess.waitForFinished();
 }
 
-void ShowCodecs::broadcast(QString streamingCommand1, QString streamingCommand2,
-                           QString streamingCommand3,
-                           QString streamingCommand4) {
+void ShowCodecs::broadcast(QString streamingCommand) {
     for (int i = 0; i < 4; i++) {
         // Stop the player
         vlcMediaPlayers[i]->stop();
-        // Kill streaming process
-        streamingProcesses[i].kill();
-        streamingProcesses[i].waitForFinished();
     }
 
-    // Start streaming processes
-    streamingProcesses[0].start(streamingCommand1);
-    streamingProcesses[1].start(streamingCommand2);
-    streamingProcesses[2].start(streamingCommand3);
-    streamingProcesses[3].start(streamingCommand4);
+    // Kill streaming process
+    streamingProcess.kill();
+    streamingProcess.waitForFinished();
+
+    // Start streaming process
+    streamingProcess.start(streamingCommand);
 
     qDebug() << "Starting the players...";
     for (int i = 0; i < 4; i++) {

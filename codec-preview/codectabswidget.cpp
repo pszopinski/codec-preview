@@ -43,28 +43,20 @@ void CodecTabsWidget::setSelectedCodecs(int first, int second, int third) {
     qDebug() << streamingParameters3;
     qDebug() << streamingParameters4;
 
-    QString streamingCommand1 = buildStreamingCommand(
-        inputParameters, inputLocation, {streamingParameters1},
-        {VIDEO_PROTOCOLS[0] + "://" + VIDEO_HOSTS[0] + ":" + VIDEO_PORTS[0]});
-    QString streamingCommand2 = buildStreamingCommand(
-        inputParameters, inputLocation, {streamingParameters2},
-        {VIDEO_PROTOCOLS[1] + "://" + VIDEO_HOSTS[1] + ":" + VIDEO_PORTS[1]});
-    QString streamingCommand3 = buildStreamingCommand(
-        inputParameters, inputLocation, {streamingParameters3},
-        {VIDEO_PROTOCOLS[2] + "://" + VIDEO_HOSTS[2] + ":" + VIDEO_PORTS[2]});
-    QString streamingCommand4 = buildStreamingCommand(
-        inputParameters, inputLocation, {streamingParameters4},
-        {VIDEO_PROTOCOLS[3] + "://" + VIDEO_HOSTS[3] + ":" + VIDEO_PORTS[3]});
+    QString streamingCommand = buildStreamingCommand(
+        inputParameters, inputLocation,
+        {streamingParameters1, streamingParameters2, streamingParameters3,
+         streamingParameters4},
+        {VIDEO_PROTOCOLS[0] + "://" + VIDEO_HOSTS[0] + ":" + VIDEO_PORTS[0],
+         VIDEO_PROTOCOLS[1] + "://" + VIDEO_HOSTS[1] + ":" + VIDEO_PORTS[1],
+         VIDEO_PROTOCOLS[2] + "://" + VIDEO_HOSTS[2] + ":" + VIDEO_PORTS[2],
+         VIDEO_PROTOCOLS[3] + "://" + VIDEO_HOSTS[3] + ":" + VIDEO_PORTS[3]});
 
-    qDebug() << "Streaming commands:";
-    qDebug() << streamingCommand1;
-    qDebug() << streamingCommand2;
-    qDebug() << streamingCommand3;
-    qDebug() << streamingCommand4;
+    qDebug() << "Streaming command:";
+    qDebug() << streamingCommand;
 
     showCodecs.show();
-    showCodecs.broadcast(streamingCommand1, streamingCommand2,
-                         streamingCommand3, streamingCommand4);
+    showCodecs.broadcast(streamingCommand);
 }
 
 // QVector<CodecManager *> CodecTabsWidget::getCodecManagers() {
@@ -111,7 +103,8 @@ CodecTabsWidget::parametersToString(QMap<QString, QString> *parameters) {
     QStringList result;
 
     for (auto key : parameters->keys()) {
-        if(!parameters->value(key).isEmpty()) result << "-" + key << parameters->value(key);
+        if (!parameters->value(key).isEmpty())
+            result << "-" + key << parameters->value(key);
     }
 
     return result.join(" ");
