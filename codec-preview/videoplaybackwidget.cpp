@@ -3,7 +3,6 @@
 
 VideoPlaybackWidget::VideoPlaybackWidget(QWidget *parent)
     : QWidget(parent), ui(new Ui::VideoPlaybackWidget) {
-    this->showMaximized();
     ui->setupUi(this);
 
     vlcInstance = new VlcInstance(VlcCommon::args(), NULL);
