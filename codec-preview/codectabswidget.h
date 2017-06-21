@@ -32,6 +32,10 @@ class CodecTabsWidget : public QWidget {
     bool selectedCodecs[6];
     ShowCodecs showCodecs;
 
+    QProcess cameraNameGetterProcess;
+
+
+
   public:
     explicit CodecTabsWidget(QWidget *parent = 0);
     ~CodecTabsWidget();
@@ -62,6 +66,7 @@ class CodecTabsWidget : public QWidget {
 
   private slots:
     void onTabChange();
+    void parseCameraNameProbeOutput();
 
   signals:
     void currentTabChanged();

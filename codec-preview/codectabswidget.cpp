@@ -22,6 +22,9 @@ CodecTabsWidget::CodecTabsWidget(QWidget *parent)
         connect(codecManager, &CodecManager::parametersChanged, this,
                 &CodecTabsWidget::settingsChanged);
     }
+
+    connect(&cameraNameGetterProcess, &QProcess::readyRead, this,
+            &CodecTabsWidget::parseCameraNameProbeOutput);
 }
 
 CodecTabsWidget::~CodecTabsWidget() { delete ui; }
@@ -128,8 +131,15 @@ void CodecTabsWidget::openFromFile(QString filePath) {
 void CodecTabsWidget::openFromCamera() {
 #ifdef Q_OS_WIN
     inputParameters = "-f dshow";
+
+
+    cameraNameGetterProcess.kill();
+    cameraNameGetterProcess.waitForFinished();
+    cameraNameGetterProcess.start("ffmpeg -list_devices true -f dshow -i dummy");
+
     inputLocation = "video=\"Lenovo EasyCamera\"";
     settingsChanged();
+
 #else
     inputParameters = "-f v4l2";
     inputLocation = "/dev/video0";
@@ -196,4 +206,28 @@ QString CodecTabsWidget::getStreamCommand() {
                           "-show_streams -select_streams v:0");
 
     return streamProbeCommand;
+}
+
+void CodecTabsWidget::parseCameraNameProbeOutput() {
+
+    QString cameraName;
+
+
+    bool firstLine = true;
+    while (cameraNameGetterProcess.canReadLine()) {
+        QString output = cameraNameGetterProcess.readLine();
+        if(!firstLine) {
+            qDebug() << "the output is " + output;
+            break;
+        }
+        firstLine = false;
+
+    }
+
+
+
+    inputLocation = "video=\"Lenovo EasyCamera\"";
+
+
+    settingsChanged();
 }
