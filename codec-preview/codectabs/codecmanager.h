@@ -1,9 +1,11 @@
 #ifndef CODECMANAGER_H
 #define CODECMANAGER_H
 
+#include <QComboBox>
 #include <QDebug>
 #include <QLabel>
 #include <QLineEdit>
+#include <QList>
 #include <QMap>
 #include <QString>
 #include <QVBoxLayout>
@@ -28,6 +30,10 @@ class CodecManager : public QWidget {
     ~CodecManager();
     QMap<QString, QString> *getStreamingParameters();
     void addParameter(QString label, QString parameter, QString value);
+    void addParameter(QString label, QString parameter, QList<QString> values);
+
+  private:
+    void insertParameter(QLayout *layout);
 
   signals:
     void parametersChanged();

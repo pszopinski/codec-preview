@@ -43,11 +43,42 @@ void CodecManager::addParameter(QString label, QString parameter,
         }
     });
 
-    // Calculate the position of the parameter's layout
+    insertParameter(layout);
+}
+
+void CodecManager::addParameter(QString label, QString parameter,
+                                QList<QString> values) {
+    // Create a new layout for the parameter
+    QVBoxLayout *layout = new QVBoxLayout(this);
+
+    // Add a QLabel
+    QLabel *labelWidget = new QLabel(label, this);
+    layout->addWidget(labelWidget);
+
+    // Add a QComboBox
+    QComboBox *comboBox = new QComboBox(this);
+    comboBox->insertItems(0, values);
+    layout->addWidget(comboBox);
+
+    // Make the form interactive
+    streamingParameters->insert(parameter, values[0]);
+    connect(comboBox, &QComboBox::currentTextChanged,
+            [=](const QString &newValue) {
+                if (newValue != streamingParameters->value(parameter)) {
+                    streamingParameters->insert(parameter, newValue);
+                    emit parametersChanged();
+                }
+            });
+
+    insertParameter(layout);
+}
+
+void CodecManager::insertParameter(QLayout *layout) {
+    // Calculate position
     int row = layoutCounter / 5;
     int column = layoutCounter % 5;
 
-    // Insert the new layout
+    // Insert the layout
     ui->mainLayout->addLayout(layout, row, column);
     layoutCounter++;
 }
