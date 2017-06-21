@@ -8,7 +8,6 @@ CodecManager::CodecManager(QWidget *parent, QString encoder)
 
     streamingParameters->insert("c:v", encoder);
     addParameter("FPS", "r", "");
-
 }
 
 CodecManager::~CodecManager() { delete ui; }
@@ -74,7 +73,10 @@ void CodecManager::addParameter(QString label, QString parameter,
     insertParameter(layout);
 }
 
-void CodecManager::insertParameter(QLayout *layout) {
+void CodecManager::insertParameter(QVBoxLayout *layout) {
+    // Add a stretch to the bottom
+    layout->addStretch();
+
     // Calculate position
     int row = layoutCounter / 7;
     int column = layoutCounter % 7;

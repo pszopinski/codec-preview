@@ -47,7 +47,8 @@ void MainWindow::on_actionOpen_from_camera_triggered() {
 }
 
 void MainWindow::on_actionCompare_multiple_codecs_triggered() {
-    qDebug() << "Clicked!\n";
+    resetPlayback();
+
     SelectCodecs selectCodecs;
     selectCodecs.setMainWindowHandler(ui->codecTabs);
     selectCodecs.setModal(true);
@@ -61,9 +62,20 @@ void MainWindow::broadcast() {
 
     QString streamingParameters = ui->codecTabs->getStreamingParameters();
 
-    ui->videoInfo->clearFrameQueue();
+    resetPlayback();
 
-    // ui->crf->setText(codecManagers.at(ui->tabWidget->currentIndex())->getCRF());
+    ui->codecTabs->startStreaming(streamingParameters);
+
+    QString frameProbeCommand = ui->codecTabs->getProbeCommand();
+    ui->videoInfo->startFrameProbe(frameProbeCommand);
+    QString streamProbeCommand = ui->codecTabs->getStreamCommand();
+    ui->videoInfo->startStreamProbe(streamProbeCommand);
+
+    ui->videoPlayback->startPlayers();
+}
+
+void MainWindow::resetPlayback() {
+    ui->videoInfo->clearFrameQueue();
 
     qDebug() << "Stopping the players...";
 
@@ -74,13 +86,4 @@ void MainWindow::broadcast() {
     ui->codecTabs->stopStreaming();
 
     ui->videoInfo->stopProbe();
-
-    ui->codecTabs->startStreaming(streamingParameters);
-
-    QString frameProbeCommand = ui->codecTabs->getProbeCommand();
-    ui->videoInfo->startFrameProbe(frameProbeCommand);
-    QString streamProbeCommand = ui->codecTabs->getStreamCommand();
-    ui->videoInfo->startStreamProbe(streamProbeCommand);
-
-    ui->videoPlayback->startPlayers();
 }

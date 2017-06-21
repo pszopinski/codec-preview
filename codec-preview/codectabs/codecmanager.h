@@ -33,7 +33,7 @@ class CodecManager : public QWidget {
     void addParameter(QString label, QString parameter, QList<QString> values);
 
   private:
-    void insertParameter(QLayout *layout);
+    void insertParameter(QVBoxLayout *layout);
 
   signals:
     void parametersChanged();
