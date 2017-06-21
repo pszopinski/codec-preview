@@ -4,20 +4,25 @@
 #include <QDebug>
 #include <QMap>
 #include <QWidget>
+#include <QLineEdit>
 
-//#include "codectabswidget.h"
 
 //#include "commonparameterswidget.h"
 
-class CodecTabsWidget;
+
+#include "codectabswidget.h"
+
 
 class CodecManager : public QWidget {
     Q_OBJECT
+    CodecTabsWidget* codecTabs;
 
   protected:
-    CodecTabsWidget *codecTabs;
-
     QMap<QString, QString> parameters;
+
+    QMap<QString, QLineEdit*> parameterFields;
+
+
 
   public:
     explicit CodecManager(QWidget *parent = 0);
@@ -26,7 +31,10 @@ class CodecManager : public QWidget {
     void setParameter(QString parameter, QString value);
     QString getParameter(QString parameter);
 
+    void setField(QString parameter);
+
     virtual void setCodecTabs(CodecTabsWidget *widget);
+
 
     // CommonParametersWidget* getCommonParams();
 

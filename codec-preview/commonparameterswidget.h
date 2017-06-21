@@ -27,7 +27,7 @@ class CommonParametersWidget : public QWidget {
     void setCodecManager(CodecManager *widget);
     void retrieveParameter(QString parameter);
 
-    void setParameter(QString parameter);
+    void setField(QString parameter);
 
 
 

@@ -8,6 +8,9 @@ H265Manager::H265Manager(QWidget *parent)
     ui->setupUi(this);
 
     ui->commonParameters->setCodecManager(this);
+
+    parameterFields.insert("crf", this->ui->crf);
+
 }
 
 H265Manager::~H265Manager() { delete ui; }
@@ -19,4 +22,9 @@ H265Manager::~H265Manager() { delete ui; }
 void H265Manager::setCodecTabs(CodecTabsWidget *widget) {
     this->codecTabs = widget;
     ui->commonParameters->setCodecTabs(codecTabs);
+}
+
+void H265Manager::on_crf_returnPressed()
+{
+
 }

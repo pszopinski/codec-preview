@@ -8,6 +8,8 @@ H264Manager::H264Manager(QWidget *parent)
     ui->setupUi(this);
 
     ui->commonParameters->setCodecManager(this);
+
+    parameterFields.insert("crf", this->ui->crf);
 }
 
 H264Manager::~H264Manager() { delete ui; }
@@ -19,4 +21,9 @@ H264Manager::~H264Manager() { delete ui; }
 void H264Manager::setCodecTabs(CodecTabsWidget *widget) {
     this->codecTabs = widget;
     ui->commonParameters->setCodecTabs(codecTabs);
+}
+
+void H264Manager::on_crf_returnPressed()
+{
+
 }

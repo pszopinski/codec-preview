@@ -49,7 +49,7 @@ void CommonParametersWidget::retrieveAllParameters() {
 
 }
 
-void CommonParametersWidget::setParameter(QString parameter) {
+void CommonParametersWidget::setField(QString parameter) {
     codecTabs->setParameter(parameter, parameterFields.value(parameter)->text());
     codecTabs->settingsChanged();
 }

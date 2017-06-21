@@ -18,7 +18,10 @@ class H264Manager : public CodecManager {
 
     void setCodecTabs(CodecTabsWidget *widget);
     // CommonParametersWidget* getCommonParams();
-  private:
+private slots:
+    void on_crf_returnPressed();
+
+private:
     Ui::H264Manager *ui;
 };
 

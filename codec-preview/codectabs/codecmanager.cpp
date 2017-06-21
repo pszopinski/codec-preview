@@ -1,5 +1,6 @@
 #include "codecmanager.h"
 
+
 CodecManager::CodecManager(QWidget *parent) : QWidget(parent) {
     parameters.insert("crf", "38");
     parameters.insert("pix_fmt", "yuv420p");
@@ -8,6 +9,8 @@ CodecManager::CodecManager(QWidget *parent) : QWidget(parent) {
     parameters.insert("f", "matroska");
     parameters.insert("r", "30");
     parameters.insert("s", "120:60");
+
+
 }
 
 QMap<QString, QString> CodecManager::getStreamingParameters() {
@@ -31,10 +34,8 @@ QString CodecManager::getParameter(QString parameter) {
     return NULL;
 }*/
 
-void CodecManager::setCodecTabs(CodecTabsWidget *widget) {
-    // this->codecTabs = widget;
-    // ui->commonParameters->setCodecTabs(codecTabs);
-    qDebug() << "===============this SHOULDNT run======================";
 
-    (void)widget;
+void CodecManager::setField(QString parameter) {
+    codecTabs->setParameter(parameter, parameterFields.value(parameter)->text());
+    codecTabs->settingsChanged();
 }

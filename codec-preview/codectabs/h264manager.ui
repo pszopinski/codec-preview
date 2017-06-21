@@ -20,7 +20,43 @@
       <widget class="CommonParametersWidget" name="commonParameters" native="true"/>
      </item>
      <item>
-      <widget class="QWidget" name="specificParameters" native="true"/>
+      <widget class="QWidget" name="specificParameters" native="true">
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>30</y>
+          <width>151</width>
+          <height>107</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>CRF:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="crf">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>50</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
      </item>
     </layout>
    </item>
@@ -28,10 +64,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CommonParameters</class>
+   <class>CommonParametersWidget</class>
    <extends>QWidget</extends>
    <header>commonparameterswidget.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
