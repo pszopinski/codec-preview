@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>441</width>
-    <height>137</height>
+    <width>705</width>
+    <height>154</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,6 +18,20 @@
     <widget class="QWidget" name="widget_2" native="true">
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
+       <layout class="QVBoxLayout" name="verticalLayout_12" stretch="0,0">
+        <item>
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>Codec name:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="codecName"/>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="1">
        <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0">
         <item>
          <widget class="QLabel" name="label">
@@ -31,7 +45,7 @@
         </item>
        </layout>
       </item>
-      <item row="0" column="1">
+      <item row="0" column="2">
        <layout class="QVBoxLayout" name="verticalLayout_8">
         <item>
          <widget class="QLabel" name="label_2">
@@ -45,7 +59,7 @@
         </item>
        </layout>
       </item>
-      <item row="0" column="2">
+      <item row="0" column="3">
        <layout class="QVBoxLayout" name="verticalLayout_9">
         <item>
          <widget class="QLabel" name="label_3">
@@ -59,21 +73,7 @@
         </item>
        </layout>
       </item>
-      <item row="0" column="3">
-       <layout class="QVBoxLayout" name="verticalLayout_13">
-        <item>
-         <widget class="QLabel" name="label_7">
-          <property name="text">
-           <string>Frame rate:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="frameRate"/>
-        </item>
-       </layout>
-      </item>
-      <item row="1" column="0">
+      <item row="0" column="4">
        <layout class="QVBoxLayout" name="verticalLayout_10" stretch="0,0">
         <item>
          <widget class="QLabel" name="label_4">
@@ -87,7 +87,21 @@
         </item>
        </layout>
       </item>
-      <item row="1" column="1">
+      <item row="0" column="6">
+       <layout class="QVBoxLayout" name="verticalLayout_13">
+        <item>
+         <widget class="QLabel" name="label_7">
+          <property name="text">
+           <string>Frame rate:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="frameRate"/>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="7">
        <layout class="QVBoxLayout" name="verticalLayout_11" stretch="0,0">
         <item>
          <widget class="QLabel" name="label_5">
@@ -98,20 +112,6 @@
         </item>
         <item>
          <widget class="QLineEdit" name="bitRate"/>
-        </item>
-       </layout>
-      </item>
-      <item row="1" column="2">
-       <layout class="QVBoxLayout" name="verticalLayout_12" stretch="0,0">
-        <item>
-         <widget class="QLabel" name="label_6">
-          <property name="text">
-           <string>Codec name:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="codecName"/>
         </item>
        </layout>
       </item>

@@ -82,8 +82,8 @@ void CodecManager::addParameter(QString label, QString parameter,
 
 void CodecManager::insertParameter(QLayout *layout) {
     // Calculate position
-    int row = layoutCounter / 5;
-    int column = layoutCounter % 5;
+    int row = layoutCounter / 7;
+    int column = layoutCounter % 7;
 
     // Insert the layout
     ui->mainLayout->addLayout(layout, row, column);
