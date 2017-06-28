@@ -75,6 +75,7 @@ void VideoInfoWidget::parseStreamProbeOutput(int a, QProcess::ExitStatus b) {
     (void)a;
     (void)b;
 
+
     // qDebug() << "start reading";
     std::ifstream myReadFile;
     myReadFile.open(PROBE_FILE_NAME.toUtf8().data());

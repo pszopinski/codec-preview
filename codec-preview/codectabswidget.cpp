@@ -23,8 +23,8 @@ CodecTabsWidget::CodecTabsWidget(QWidget *parent)
                 &CodecTabsWidget::settingsChanged);
     }
 
-    connect(&cameraNameGetterProcess, &QProcess::readyRead, this,
-            &CodecTabsWidget::parseCameraNameProbeOutput);
+    connect(&cameraNameGetterProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this,
+            SLOT(parseCameraNameProbeOutput(int, QProcess::ExitStatus)));
 }
 
 CodecTabsWidget::~CodecTabsWidget() { delete ui; }
@@ -129,9 +129,9 @@ void CodecTabsWidget::openFromCamera() {
     cameraNameGetterProcess.kill();
     cameraNameGetterProcess.waitForFinished();
     cameraNameGetterProcess.start("ffmpeg -list_devices true -f dshow -i dummy");
+    qDebug() << "started the camera name process";
 
-    inputLocation = "video=\"Lenovo EasyCamera\"";
-    settingsChanged();
+
 
 #else
     inputParameters = "-f v4l2";
@@ -201,26 +201,14 @@ QString CodecTabsWidget::getStreamCommand() {
     return streamProbeCommand;
 }
 
-void CodecTabsWidget::parseCameraNameProbeOutput() {
+void CodecTabsWidget::parseCameraNameProbeOutput(int a, QProcess::ExitStatus b) {
+    (void) a;
+    (void) b;
 
-    QString cameraName;
+    QRegularExpression re("\"(.*?)\"");
+    QRegularExpressionMatch match = re.globalMatch(cameraNameGetterProcess.readAllStandardError()).next();
+    //qDebug() << ;
 
-
-    bool firstLine = true;
-    while (cameraNameGetterProcess.canReadLine()) {
-        QString output = cameraNameGetterProcess.readLine();
-        if(!firstLine) {
-            qDebug() << "the output is " + output;
-            break;
-        }
-        firstLine = false;
-
-    }
-
-
-
-    inputLocation = "video=\"Lenovo EasyCamera\"";
-
-
+    inputLocation = QString("video=") + QString(match.captured().toUtf8().constData());
     settingsChanged();
 }

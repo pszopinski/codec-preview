@@ -4,6 +4,7 @@
 #include <QProcess>
 #include <QVector>
 #include <QWidget>
+#include <QRegularExpression>
 
 #include "codectabs/codecmanager.h"
 #include "codectabs/h261manager.h"
@@ -66,7 +67,7 @@ class CodecTabsWidget : public QWidget {
 
   private slots:
     void onTabChange();
-    void parseCameraNameProbeOutput();
+    void parseCameraNameProbeOutput(int a, QProcess::ExitStatus b);
 
   signals:
     void currentTabChanged();
