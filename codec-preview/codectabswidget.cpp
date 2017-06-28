@@ -129,8 +129,6 @@ void CodecTabsWidget::openFromCamera() {
     cameraNameGetterProcess.kill();
     cameraNameGetterProcess.waitForFinished();
     cameraNameGetterProcess.start("ffmpeg -list_devices true -f dshow -i dummy");
-    qDebug() << "started the camera name process";
-
 
 
 #else
@@ -144,18 +142,15 @@ void CodecTabsWidget::onTabChange() { currentTabChanged(); }
 
 QString CodecTabsWidget::getStreamingParameters() {
     if (inputLocation.isEmpty()) {
-        qDebug() << "Input location is missing! Not starting player.";
         return "";
     }
     if (inputParameters.isEmpty()) {
-        qDebug() << "Input parameters are missing! Not starting player.";
         return "";
     }
     QMap<QString, QString> *streamingParametersMap =
         codecManagers.at(ui->tabWidget->currentIndex())
             ->getStreamingParameters();
     if (streamingParametersMap->isEmpty()) {
-        qDebug() << "Encoding parameters are missing! Not starting player.";
         return "";
     }
 
@@ -207,7 +202,6 @@ void CodecTabsWidget::parseCameraNameProbeOutput(int a, QProcess::ExitStatus b) 
 
     QRegularExpression re("\"(.*?)\"");
     QRegularExpressionMatch match = re.globalMatch(cameraNameGetterProcess.readAllStandardError()).next();
-    //qDebug() << ;
 
     inputLocation = QString("video=") + QString(match.captured().toUtf8().constData());
     settingsChanged();

@@ -39,7 +39,6 @@ void VideoPlaybackWidget::stopPlayers() {
 }
 
 void VideoPlaybackWidget::startPlayers() {
-    qDebug() << "Starting the players...";
     vlcPlayerRaw->setTime(0);
     vlcPlayerEncoded->setTime(0);
     vlcPlayerRaw->play();

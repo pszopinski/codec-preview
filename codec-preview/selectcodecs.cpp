@@ -17,9 +17,7 @@ SelectCodecs::SelectCodecs(QWidget *parent)
 
 bool SelectCodecs::canCheck() {
     int count = 0;
-    qDebug() << "Nowy:";
     for (int i = 0; i < 6; i++) {
-        qDebug() << selected[i];
         if (selected[i])
             ++count;
     }
@@ -143,6 +141,5 @@ void SelectCodecs::on_buttonBox_accepted() {
 }
 
 void SelectCodecs::setMainWindowHandler(CodecTabsWidget *hndl) {
-    qDebug() << "setMain!\n";
     this->hndl = hndl;
 }

@@ -75,8 +75,6 @@ void VideoInfoWidget::parseStreamProbeOutput(int a, QProcess::ExitStatus b) {
     (void)a;
     (void)b;
 
-
-    // qDebug() << "start reading";
     std::ifstream myReadFile;
     myReadFile.open(PROBE_FILE_NAME.toUtf8().data());
     char output[100];
@@ -84,12 +82,10 @@ void VideoInfoWidget::parseStreamProbeOutput(int a, QProcess::ExitStatus b) {
         while (!myReadFile.eof()) {
 
             myReadFile >> output;
-            // qDebug() << output;
 
             QString fileOutput = QString(output);
 
             if (fileOutput.startsWith("avg_frame_rate=")) {
-                // qDebug() << "got some output for frame rate";
                 ui->frameRate->setText(fileOutput.mid(15, fileOutput.length()));
             }
 
@@ -107,8 +103,7 @@ void VideoInfoWidget::parseStreamProbeOutput(int a, QProcess::ExitStatus b) {
             }
         }
     } else {
-        qDebug() << "cannot access file";
+        qDebug() << "Cannot access file";
     }
     myReadFile.close();
-    qDebug() << "stop reading";
 }

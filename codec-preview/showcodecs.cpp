@@ -57,7 +57,6 @@ void ShowCodecs::broadcast(QString streamingCommand) {
     // Start streaming process
     streamingProcess.start(streamingCommand);
 
-    qDebug() << "Starting the players...";
     for (int i = 0; i < 4; i++) {
         vlcMediaPlayers[i]->play();
     }

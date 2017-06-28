@@ -56,8 +56,7 @@ void MainWindow::on_actionCompare_multiple_codecs_triggered() {
 }
 
 void MainWindow::broadcast() {
-    qDebug() << "==========BROADCASTING============";
-
+    qDebug() << "Starting broadcast...";
     ui->codecTabs->getStreamingParameters();
 
     QString streamingParameters = ui->codecTabs->getStreamingParameters();
@@ -72,16 +71,14 @@ void MainWindow::broadcast() {
     ui->videoInfo->startStreamProbe(streamProbeCommand);
 
     ui->videoPlayback->startPlayers();
+    qDebug() << "Started broadcast";
+
 }
 
 void MainWindow::resetPlayback() {
     ui->videoInfo->clearFrameQueue();
 
-    qDebug() << "Stopping the players...";
-
     ui->videoPlayback->stopPlayers();
-
-    qDebug() << "Killing current encoding and probe processes...";
 
     ui->codecTabs->stopStreaming();
 
