@@ -7,32 +7,22 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowState(Qt::WindowMaximized);
     ui->setupUi(this);
 
+    // broadcast on settings changed
     connect(ui->codecTabs, &CodecTabsWidget::settingsChanged, this,
             &MainWindow::broadcast);
+    // broadcast on tab changed
     connect(ui->codecTabs, &CodecTabsWidget::currentTabChanged, this,
             &MainWindow::broadcast);
 }
 
 MainWindow::~MainWindow() { delete ui; }
 
-void MainWindow::closeEvent(QCloseEvent *event) {
-    (void)event; // silence annoying warning
+void MainWindow::closeEvent(QCloseEvent *a) {
+    (void)a;
 
     ui->codecTabs->stopStreaming();
     ui->videoInfo->stopProbe();
 }
-
-// void CodecComparisonWindow::on_crf_returnPressed()
-//{
-//    codecManagers.at(ui->tabWidget->currentIndex())->setCRF(ui->crf->text());
-//    settingsChanged();
-//}
-
-// void CodecComparisonWindow::on_crf_editingFinished()
-//{
-//    codecManagers.at(ui->tabWidget->currentIndex())->setCRF(ui->crf->text());
-//    settingsChanged();
-//}
 
 void MainWindow::on_actionOpen_file_triggered() {
 
@@ -56,7 +46,7 @@ void MainWindow::on_actionCompare_multiple_codecs_triggered() {
 }
 
 void MainWindow::broadcast() {
-    qDebug() << "Starting broadcast...";
+    qDebug() << "starting broadcast...";
     ui->codecTabs->getStreamingParameters();
 
     QString streamingParameters = ui->codecTabs->getStreamingParameters();
@@ -71,8 +61,7 @@ void MainWindow::broadcast() {
     ui->videoInfo->startStreamProbe(streamProbeCommand);
 
     ui->videoPlayback->startPlayers();
-    qDebug() << "Started broadcast";
-
+    qDebug() << "started broadcast";
 }
 
 void MainWindow::resetPlayback() {

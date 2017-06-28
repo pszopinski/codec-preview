@@ -122,7 +122,7 @@ void SelectCodecs::on_H265_clicked() {
 void SelectCodecs::on_buttonBox_accepted() {
     int indexes[3];
     int n = 0;
-    // Locate selected codec indexes
+    // locate selected codec indexes
     for (int i = 0; i < 6; i++) {
         if (selected[i]) {
             indexes[n] = i;
@@ -130,10 +130,10 @@ void SelectCodecs::on_buttonBox_accepted() {
         }
     }
     if (n == 3) {
-        // User selected exactly 3 codecs
+        // user selected exactly 3 codecs
         hndl->setSelectedCodecs(indexes[0], indexes[1], indexes[2]);
     } else {
-        // User selected too little codecs
+        // user selected too little codecs
         QMessageBox::information(this, "Codec selection",
                                  "Too little codecs selected!", QMessageBox::Ok,
                                  QMessageBox::Ok);

@@ -7,7 +7,7 @@ VideoPlaybackWidget::VideoPlaybackWidget(QWidget *parent)
 
     vlcInstance = new VlcInstance(VlcCommon::args(), NULL);
 
-    // Initialize raw video display
+    // initialize raw video display
     vlcPlayerRaw = new VlcMediaPlayer(vlcInstance);
     vlcPlayerRaw->setVideoWidget(ui->rawVideo);
     vlcPlayerRaw->audio()->setMute(true);
@@ -19,7 +19,7 @@ VideoPlaybackWidget::VideoPlaybackWidget(QWidget *parent)
 
     vlcPlayerRaw->openOnly(vlcMediaRaw);
 
-    // Initialize encoded video display
+    // initialize encoded video display
     vlcPlayerEncoded = new VlcMediaPlayer(vlcInstance);
     vlcPlayerEncoded->setVideoWidget(ui->encodedVideo);
     vlcPlayerEncoded->audio()->setMute(true);

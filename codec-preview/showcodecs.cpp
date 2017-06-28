@@ -9,18 +9,18 @@ ShowCodecs::ShowCodecs(QWidget *parent)
     vlcInstance = new VlcInstance(VlcCommon::args(), NULL);
 
     for (int i = 0; i < 4; i++) {
-        // Initialise media objects
+        // initialize media objects
         vlcMedia[i] = new VlcMedia(VIDEO_PROTOCOLS[i] + "://@" +
                                        VIDEO_HOSTS[i] + ":" + VIDEO_PORTS[i],
                                    false, vlcInstance);
 
-        // Initialise video displays
+        // initialize video displays
         vlcMediaPlayers[i] = new VlcMediaPlayer(vlcInstance);
         vlcMediaPlayers[i]->audio()->setMute(true);
         vlcMediaPlayers[i]->openOnly(vlcMedia[i]);
     }
 
-    // Connect video widgets
+    // connect video widgets
     vlcMediaPlayers[0]->setVideoWidget(ui->rawVideo);
     ui->rawVideo->setMediaPlayer(vlcMediaPlayers[0]);
     vlcMediaPlayers[1]->setVideoWidget(ui->encodedVideo1);
@@ -36,25 +36,25 @@ ShowCodecs::~ShowCodecs() { delete ui; }
 void ShowCodecs::closeEvent(QCloseEvent *event) {
     (void)event;
     for (int i = 0; i < 4; i++) {
-        // Stop the player
+        // stop player
         vlcMediaPlayers[i]->stop();
     }
-    // Kill streaming process
+    // kill streaming process
     streamingProcess.kill();
     streamingProcess.waitForFinished();
 }
 
 void ShowCodecs::broadcast(QString streamingCommand) {
     for (int i = 0; i < 4; i++) {
-        // Stop the player
+        // stop player
         vlcMediaPlayers[i]->stop();
     }
 
-    // Kill streaming process
+    // kill streaming process
     streamingProcess.kill();
     streamingProcess.waitForFinished();
 
-    // Start streaming process
+    // start streaming process
     streamingProcess.start(streamingCommand);
 
     for (int i = 0; i < 4; i++) {

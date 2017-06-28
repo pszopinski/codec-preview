@@ -25,7 +25,6 @@ class CodecTabsWidget : public QWidget {
 
   private:
     QVector<CodecManager *> codecManagers;
-    // QVector<CommonParametersWidget *> commonParamsWidgets;
 
     QProcess streamingProcess;
     QString inputParameters;
@@ -50,8 +49,6 @@ class CodecTabsWidget : public QWidget {
     static QString buildProbeCommand(QString location, QString params);
 
     static QString parametersToString(QMap<QString, QString> *parameters);
-
-    // QVector<CodecManager *> getCodecManagers();
 
     void openFromFile(QString filePath);
     void openFromCamera();

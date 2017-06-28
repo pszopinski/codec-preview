@@ -14,7 +14,7 @@ CodecManager::~CodecManager() { delete ui; }
 
 QMap<QString, QString> *CodecManager::getStreamingParameters() {
     QMap<QString, QString> *parameters(streamingParameters);
-    // Add final parameters
+    // add final parameters
     parameters->insert("f", "matroska");
     parameters->insert("an", "");
     return parameters;
@@ -22,18 +22,18 @@ QMap<QString, QString> *CodecManager::getStreamingParameters() {
 
 void CodecManager::addParameter(QString label, QString parameter,
                                 QString value) {
-    // Create a new layout for the parameter
+    // create new layout for parameter
     QVBoxLayout *layout = new QVBoxLayout();
 
-    // Add a QLabel
+    // add QLabel
     QLabel *labelWidget = new QLabel(label, this);
     layout->addWidget(labelWidget);
 
-    // Add a QLineEdit
+    // add QLineEdit
     QLineEdit *lineEdit = new QLineEdit(value, this);
     layout->addWidget(lineEdit);
 
-    // Make the form interactive
+    // make form interactive
     streamingParameters->insert(parameter, value);
     connect(lineEdit, &QLineEdit::editingFinished, [=] {
         QString newValue = lineEdit->text();
@@ -48,19 +48,19 @@ void CodecManager::addParameter(QString label, QString parameter,
 
 void CodecManager::addParameter(QString label, QString parameter,
                                 QList<QString> values) {
-    // Create a new layout for the parameter
+    // create new layout for parameter
     QVBoxLayout *layout = new QVBoxLayout();
 
-    // Add a QLabel
+    // add QLabel
     QLabel *labelWidget = new QLabel(label, this);
     layout->addWidget(labelWidget);
 
-    // Add a QComboBox
+    // add QComboBox
     QComboBox *comboBox = new QComboBox(this);
     comboBox->insertItems(0, values);
     layout->addWidget(comboBox);
 
-    // Make the form interactive
+    // make form interactive
     streamingParameters->insert(parameter, values[0]);
     connect(comboBox, &QComboBox::currentTextChanged,
             [=](const QString &newValue) {
@@ -74,14 +74,14 @@ void CodecManager::addParameter(QString label, QString parameter,
 }
 
 void CodecManager::insertParameter(QVBoxLayout *layout) {
-    // Add a stretch to the bottom
+    // add stretch to bottom
     layout->addStretch();
 
-    // Calculate position
+    // calculate position
     int row = layoutCounter / 7;
     int column = layoutCounter % 7;
 
-    // Insert the layout
+    // insert layout
     ui->mainLayout->addLayout(layout, row, column);
     layoutCounter++;
 }

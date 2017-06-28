@@ -8,7 +8,6 @@ H265Manager::H265Manager(QWidget *parent) : CodecManager(parent, "libx265") {
     addParameter("Aspect ratio", "aspect", "");
     addParameter("Costant Rate Factor", "crf", "");
     addParameter("Resolution", "s", "");
-
 }
 
 H265Manager::~H265Manager() {}
