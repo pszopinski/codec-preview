@@ -21,18 +21,18 @@ class ShowCodecs;
 class ShowCodecs : public QWidget {
     Q_OBJECT
 
-  public:
-    explicit ShowCodecs(QWidget *parent = 0);
-    ~ShowCodecs();
-    void broadcast(QString streamingCommand);
-    void closeEvent(QCloseEvent *event);
-
   private:
     Ui::ShowCodecs *ui;
     VlcInstance *vlcInstance;
     VlcMedia *vlcMedia[4];
     VlcMediaPlayer *vlcMediaPlayers[4];
     QProcess streamingProcess;
+
+  public:
+    explicit ShowCodecs(QWidget *parent = 0);
+    ~ShowCodecs();
+    void broadcast(QString streamingCommand);
+    void closeEvent(QCloseEvent *event);
 };
 
 #endif // SHOWCODECS_H

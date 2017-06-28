@@ -21,23 +21,18 @@ class VideoPlaybackWidget;
 class VideoPlaybackWidget : public QWidget {
     Q_OBJECT
   private:
+    Ui::VideoPlaybackWidget *ui;
     VlcInstance *vlcInstance;
-
     VlcMedia *vlcMediaRaw;
     VlcMediaPlayer *vlcPlayerRaw;
-
     VlcMedia *vlcMediaEncoded;
     VlcMediaPlayer *vlcPlayerEncoded;
 
   public:
     explicit VideoPlaybackWidget(QWidget *parent = 0);
     ~VideoPlaybackWidget();
-
     void stopPlayers();
     void startPlayers();
-
-  private:
-    Ui::VideoPlaybackWidget *ui;
 };
 
 #endif // VIDEOPLAYBACKWIDGET_H

@@ -18,6 +18,12 @@ class VideoInfoWidget;
 class VideoInfoWidget : public QWidget {
     Q_OBJECT
 
+  private:
+    Ui::VideoInfoWidget *ui;
+    QProcess frameProbeProcess;
+    QProcess streamProbeProcess;
+    QQueue<char> framesQueue;
+
   public:
     explicit VideoInfoWidget(QWidget *parent = 0);
     ~VideoInfoWidget();
@@ -25,14 +31,6 @@ class VideoInfoWidget : public QWidget {
     void clearFrameQueue();
     void startFrameProbe(QString command);
     void startStreamProbe(QString command);
-
-  private:
-    QProcess frameProbeProcess;
-    QProcess streamProbeProcess;
-    QQueue<char> framesQueue;
-
-  private:
-    Ui::VideoInfoWidget *ui;
 
   private slots:
     void parseFrameProbeOutput();

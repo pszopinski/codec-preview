@@ -15,10 +15,16 @@ class SelectCodecs;
 class SelectCodecs : public QDialog {
     Q_OBJECT
 
+  private:
+    Ui::SelectCodecs *ui;
+    bool selected[6];
+    QCheckBox **checkBox;
+    int lastChecked;
+    CodecTabsWidget *hndl;
+
   public:
     explicit SelectCodecs(QWidget *parent = 0);
     ~SelectCodecs();
-
     bool getbMpeg1();
     bool getbMpeg2();
     bool getbMjpeg();
@@ -30,26 +36,12 @@ class SelectCodecs : public QDialog {
 
   private slots:
     void on_MPEG1_clicked();
-
     void on_MPEG2_clicked();
-
     void on_MJPEG_clicked();
-
     void on_H261_clicked();
-
     void on_H264_clicked();
-
     void on_H265_clicked();
-
     void on_buttonBox_accepted();
-
-  private:
-    Ui::SelectCodecs *ui;
-    bool selected[6];
-    QCheckBox **checkBox;
-    int lastChecked;
-
-    CodecTabsWidget *hndl;
 };
 
 #endif // SELECTCODECS_H

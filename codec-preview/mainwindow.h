@@ -12,28 +12,23 @@ class MainWindow;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
-  public:
+  private:
     Ui::MainWindow *ui;
 
   public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void closeEvent(QCloseEvent *event);
-
     void broadcast();
-
-  private:
     void resetPlayback();
-
-  private slots:
-    void on_actionOpen_file_triggered();
-
-    void on_actionOpen_from_camera_triggered();
-
-    void on_actionCompare_multiple_codecs_triggered();
 
   signals:
     void settingsChanged();
+
+  private slots:
+    void on_actionOpen_file_triggered();
+    void on_actionOpen_from_camera_triggered();
+    void on_actionCompare_multiple_codecs_triggered();
 };
 
 #endif // CODECCOMPARISONWINDOW_H

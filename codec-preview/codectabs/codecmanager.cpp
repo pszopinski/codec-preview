@@ -2,8 +2,8 @@
 #include "ui_codecmanager.h"
 
 CodecManager::CodecManager(QWidget *parent, QString encoder)
-    : QWidget(parent), ui(new Ui::CodecManager),
-      streamingParameters(new QMap<QString, QString>), layoutCounter(0) {
+    : QWidget(parent), ui(new Ui::CodecManager), layoutCounter(0),
+      streamingParameters(new QMap<QString, QString>) {
     ui->setupUi(this);
 
     streamingParameters->insert("c:v", encoder);

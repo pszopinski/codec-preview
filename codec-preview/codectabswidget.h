@@ -2,9 +2,9 @@
 #define CODECTABSWIDGET_H
 
 #include <QProcess>
+#include <QRegularExpression>
 #include <QVector>
 #include <QWidget>
-#include <QRegularExpression>
 
 #include "codectabs/codecmanager.h"
 #include "codectabs/h261manager.h"
@@ -24,54 +24,43 @@ class CodecTabsWidget : public QWidget {
     Q_OBJECT
 
   private:
+    Ui::CodecTabsWidget *ui;
     QVector<CodecManager *> codecManagers;
-
     QProcess streamingProcess;
+    QProcess cameraNameGetterProcess;
     QString inputParameters;
     QString inputLocation;
     bool selectedCodecs[6];
     ShowCodecs showCodecs;
-
-    QProcess cameraNameGetterProcess;
-
-
 
   public:
     explicit CodecTabsWidget(QWidget *parent = 0);
     ~CodecTabsWidget();
     void setSelectedCodecs(int first, int second, int third);
     void stopStreaming();
-
     static QString buildStreamingCommand(QString inputParameters,
                                          QString inputLocation,
                                          QVector<QString> outputPrameters,
                                          QVector<QString> outputLocations);
     static QString buildProbeCommand(QString location, QString params);
-
     static QString parametersToString(QMap<QString, QString> *parameters);
-
     void openFromFile(QString filePath);
     void openFromCamera();
     void selectMultipleCodecs();
-
     QString getStreamingParameters();
     void startStreaming(QString streamingParameters);
-
     QString getProbeCommand();
     QString getStreamCommand();
-
     void setCRF(QString value);
-
-  private slots:
-    void onTabChange();
-    void parseCameraNameProbeOutput(int a, QProcess::ExitStatus b);
+    void insertParameter(QVBoxLayout *layout);
 
   signals:
     void currentTabChanged();
     void settingsChanged();
 
-  private:
-    Ui::CodecTabsWidget *ui;
+  private slots:
+    void onTabChange();
+    void parseCameraNameProbeOutput(int a, QProcess::ExitStatus b);
 };
 
 #endif // CODECTABSWIDGET_H

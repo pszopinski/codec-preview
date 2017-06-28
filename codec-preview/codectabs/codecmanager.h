@@ -31,8 +31,6 @@ class CodecManager : public QWidget {
     QMap<QString, QString> *getStreamingParameters();
     void addParameter(QString label, QString parameter, QString value);
     void addParameter(QString label, QString parameter, QList<QString> values);
-
-  private:
     void insertParameter(QVBoxLayout *layout);
 
   signals:
