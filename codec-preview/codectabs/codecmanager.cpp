@@ -16,6 +16,7 @@ QMap<QString, QString> *CodecManager::getStreamingParameters() {
     QMap<QString, QString> *parameters(streamingParameters);
     // add final parameters
     parameters->insert("f", "matroska");
+    parameters->insert("preset", "ultrafast");
     parameters->insert("an", "");
     return parameters;
 }
