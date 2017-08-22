@@ -208,4 +208,6 @@ void CodecTabsWidget::parseCameraNameProbeOutput(int a,
     inputLocation =
         QString("video=") + QString(match.captured().toUtf8().constData());
     settingsChanged();
+
+    qDebug() << inputLocation;
 }

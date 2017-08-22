@@ -40,7 +40,8 @@ void VideoInfoWidget::parseFrameProbeOutput() {
 
             // throw out oldest frame types if over queue size limit
             if (framesQueue.size() > 16)
-                framesQueue.dequeue();
+                stopProbe();
+                //framesQueue.dequeue();
 
             // create snapshot of queue to display in widget
             QString framesQueueSnapshot;
@@ -101,9 +102,9 @@ void VideoInfoWidget::parseStreamProbeOutput(int a, QProcess::ExitStatus b) {
             }
 
             // find codec name
-            if (fileOutput.startsWith("codec_name=")) {
-                ui->codecName->setText(fileOutput.mid(11, fileOutput.length()));
-            }
+            //if (fileOutput.startsWith("codec_name=")) {
+                //ui->codecName->setText(fileOutput.mid(11, fileOutput.length()));
+            //}
 
             // find bit rate
             if (fileOutput.startsWith("bit_rate=")) {

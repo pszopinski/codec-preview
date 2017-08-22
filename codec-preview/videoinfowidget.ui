@@ -17,97 +17,7 @@
    <item>
     <widget class="QWidget" name="widget_2" native="true">
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
-       <layout class="QVBoxLayout" name="verticalLayout_12" stretch="0,0">
-        <item>
-         <widget class="QLabel" name="label_6">
-          <property name="text">
-           <string>Codec name:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="codecName">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="0" column="1">
-       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0">
-        <item>
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Frame types:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="frameTypes">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="0" column="2">
-       <layout class="QVBoxLayout" name="verticalLayout_8">
-        <item>
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>Frame width:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="frameWidth">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="0" column="3">
-       <layout class="QVBoxLayout" name="verticalLayout_9">
-        <item>
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Frame height:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="frameHeight">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="0" column="4">
-       <layout class="QVBoxLayout" name="verticalLayout_10" stretch="0,0">
-        <item>
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>Aspect ratio:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="aspectRatio">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="0" column="6">
+      <item row="0" column="5">
        <layout class="QVBoxLayout" name="verticalLayout_13">
         <item>
          <widget class="QLabel" name="label_7">
@@ -125,7 +35,7 @@
         </item>
        </layout>
       </item>
-      <item row="0" column="7">
+      <item row="0" column="6">
        <layout class="QVBoxLayout" name="verticalLayout_11" stretch="0,0">
         <item>
          <widget class="QLabel" name="label_5">
@@ -136,6 +46,78 @@
         </item>
         <item>
          <widget class="QLineEdit" name="bitRate">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="0">
+       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Frame types:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="frameTypes">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="1">
+       <layout class="QVBoxLayout" name="verticalLayout_8">
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Frame width:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="frameWidth">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="2">
+       <layout class="QVBoxLayout" name="verticalLayout_9">
+        <item>
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Frame height:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="frameHeight">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="3">
+       <layout class="QVBoxLayout" name="verticalLayout_10" stretch="0,0">
+        <item>
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>Aspect ratio:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="aspectRatio">
           <property name="readOnly">
            <bool>true</bool>
           </property>
