@@ -8,6 +8,17 @@ H261Manager::H261Manager(QWidget *parent) : CodecManager(parent, "h261") {
     addParameter("Aspect ratio", "aspect", "");
     addParameter("Qscale", "qscale:v", "");
     addParameter("Resolution", "s", resolutions);
+
+
+}
+
+QMap<QString, QString> *H261Manager::getStreamingParameters() {
+    QMap<QString, QString> *parameters(streamingParameters);
+    // add final parameters
+    //parameters->insert("preset", "ultrafast");
+    parameters->insert("an", "");
+    parameters->insert("f", "matroska");
+    return parameters;
 }
 
 H261Manager::~H261Manager() {}
