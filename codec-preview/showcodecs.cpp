@@ -30,40 +30,35 @@ ShowCodecs::ShowCodecs(QWidget *parent)
     vlcMediaPlayers[3]->setVideoWidget(ui->encodedVideo3);
     ui->encodedVideo3->setMediaPlayer(vlcMediaPlayers[3]);
     */
-        // init labels
-  original = ui->original;
-  label1 = ui->first;
-  label2 = ui->second;
-  label3 = ui->third;
 }
 
 ShowCodecs::~ShowCodecs() { delete ui; }
 
 void ShowCodecs::closeEvent(QCloseEvent *event) {
-  (void)event;
-  for (int i = 0; i < 4; i++) {
-    // stop player
-    vlcMediaPlayers[i]->stop();
-  }
-  // kill streaming process
-  streamingProcess.kill();
-  streamingProcess.waitForFinished();
+    (void)event;
+    for (int i = 0; i < 4; i++) {
+        // stop player
+        vlcMediaPlayers[i]->stop();
+    }
+    // kill streaming process
+    streamingProcess.kill();
+    streamingProcess.waitForFinished();
 }
 
 void ShowCodecs::broadcast(QString streamingCommand) {
-  for (int i = 0; i < 4; i++) {
-    // stop player
-    vlcMediaPlayers[i]->stop();
-  }
+    for (int i = 0; i < 4; i++) {
+        // stop player
+        vlcMediaPlayers[i]->stop();
+    }
 
-  // kill streaming process
-  streamingProcess.kill();
-  streamingProcess.waitForFinished();
+    // kill streaming process
+    streamingProcess.kill();
+    streamingProcess.waitForFinished();
 
-  // start streaming process
-  streamingProcess.start(streamingCommand);
+    // start streaming process
+    streamingProcess.start(streamingCommand);
 
-  for (int i = 0; i < 4; i++) {
-    vlcMediaPlayers[i]->play();
-  }
+    for (int i = 0; i < 4; i++) {
+        vlcMediaPlayers[i]->play();
+    }
 }

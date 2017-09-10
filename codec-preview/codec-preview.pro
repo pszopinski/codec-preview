@@ -20,9 +20,7 @@ SOURCES += main.cpp\
     videoinfowidget.cpp \
     codectabswidget.cpp \
     videoplaybackwidget.cpp \
-    mainwindow.cpp \
-    codectabs/codecmanager.cpp \
-    parammanager.cpp
+    mainwindow.cpp
 
 
 HEADERS  += constants.h \
@@ -38,9 +36,8 @@ HEADERS  += constants.h \
     videoinfowidget.h \
     codectabswidget.h \
     videoplaybackwidget.h \
-    mainwindow.h \
-    codectabs/codecmanager.h \
-    parammanager.h
+    mainwindow.h
+
 
 FORMS    += \
     selectcodecs.ui \
@@ -52,7 +49,7 @@ FORMS    += \
     codectabs/codecmanager.ui
 	
 win32 {
-VLCQT_PATH = C:\vlc-qt
+VLCQT_PATH = C:\vlcqt
 
 INCLUDEPATH += $$VLCQT_PATH\include
 
