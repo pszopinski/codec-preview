@@ -1,14 +1,14 @@
-#include "showcodecs.h"
-#include "ui_showcodecs.h"
+#include "codeccomparewindow.h"
+#include "ui_codeccomparewindow.h"
 
-ShowCodecs::ShowCodecs(QWidget *parent)
-    : QWidget(parent), ui(new Ui::ShowCodecs) {
+CodecCompareWindow::CodecCompareWindow(QWidget *parent)
+    : QWidget(parent), ui(new Ui::CodecCompareWindow) {
     setWindowState(Qt::WindowMaximized);
     ui->setupUi(this);
 
     vlcInstance = new VlcInstance(VlcCommon::args(), NULL);
 
-    /*for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++) {
         // initialize media objects
         vlcMedia[i] = new VlcMedia(VIDEO_PROTOCOLS[i] + "://@" +
                                        VIDEO_HOSTS[i] + ":" + VIDEO_PORTS[i],
@@ -30,7 +30,6 @@ ShowCodecs::ShowCodecs(QWidget *parent)
     vlcMediaPlayers[3]->setVideoWidget(ui->encodedVideo3);
     ui->encodedVideo3->setMediaPlayer(vlcMediaPlayers[3]);
 
-    */
     // init labels
     original = ui->original;
     label1 = ui->first;
@@ -38,9 +37,9 @@ ShowCodecs::ShowCodecs(QWidget *parent)
     label3 = ui->third;
 }
 
-ShowCodecs::~ShowCodecs() { delete ui; }
+CodecCompareWindow::~CodecCompareWindow() { delete ui; }
 
-void ShowCodecs::closeEvent(QCloseEvent *event) {
+void CodecCompareWindow::closeEvent(QCloseEvent *event) {
     (void)event;
     for (int i = 0; i < 4; i++) {
         // stop player
@@ -51,7 +50,7 @@ void ShowCodecs::closeEvent(QCloseEvent *event) {
     streamingProcess.waitForFinished();
 }
 
-void ShowCodecs::broadcast(QString streamingCommand) {
+void CodecCompareWindow::stream(QString streamingCommand) {
     for (int i = 0; i < 4; i++) {
         // stop player
         vlcMediaPlayers[i]->stop();

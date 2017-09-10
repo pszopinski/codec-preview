@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "selectcodecs.h"
+#include "codecselector.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -7,12 +7,12 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowState(Qt::WindowMaximized);
     ui->setupUi(this);
 
-    // broadcast on settings changed
+    // stream on settings changed
     connect(ui->codecTabs, &CodecTabsWidget::settingsChanged, this,
-            &MainWindow::broadcast);
-    // broadcast on tab changed
+            &MainWindow::stream);
+    // stream on tab changed
     connect(ui->codecTabs, &CodecTabsWidget::currentTabChanged, this,
-            &MainWindow::broadcast);
+            &MainWindow::stream);
 }
 
 MainWindow::~MainWindow() { delete ui; }
@@ -39,14 +39,14 @@ void MainWindow::on_actionOpen_from_camera_triggered() {
 void MainWindow::on_actionCompare_multiple_codecs_triggered() {
     resetPlayback();
 
-    SelectCodecs selectCodecs;
-    selectCodecs.setMainWindowHandler(ui->codecTabs);
-    selectCodecs.setModal(true);
-    selectCodecs.exec();
+    CodecSelector codecSelector;
+    codecSelector.setMainWindowHandler(ui->codecTabs);
+    codecSelector.setModal(true);
+    codecSelector.exec();
 }
 
-void MainWindow::broadcast() {
-    qDebug() << "starting broadcast...";
+void MainWindow::stream() {
+    qDebug() << "starting stream...";
     ui->codecTabs->getStreamingParameters();
 
     QString streamingParameters = ui->codecTabs->getStreamingParameters();
@@ -61,7 +61,7 @@ void MainWindow::broadcast() {
     ui->videoInfo->startStreamProbe(streamProbeCommand);
 
     ui->videoPlayback->startPlayers();
-    qDebug() << "started broadcast";
+    qDebug() << "started stream";
 }
 
 void MainWindow::resetPlayback() {

@@ -13,8 +13,7 @@
 #include "codectabs/mpeg1manager.h"
 #include "codectabs/mpeg2manager.h"
 
-#include "showcodecs.h"
-//#include "commonparameterswidget.h"
+#include "codeccomparewindow.h"
 
 namespace Ui {
 class CodecTabsWidget;
@@ -31,7 +30,7 @@ class CodecTabsWidget : public QWidget {
     QString inputParameters;
     QString inputLocation;
     bool selectedCodecs[6];
-    ShowCodecs showCodecs;
+    CodecCompareWindow compareWindow;
 
   public:
     explicit CodecTabsWidget(QWidget *parent = 0);
@@ -43,6 +42,10 @@ class CodecTabsWidget : public QWidget {
                                          QString outputPrameters,
                                          QString rawLocation,
                                          QString encodedLocation);
+
+    static QString buildMultipleStreamingCommands(
+        QString inputParameters, QString inputLocation,
+        QVector<QString> outputPrameters, QVector<QString> outputLocations);
 
     static QString buildProbeCommand(QString location, QString params);
     static QString parametersToString(QMap<QString, QString> *parameters);

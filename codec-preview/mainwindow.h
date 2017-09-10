@@ -4,7 +4,7 @@
 #include <QFileDialog>
 #include <QMainWindow>
 
-#include "selectcodecs.h"
+//#include "codecselector.h"
 
 namespace Ui {
 class MainWindow;
@@ -19,7 +19,7 @@ class MainWindow : public QMainWindow {
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void closeEvent(QCloseEvent *event);
-    void broadcast();
+    void stream();
     void resetPlayback();
 
   signals:

@@ -15,13 +15,13 @@ SOURCES += main.cpp \
     codectabs/mjpegmanager.cpp \
     codectabs/mpeg1manager.cpp \
     codectabs/mpeg2manager.cpp \
-    selectcodecs.cpp \
-    showcodecs.cpp \
     videoinfowidget.cpp \
     codectabswidget.cpp \
     videoplaybackwidget.cpp \
     mainwindow.cpp \
-    parammanager.cpp
+    parammanager.cpp \
+    codeccomparewindow.cpp \
+    codecselector.cpp
 
 
 
@@ -33,23 +33,23 @@ HEADERS  += constants.h \
     codectabs/mjpegmanager.h \
     codectabs/mpeg1manager.h \
     codectabs/mpeg2manager.h \
-    selectcodecs.h \
-    showcodecs.h \
     videoinfowidget.h \
     codectabswidget.h \
     videoplaybackwidget.h \
     mainwindow.h \
-    parammanager.h
+    parammanager.h \
+    codeccomparewindow.h \
+    codecselector.h
 
 
 FORMS    += \
-    selectcodecs.ui \
-    showcodecs.ui \
     videoinfowidget.ui \
     videoplaybackwidget.ui \
     codectabswidget.ui \
     mainwindow.ui \
-    codectabs/codecmanager.ui
+    codectabs/codecmanager.ui \
+    codeccomparewindow.ui \
+    codecselector.ui
 	
 win32 {
 VLCQT_PATH = C:\vlc-qt

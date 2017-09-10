@@ -54,25 +54,28 @@ void CodecTabsWidget::setSelectedCodecs(int first, int second, int third) {
     qDebug() << streamingParameters3;
     qDebug() << streamingParameters4;
 
-    /*
-    QString streamingCommand = buildStreamingCommand(
+    QString streamingCommand = buildMultipleStreamingCommands(
         inputParameters, inputLocation,
         {streamingParameters1, streamingParameters2, streamingParameters3,
          streamingParameters4},
-        {VIDEO_PROTOCOLS[0] + "://" + VIDEO_HOSTS[0] + ":" + VIDEO_PORTS[0],
-         VIDEO_PROTOCOLS[1] + "://" + VIDEO_HOSTS[1] + ":" + VIDEO_PORTS[1],
-         VIDEO_PROTOCOLS[2] + "://" + VIDEO_HOSTS[2] + ":" + VIDEO_PORTS[2],
-         VIDEO_PROTOCOLS[3] + "://" + VIDEO_HOSTS[3] + ":" + VIDEO_PORTS[3]});*/
+        {VIDEO_PROTOCOLS[0] + "://" + VIDEO_HOSTS[0] + ":" + VIDEO_PORTS[0] +
+             "?ttl=0",
+         VIDEO_PROTOCOLS[1] + "://" + VIDEO_HOSTS[1] + ":" + VIDEO_PORTS[1] +
+             "?ttl=0",
+         VIDEO_PROTOCOLS[2] + "://" + VIDEO_HOSTS[2] + ":" + VIDEO_PORTS[2] +
+             "?ttl=0",
+         VIDEO_PROTOCOLS[3] + "://" + VIDEO_HOSTS[3] + ":" + VIDEO_PORTS[3] +
+             "?ttl=0"});
 
     qDebug() << "streaming command:";
 
-    // qDebug() << streamingCommand;
-    showCodecs.original->setText("Original");
-    showCodecs.label1->setText(codecManagers.at(first)->getCodecName());
-    showCodecs.label2->setText(codecManagers.at(second)->getCodecName());
-    showCodecs.label3->setText(codecManagers.at(third)->getCodecName());
-    showCodecs.show();
-    // showCodecs.broadcast(streamingCommand);
+    qDebug() << streamingCommand;
+    compareWindow.original->setText("Original");
+    compareWindow.label1->setText(codecManagers.at(first)->getCodecName());
+    compareWindow.label2->setText(codecManagers.at(second)->getCodecName());
+    compareWindow.label3->setText(codecManagers.at(third)->getCodecName());
+    compareWindow.show();
+    compareWindow.stream(streamingCommand);
 }
 
 void CodecTabsWidget::stopStreaming() {
@@ -90,9 +93,27 @@ QString CodecTabsWidget::buildStreamingCommand(QString inputParameters,
     list << inputParameters;
     list << "-i " << inputLocation;
 
-    list << "-c:v copy -f nut -an" << rawLocation,
+    list << "-c:v copy -f nut -an" << rawLocation + "?ttl=0";
 
-        list << outputPrameters << encodedLocation + "?ttl=0";
+    list << outputPrameters << encodedLocation + "?ttl=0";
+
+    QString command = list.join(" ");
+    qDebug() << "produced following encoding command:\n"
+             << command.toUtf8().constData();
+    return command;
+}
+
+QString CodecTabsWidget::buildMultipleStreamingCommands(
+    QString inputParameters, QString inputLocation,
+    QVector<QString> outputPrameters, QVector<QString> outputLocations) {
+    QStringList list;
+    list << FFMPEG;
+    list << inputParameters;
+    list << "-i " << inputLocation;
+    for (int i = 0;
+         i < outputPrameters.length() && i < outputLocations.length(); i++) {
+        list << outputPrameters[i] << outputLocations[i];
+    }
 
     QString command = list.join(" ");
     qDebug() << "produced following encoding command:\n"

@@ -1,5 +1,5 @@
-#ifndef SELECTCODECS_H
-#define SELECTCODECS_H
+#ifndef CODECSELECTOR_H
+#define CODECSELECTOR_H
 
 #include <QCheckBox>
 #include <QDebug>
@@ -9,22 +9,22 @@
 #include "codectabswidget.h"
 
 namespace Ui {
-class SelectCodecs;
+class CodecSelector;
 }
 
-class SelectCodecs : public QDialog {
+class CodecSelector : public QDialog {
     Q_OBJECT
 
   private:
-    Ui::SelectCodecs *ui;
+    Ui::CodecSelector *ui;
     bool selected[6];
     QCheckBox **checkBox;
     int lastChecked;
     CodecTabsWidget *hndl;
 
   public:
-    explicit SelectCodecs(QWidget *parent = 0);
-    ~SelectCodecs();
+    explicit CodecSelector(QWidget *parent = 0);
+    ~CodecSelector();
     bool getbMpeg1();
     bool getbMpeg2();
     bool getbMjpeg();
@@ -44,4 +44,4 @@ class SelectCodecs : public QDialog {
     void on_buttonBox_accepted();
 };
 
-#endif // SELECTCODECS_H
+#endif // CODECSELECTOR_H

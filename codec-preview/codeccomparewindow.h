@@ -1,5 +1,5 @@
-#ifndef SHOWCODECS_H
-#define SHOWCODECS_H
+#ifndef CODECCOMPAREWINDOW_H
+#define CODECCOMPAREWINDOW_H
 
 #include "constants.h"
 #include <QDebug>
@@ -16,23 +16,23 @@
 #include <VLCQtCore/Stats.h>
 
 namespace Ui {
-class ShowCodecs;
+class CodecCompareWindow;
 }
 
-class ShowCodecs : public QWidget {
+class CodecCompareWindow : public QWidget {
     Q_OBJECT
 
   private:
-    Ui::ShowCodecs *ui;
+    Ui::CodecCompareWindow *ui;
     VlcInstance *vlcInstance;
     VlcMedia *vlcMedia[4];
     VlcMediaPlayer *vlcMediaPlayers[4];
     QProcess streamingProcess;
 
   public:
-    explicit ShowCodecs(QWidget *parent = 0);
-    ~ShowCodecs();
-    void broadcast(QString streamingCommand);
+    explicit CodecCompareWindow(QWidget *parent = 0);
+    ~CodecCompareWindow();
+    void stream(QString streamingCommand);
     void closeEvent(QCloseEvent *event);
 
     QLabel *original;
@@ -41,4 +41,4 @@ class ShowCodecs : public QWidget {
     QLabel *label3;
 };
 
-#endif // SHOWCODECS_H
+#endif // CODECCOMPAREWINDOW_H

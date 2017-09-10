@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ShowCodecs</class>
- <widget class="QWidget" name="ShowCodecs">
+ <class>CodecCompareWindow</class>
+ <widget class="QWidget" name="CodecCompareWindow">
   <property name="geometry">
    <rect>
     <x>0</x>

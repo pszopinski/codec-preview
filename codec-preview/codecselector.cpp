@@ -1,8 +1,8 @@
-#include "selectcodecs.h"
-#include "ui_selectcodecs.h"
+#include "codecselector.h"
+#include "ui_codecselector.h"
 
-SelectCodecs::SelectCodecs(QWidget *parent)
-    : QDialog(parent), ui(new Ui::SelectCodecs) {
+CodecSelector::CodecSelector(QWidget *parent)
+    : QDialog(parent), ui(new Ui::CodecSelector) {
     ui->setupUi(this);
     checkBox = new QCheckBox *[6];
     checkBox[0] = ui->MJPEG;
@@ -15,7 +15,7 @@ SelectCodecs::SelectCodecs(QWidget *parent)
         selected[i] = false;
 }
 
-bool SelectCodecs::canCheck() {
+bool CodecSelector::canCheck() {
     int count = 0;
     for (int i = 0; i < 6; i++) {
         if (selected[i])
@@ -27,9 +27,9 @@ bool SelectCodecs::canCheck() {
         return true;
 }
 
-SelectCodecs::~SelectCodecs() { delete ui; }
+CodecSelector::~CodecSelector() { delete ui; }
 
-void SelectCodecs::on_MPEG1_clicked() {
+void CodecSelector::on_MPEG1_clicked() {
     if (selected[2]) {
         selected[2] = !selected[2];
         return;
@@ -44,7 +44,7 @@ void SelectCodecs::on_MPEG1_clicked() {
     lastChecked = 2;
 }
 
-void SelectCodecs::on_MPEG2_clicked() {
+void CodecSelector::on_MPEG2_clicked() {
     if (selected[3]) {
         selected[3] = !selected[3];
         return;
@@ -59,7 +59,7 @@ void SelectCodecs::on_MPEG2_clicked() {
     lastChecked = 3;
 }
 
-void SelectCodecs::on_MJPEG_clicked() {
+void CodecSelector::on_MJPEG_clicked() {
     if (selected[0]) {
         selected[0] = !selected[0];
         return;
@@ -74,7 +74,7 @@ void SelectCodecs::on_MJPEG_clicked() {
     lastChecked = 0;
 }
 
-void SelectCodecs::on_H261_clicked() {
+void CodecSelector::on_H261_clicked() {
     if (selected[1]) {
         selected[1] = !selected[1];
         return;
@@ -89,7 +89,7 @@ void SelectCodecs::on_H261_clicked() {
     lastChecked = 1;
 }
 
-void SelectCodecs::on_H264_clicked() {
+void CodecSelector::on_H264_clicked() {
     if (selected[4]) {
         selected[4] = !selected[4];
         return;
@@ -104,7 +104,7 @@ void SelectCodecs::on_H264_clicked() {
     lastChecked = 4;
 }
 
-void SelectCodecs::on_H265_clicked() {
+void CodecSelector::on_H265_clicked() {
     if (selected[5]) {
         selected[5] = !selected[5];
         return;
@@ -119,7 +119,7 @@ void SelectCodecs::on_H265_clicked() {
     lastChecked = 5;
 }
 
-void SelectCodecs::on_buttonBox_accepted() {
+void CodecSelector::on_buttonBox_accepted() {
     int indexes[3];
     int n = 0;
     // locate selected codec indexes
@@ -132,6 +132,8 @@ void SelectCodecs::on_buttonBox_accepted() {
     if (n == 3) {
         // user selected exactly 3 codecs
         hndl->setSelectedCodecs(indexes[0], indexes[1], indexes[2]);
+        close();
+
     } else {
         // user selected too little codecs
         QMessageBox::information(this, "Codec selection",
@@ -140,6 +142,6 @@ void SelectCodecs::on_buttonBox_accepted() {
     }
 }
 
-void SelectCodecs::setMainWindowHandler(CodecTabsWidget *hndl) {
+void CodecSelector::setMainWindowHandler(CodecTabsWidget *hndl) {
     this->hndl = hndl;
 }
