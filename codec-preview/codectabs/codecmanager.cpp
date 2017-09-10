@@ -12,8 +12,6 @@ CodecManager::CodecManager(QWidget *parent, QString encoder)
 
 CodecManager::~CodecManager() { delete ui; }
 
-
-
 void CodecManager::addParameter(QString label, QString parameter,
                                 QString value) {
     // create new layout for parameter
@@ -80,4 +78,4 @@ void CodecManager::insertParameter(QVBoxLayout *layout) {
     layoutCounter++;
 }
 
-QMap<QString, QString> *CodecManager::getStreamingParameters() {return NULL;}
+QMap<QString, QString> *CodecManager::getStreamingParameters() { return NULL; }

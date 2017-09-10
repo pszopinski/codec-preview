@@ -38,9 +38,11 @@ class CodecTabsWidget : public QWidget {
     ~CodecTabsWidget();
     void setSelectedCodecs(int first, int second, int third);
     void stopStreaming();
-    static QString buildStreamingCommand(
-            QString inputParameters, QString inputLocation,
-            QString outputPrameters, QString rawLocation, QString encodedLocation);
+    static QString buildStreamingCommand(QString inputParameters,
+                                         QString inputLocation,
+                                         QString outputPrameters,
+                                         QString rawLocation,
+                                         QString encodedLocation);
     static QString buildProbeCommand(QString location, QString params);
     static QString parametersToString(QMap<QString, QString> *parameters);
     void openFromFile(QString filePath);
