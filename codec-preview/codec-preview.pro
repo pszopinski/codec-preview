@@ -8,6 +8,7 @@ TEMPLATE = app
 DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
+    codectabs/codecmanager.cpp \
     codectabs/h261manager.cpp \
     codectabs/h264manager.cpp \
     codectabs/h265manager.cpp \
@@ -19,11 +20,11 @@ SOURCES += main.cpp\
     videoinfowidget.cpp \
     codectabswidget.cpp \
     videoplaybackwidget.cpp \
-    mainwindow.cpp \
-    codectabs/codecmanager.cpp
+    mainwindow.cpp
 
 
 HEADERS  += constants.h \
+    codectabs/codecmanager.h \
     codectabs/h261manager.h \
     codectabs/h264manager.h \
     codectabs/h265manager.h \
@@ -35,8 +36,8 @@ HEADERS  += constants.h \
     videoinfowidget.h \
     codectabswidget.h \
     videoplaybackwidget.h \
-    mainwindow.h \
-    codectabs/codecmanager.h
+    mainwindow.h
+
 
 FORMS    += \
     selectcodecs.ui \
