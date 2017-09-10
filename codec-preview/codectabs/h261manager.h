@@ -10,7 +10,6 @@ class H261Manager : public CodecManager {
 
   public:
     explicit H261Manager(QWidget *parent = 0);
-    QMap<QString, QString> *getStreamingParameters();
     ~H261Manager();
 };
 

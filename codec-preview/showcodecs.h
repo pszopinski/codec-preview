@@ -33,6 +33,11 @@ class ShowCodecs : public QWidget {
     ~ShowCodecs();
     void broadcast(QString streamingCommand);
     void closeEvent(QCloseEvent *event);
+
+    QLabel *original;
+    QLabel *label1;
+    QLabel *label2;
+    QLabel *label3;
 };
 
 #endif // SHOWCODECS_H

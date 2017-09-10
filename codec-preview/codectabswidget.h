@@ -43,6 +43,7 @@ class CodecTabsWidget : public QWidget {
                                          QString outputPrameters,
                                          QString rawLocation,
                                          QString encodedLocation);
+
     static QString buildProbeCommand(QString location, QString params);
     static QString parametersToString(QMap<QString, QString> *parameters);
     void openFromFile(QString filePath);

@@ -23,6 +23,7 @@ class VideoInfoWidget : public QWidget {
     QProcess frameProbeProcess;
     QProcess streamProbeProcess;
     QQueue<char> framesQueue;
+    ParamManager paramManager;
 
   public:
     explicit VideoInfoWidget(QWidget *parent = 0);

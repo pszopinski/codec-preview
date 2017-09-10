@@ -16,6 +16,9 @@ VideoInfoWidget::VideoInfoWidget(QWidget *parent)
     // react to stream probe output with parseStreamProbeOutput
     connect(&streamProbeProcess, SIGNAL(finished(int, QProcess::ExitStatus)),
             this, SLOT(parseStreamProbeOutput(int, QProcess::ExitStatus)));
+
+    ui->lAspectRatio->setToolTip(paramManager.getHint("Aspect ratio"));
+    ui->lBitrate->setToolTip(paramManager.getHint("Bitrate"));
 }
 
 VideoInfoWidget::~VideoInfoWidget() { delete ui; }

@@ -19,6 +19,8 @@ void CodecManager::addParameter(QString label, QString parameter,
 
     // add QLabel
     QLabel *labelWidget = new QLabel(label, this);
+
+    labelWidget->setToolTip(paramManager.getHint(label)); // add tooltip
     layout->addWidget(labelWidget);
 
     // add QLineEdit
@@ -45,6 +47,9 @@ void CodecManager::addParameter(QString label, QString parameter,
 
     // add QLabel
     QLabel *labelWidget = new QLabel(label, this);
+
+    labelWidget->setToolTip(paramManager.getHint(label)); // add tooltip
+
     layout->addWidget(labelWidget);
 
     // add QComboBox
@@ -79,3 +84,8 @@ void CodecManager::insertParameter(QVBoxLayout *layout) {
 }
 
 QMap<QString, QString> *CodecManager::getStreamingParameters() { return NULL; }
+
+void CodecManager::setCodecName(QString codecName) {
+    this->codecName = codecName;
+}
+

@@ -49,7 +49,7 @@ FORMS    += \
     codectabs/codecmanager.ui
 	
 win32 {
-VLCQT_PATH = C:\vlcqt
+VLCQT_PATH = C:\vlc-qt
 
 INCLUDEPATH += $$VLCQT_PATH\include
 

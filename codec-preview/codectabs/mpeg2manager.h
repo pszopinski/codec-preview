@@ -10,7 +10,6 @@ class MPEG2Manager : public CodecManager {
 
   public:
     explicit MPEG2Manager(QWidget *parent = 0);
-    QMap<QString, QString> *getStreamingParameters();
     ~MPEG2Manager();
 };
 

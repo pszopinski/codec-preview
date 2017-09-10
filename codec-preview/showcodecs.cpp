@@ -18,10 +18,10 @@ ShowCodecs::ShowCodecs(QWidget *parent)
         vlcMediaPlayers[i] = new VlcMediaPlayer(vlcInstance);
         vlcMediaPlayers[i]->audio()->setMute(true);
         vlcMediaPlayers[i]->openOnly(vlcMedia[i]);
-    }*/
+    }
 
     // connect video widgets
-    /*vlcMediaPlayers[0]->setVideoWidget(ui->rawVideo);
+    vlcMediaPlayers[0]->setVideoWidget(ui->rawVideo);
     ui->rawVideo->setMediaPlayer(vlcMediaPlayers[0]);
     vlcMediaPlayers[1]->setVideoWidget(ui->encodedVideo1);
     ui->encodedVideo1->setMediaPlayer(vlcMediaPlayers[1]);
@@ -29,7 +29,13 @@ ShowCodecs::ShowCodecs(QWidget *parent)
     ui->encodedVideo2->setMediaPlayer(vlcMediaPlayers[2]);
     vlcMediaPlayers[3]->setVideoWidget(ui->encodedVideo3);
     ui->encodedVideo3->setMediaPlayer(vlcMediaPlayers[3]);
+
     */
+    // init labels
+    original = ui->original;
+    label1 = ui->first;
+    label2 = ui->second;
+    label3 = ui->third;
 }
 
 ShowCodecs::~ShowCodecs() { delete ui; }
