@@ -22,7 +22,7 @@ class CodecManager : public QWidget {
 private:
   Ui::CodecManager *ui;
   int layoutCounter;
-  ParamManager paramHint;
+  ParamManager paramManager;
   QString codecName;
 
 protected:

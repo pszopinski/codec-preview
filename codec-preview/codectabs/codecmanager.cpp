@@ -28,7 +28,7 @@ void CodecManager::addParameter(QString label, QString parameter,
 
   // add QLabel
   QLabel *labelWidget = new QLabel(label, this);
-  labelWidget->setToolTip(paramHint.getHint(label)); // add tooltip
+  labelWidget->setToolTip(paramManager.getHint(label)); // add tooltip
   layout->addWidget(labelWidget);
   // add QLineEdit
   QLineEdit *lineEdit = new QLineEdit(value, this);
@@ -54,7 +54,7 @@ void CodecManager::addParameter(QString label, QString parameter,
 
   // add QLabel
   QLabel *labelWidget = new QLabel(label, this);
-  labelWidget->setToolTip(paramHint.getHint(label)); // add tooltip
+  labelWidget->setToolTip(paramManager.getHint(label)); // add tooltip
   layout->addWidget(labelWidget);
 
   // add QComboBox
