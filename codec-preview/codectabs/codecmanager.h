@@ -10,31 +10,36 @@
 #include <QString>
 #include <QVBoxLayout>
 #include <QWidget>
+#include <parammanager.h>
 
 namespace Ui {
 class CodecManager;
 }
 
 class CodecManager : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
-  private:
-    Ui::CodecManager *ui;
-    int layoutCounter;
+private:
+  Ui::CodecManager *ui;
+  int layoutCounter;
+  ParamManager paramHint;
+  QString codecName;
 
-  protected:
-    QMap<QString, QString> *streamingParameters;
+protected:
+  QMap<QString, QString> *streamingParameters;
 
-  public:
-    explicit CodecManager(QWidget *parent = 0, QString encoder = "copy");
-    ~CodecManager();
-    QMap<QString, QString> *getStreamingParameters();
-    void addParameter(QString label, QString parameter, QString value);
-    void addParameter(QString label, QString parameter, QList<QString> values);
-    void insertParameter(QVBoxLayout *layout);
+public:
+  explicit CodecManager(QWidget *parent = 0, QString encoder = "copy");
+  ~CodecManager();
+  QMap<QString, QString> *getStreamingParameters();
+  void addParameter(QString label, QString parameter, QString value);
+  void addParameter(QString label, QString parameter, QList<QString> values);
+  void insertParameter(QVBoxLayout *layout);
+  QString getCodecName();
+  void setCodecName(QString codecName);
 
-  signals:
-    void parametersChanged();
+signals:
+  void parametersChanged();
 };
 
 #endif // CODECMANAGER_H
