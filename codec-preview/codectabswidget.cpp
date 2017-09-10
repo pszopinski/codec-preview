@@ -48,20 +48,20 @@ void CodecTabsWidget::setSelectedCodecs(int first, int second, int third) {
     qDebug() << streamingParameters3;
     qDebug() << streamingParameters4;
 
-    QString streamingCommand = buildStreamingCommand(
+    /*QString streamingCommand = buildStreamingCommand(
         inputParameters, inputLocation,
         {streamingParameters1, streamingParameters2, streamingParameters3,
          streamingParameters4},
         {VIDEO_PROTOCOLS[0] + "://" + VIDEO_HOSTS[0] + ":" + VIDEO_PORTS[0],
          VIDEO_PROTOCOLS[1] + "://" + VIDEO_HOSTS[1] + ":" + VIDEO_PORTS[1],
          VIDEO_PROTOCOLS[2] + "://" + VIDEO_HOSTS[2] + ":" + VIDEO_PORTS[2],
-         VIDEO_PROTOCOLS[3] + "://" + VIDEO_HOSTS[3] + ":" + VIDEO_PORTS[3]});
+         VIDEO_PROTOCOLS[3] + "://" + VIDEO_HOSTS[3] + ":" + VIDEO_PORTS[3]});*/
 
     qDebug() << "streaming command:";
-    qDebug() << streamingCommand;
+    //qDebug() << streamingCommand;
 
     showCodecs.show();
-    showCodecs.broadcast(streamingCommand);
+    //showCodecs.broadcast(streamingCommand);
 }
 
 void CodecTabsWidget::stopStreaming() {
@@ -71,15 +71,15 @@ void CodecTabsWidget::stopStreaming() {
 
 QString CodecTabsWidget::buildStreamingCommand(
     QString inputParameters, QString inputLocation,
-    QVector<QString> outputPrameters, QVector<QString> outputLocations) {
+    QString outputPrameters, QString rawLocation, QString encodedLocation) {
     QStringList list;
     list << FFMPEG;
     list << inputParameters;
     list << "-i " << inputLocation;
-    for (int i = 0;
-         i < outputPrameters.length() && i < outputLocations.length(); i++) {
-        list << outputPrameters[i] << outputLocations[i];
-    }
+
+    list << "-c:v copy -f nut -an" << rawLocation,
+
+    list << outputPrameters << encodedLocation + "?ttl=0";
 
     QString command = list.join(" ");
     qDebug() << "produced following encoding command:\n"
@@ -163,15 +163,8 @@ void CodecTabsWidget::startStreaming(QString streamingParameters) {
     qDebug() << "starting encoding process...";
     QString streamingCommand = buildStreamingCommand(
         inputParameters, inputLocation,
-        {"-c:v copy -f nut -an", streamingParameters, streamingParameters,
-         streamingParameters},
-        {RAW_VIDEO_PROTOCOL + "://" + RAW_VIDEO_HOST + ":" + RAW_VIDEO_PORT,
-         ENCODED_VIDEO_PROTOCOL + "://" + ENCODED_VIDEO_HOST + ":" +
-             ENCODED_VIDEO_PORT,
-         VIDEO_PROBE_PROTOCOL + "://" + VIDEO_PROBE_HOST + ":" +
-             VIDEO_PROBE_PORT,
-         STREAM_PROBE_PROTOCOL + "://" + STREAM_PROBE_HOST + ":" +
-             STREAM_PROBE_PORT});
+        streamingParameters,
+        RAW_ADDRESS, ENCODED_ADDRESS);
     streamingProcess.start(streamingCommand);
 }
 
@@ -179,8 +172,7 @@ QString CodecTabsWidget::getProbeCommand() {
     qDebug() << "starting probe process...";
 
     QString frameProbeCommand = buildProbeCommand(
-        VIDEO_PROBE_PROTOCOL + "://" + VIDEO_PROBE_HOST + ":" +
-            VIDEO_PROBE_PORT,
+        ENCODED_ADDRESS,
         "-show_frames -show_entries frame=pict_type,width,height");
 
     return frameProbeCommand;
@@ -188,8 +180,7 @@ QString CodecTabsWidget::getProbeCommand() {
 
 QString CodecTabsWidget::getStreamCommand() {
     QString streamProbeCommand =
-        buildProbeCommand(STREAM_PROBE_PROTOCOL + "://" + STREAM_PROBE_HOST +
-                              ":" + STREAM_PROBE_PORT,
+        buildProbeCommand(ENCODED_ADDRESS,
                           "-show_streams -select_streams v:0");
 
     return streamProbeCommand;
