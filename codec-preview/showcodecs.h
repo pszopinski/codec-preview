@@ -3,6 +3,7 @@
 
 #include "constants.h"
 #include <QDebug>
+#include <QLabel>
 #include <QProcess>
 #include <QString>
 #include <QWidget>

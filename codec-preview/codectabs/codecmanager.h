@@ -1,6 +1,7 @@
 #ifndef CODECMANAGER_H
 #define CODECMANAGER_H
 
+#include "parammanager.h"
 #include <QComboBox>
 #include <QDebug>
 #include <QLabel>

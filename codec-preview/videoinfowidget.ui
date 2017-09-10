@@ -38,7 +38,7 @@
       <item row="0" column="6">
        <layout class="QVBoxLayout" name="verticalLayout_11" stretch="0,0">
         <item>
-         <widget class="QLabel" name="label_5">
+         <widget class="QLabel" name="lBitrate">
           <property name="text">
            <string>Bit rate:</string>
           </property>
@@ -110,7 +110,7 @@
       <item row="0" column="3">
        <layout class="QVBoxLayout" name="verticalLayout_10" stretch="0,0">
         <item>
-         <widget class="QLabel" name="label_4">
+         <widget class="QLabel" name="lAspectRatio">
           <property name="text">
            <string>Aspect ratio:</string>
           </property>

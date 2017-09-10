@@ -10,6 +10,7 @@
 #include <QWidget>
 
 #include "constants.h"
+#include "parammanager.h"
 
 namespace Ui {
 class VideoInfoWidget;

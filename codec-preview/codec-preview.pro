@@ -7,7 +7,7 @@ TEMPLATE = app
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
-SOURCES += main.cpp\
+SOURCES += main.cpp \
     codectabs/codecmanager.cpp \
     codectabs/h261manager.cpp \
     codectabs/h264manager.cpp \
@@ -20,7 +20,9 @@ SOURCES += main.cpp\
     videoinfowidget.cpp \
     codectabswidget.cpp \
     videoplaybackwidget.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    parammanager.cpp
+
 
 
 HEADERS  += constants.h \
@@ -36,7 +38,8 @@ HEADERS  += constants.h \
     videoinfowidget.h \
     codectabswidget.h \
     videoplaybackwidget.h \
-    mainwindow.h
+    mainwindow.h \
+    parammanager.h
 
 
 FORMS    += \

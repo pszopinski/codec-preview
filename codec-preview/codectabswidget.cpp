@@ -54,6 +54,7 @@ void CodecTabsWidget::setSelectedCodecs(int first, int second, int third) {
     qDebug() << streamingParameters3;
     qDebug() << streamingParameters4;
 
+    /*
     QString streamingCommand = buildStreamingCommand(
         inputParameters, inputLocation,
         {streamingParameters1, streamingParameters2, streamingParameters3,
@@ -61,17 +62,17 @@ void CodecTabsWidget::setSelectedCodecs(int first, int second, int third) {
         {VIDEO_PROTOCOLS[0] + "://" + VIDEO_HOSTS[0] + ":" + VIDEO_PORTS[0],
          VIDEO_PROTOCOLS[1] + "://" + VIDEO_HOSTS[1] + ":" + VIDEO_PORTS[1],
          VIDEO_PROTOCOLS[2] + "://" + VIDEO_HOSTS[2] + ":" + VIDEO_PORTS[2],
-         VIDEO_PROTOCOLS[3] + "://" + VIDEO_HOSTS[3] + ":" + VIDEO_PORTS[3]});
+         VIDEO_PROTOCOLS[3] + "://" + VIDEO_HOSTS[3] + ":" + VIDEO_PORTS[3]});*/
 
     qDebug() << "streaming command:";
 
-    qDebug() << streamingCommand;
+    // qDebug() << streamingCommand;
     showCodecs.original->setText("Original");
     showCodecs.label1->setText(codecManagers.at(first)->getCodecName());
     showCodecs.label2->setText(codecManagers.at(second)->getCodecName());
     showCodecs.label3->setText(codecManagers.at(third)->getCodecName());
     showCodecs.show();
-    showCodecs.broadcast(streamingCommand);
+    // showCodecs.broadcast(streamingCommand);
 }
 
 void CodecTabsWidget::stopStreaming() {
@@ -183,8 +184,7 @@ QString CodecTabsWidget::getProbeCommand() {
     qDebug() << "starting probe process...";
 
     QString frameProbeCommand = buildProbeCommand(
-        VIDEO_PROBE_PROTOCOL + "://" + VIDEO_PROBE_HOST + ":" +
-            VIDEO_PROBE_PORT,
+        ENCODED_ADDRESS,
         "-show_frames -show_entries frame=pict_type,width,height");
 
     return frameProbeCommand;
