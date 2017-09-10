@@ -28,7 +28,7 @@ class CodecManager : public QWidget {
   public:
     explicit CodecManager(QWidget *parent = 0, QString encoder = "copy");
     ~CodecManager();
-    QMap<QString, QString> *getStreamingParameters();
+    virtual QMap<QString, QString> *getStreamingParameters();
     void addParameter(QString label, QString parameter, QString value);
     void addParameter(QString label, QString parameter, QList<QString> values);
     void insertParameter(QVBoxLayout *layout);

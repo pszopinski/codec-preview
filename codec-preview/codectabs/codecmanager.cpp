@@ -12,14 +12,7 @@ CodecManager::CodecManager(QWidget *parent, QString encoder)
 
 CodecManager::~CodecManager() { delete ui; }
 
-QMap<QString, QString> *CodecManager::getStreamingParameters() {
-    QMap<QString, QString> *parameters(streamingParameters);
-    // add final parameters
-    parameters->insert("f", "matroska");
-    parameters->insert("preset", "ultrafast");
-    parameters->insert("an", "");
-    return parameters;
-}
+
 
 void CodecManager::addParameter(QString label, QString parameter,
                                 QString value) {
@@ -86,3 +79,5 @@ void CodecManager::insertParameter(QVBoxLayout *layout) {
     ui->mainLayout->addLayout(layout, row, column);
     layoutCounter++;
 }
+
+QMap<QString, QString> *CodecManager::getStreamingParameters() {return NULL;}

@@ -10,6 +10,7 @@ class MPEG1Manager : public CodecManager {
 
   public:
     explicit MPEG1Manager(QWidget *parent = 0);
+    QMap<QString, QString> *getStreamingParameters();
     ~MPEG1Manager();
 };
 
