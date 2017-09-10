@@ -8,17 +8,6 @@ MPEG2Manager::MPEG2Manager(QWidget *parent)
     addParameter("Aspect ratio", "aspect", "");
     addParameter("Qscale", "qscale:v", "");
     addParameter("Resolution", "s", "");
-
-}
-
-QMap<QString, QString> *MPEG2Manager::getStreamingParameters() {
-    QMap<QString, QString> *parameters(streamingParameters);
-    // add final parameters
-    //parameters->insert("preset", "ultrafast");
-    parameters->insert("an", "");
-    parameters->insert("f", "mpegts");
-
-    return parameters;
 }
 
 MPEG2Manager::~MPEG2Manager() {}

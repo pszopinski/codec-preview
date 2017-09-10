@@ -93,5 +93,3 @@ QString CodecManager::getCodecName() { return codecName; }
 void CodecManager::setCodecName(QString codecName) {
   this->codecName = codecName;
 }
-
-QMap<QString, QString> *CodecManager::getStreamingParameters() {return NULL;}

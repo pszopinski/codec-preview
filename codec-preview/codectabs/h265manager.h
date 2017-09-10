@@ -10,7 +10,6 @@ class H265Manager : public CodecManager {
 
   public:
     explicit H265Manager(QWidget *parent = 0);
-    QMap<QString, QString> *getStreamingParameters();
     ~H265Manager();
 };
 

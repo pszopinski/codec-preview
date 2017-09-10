@@ -8,7 +8,6 @@ TEMPLATE = app
 DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
-    codectabs/codecmanager.cpp \
     codectabs/h261manager.cpp \
     codectabs/h264manager.cpp \
     codectabs/h265manager.cpp \
@@ -26,7 +25,6 @@ SOURCES += main.cpp\
 
 
 HEADERS  += constants.h \
-    codectabs/codecmanager.h \
     codectabs/h261manager.h \
     codectabs/h264manager.h \
     codectabs/h265manager.h \
