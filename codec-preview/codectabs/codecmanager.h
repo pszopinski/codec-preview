@@ -17,6 +17,7 @@ class CodecManager;
 }
 
 class CodecManager : public QWidget {
+<<<<<<< gui
   Q_OBJECT
 
 private:
