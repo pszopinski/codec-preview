@@ -159,8 +159,8 @@ void CodecTabsWidget::openFromCamera() {
 
     cameraNameGetterProcess.kill();
     cameraNameGetterProcess.waitForFinished();
-    cameraNameGetterProcess.start(
-        "ffmpeg -list_devices true -f dshow -i dummy");
+    cameraNameGetterProcess.start(FFMPEG +
+                                  " -list_devices true -f dshow -i dummy");
 
     // when process is done parseCameraNameProbeOutput runs and opens camera
 

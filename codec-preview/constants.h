@@ -1,10 +1,13 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+#include <QDir>
 #include <QString>
 
-const QString FFMPEG = "ffmpeg";
-const QString FFPROBE = "ffprobe";
+const QString WORKING_DIR = QDir::currentPath();
+
+const QString FFMPEG = WORKING_DIR + "/ffmpeg/bin/ffmpeg";
+const QString FFPROBE = WORKING_DIR + "/ffmpeg/bin/ffprobe";
 
 const QString VIDEO_PROTOCOLS[4] = {"udp", "udp", "udp", "udp"};
 const QString VIDEO_HOSTS[4] = {"224.0.0.133", "224.0.0.133", "224.0.0.133",
