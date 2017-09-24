@@ -52,7 +52,7 @@ FORMS    += \
     codecselector.ui
 	
 win32 {
-VLCQT_PATH = C:\vlc-qt
+VLCQT_PATH = $$_PRO_FILE_PWD_\vlc-qt
 
 INCLUDEPATH += $$VLCQT_PATH\include
 
