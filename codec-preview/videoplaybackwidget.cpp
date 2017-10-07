@@ -1,11 +1,13 @@
 #include "videoplaybackwidget.h"
 #include "ui_videoplaybackwidget.h"
 
+
 VideoPlaybackWidget::VideoPlaybackWidget(QWidget *parent)
     : QWidget(parent), ui(new Ui::VideoPlaybackWidget) {
     ui->setupUi(this);
 
-    vlcInstance = new VlcInstance(VlcCommon::args(), NULL);
+    vlcInstance = new VlcInstance({""}, NULL);
+
 
     // initialize raw video display
     vlcPlayerRaw = new VlcMediaPlayer(vlcInstance);
@@ -29,6 +31,9 @@ VideoPlaybackWidget::VideoPlaybackWidget(QWidget *parent)
                          ":" + ENCODED_VIDEO_PORT,
                      false, vlcInstance);
     vlcPlayerEncoded->openOnly(vlcMediaEncoded);
+
+    connect(vlcPlayerEncoded, &VlcMediaPlayer::timeChanged, this,
+            &VideoPlaybackWidget::whilePlaying);
 }
 
 VideoPlaybackWidget::~VideoPlaybackWidget() { delete ui; }
@@ -44,3 +49,11 @@ void VideoPlaybackWidget::startPlayers() {
     vlcPlayerRaw->play();
     vlcPlayerEncoded->play();
 }
+
+void VideoPlaybackWidget::whilePlaying() {
+    emit statsChanged(vlcMediaEncoded->getStats());
+
+
+}
+
+

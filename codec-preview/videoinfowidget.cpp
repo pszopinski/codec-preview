@@ -17,8 +17,8 @@ VideoInfoWidget::VideoInfoWidget(QWidget *parent)
     connect(&streamProbeProcess, SIGNAL(finished(int, QProcess::ExitStatus)),
             this, SLOT(parseStreamProbeOutput(int, QProcess::ExitStatus)));
 
-    ui->lAspectRatio->setToolTip(paramManager.getHint("Aspect ratio"));
     ui->lBitrate->setToolTip(paramManager.getHint("Bitrate"));
+
 }
 
 VideoInfoWidget::~VideoInfoWidget() { delete ui; }
@@ -104,24 +104,17 @@ void VideoInfoWidget::parseStreamProbeOutput(int a, QProcess::ExitStatus b) {
                 ui->frameRate->setText(fileOutput.mid(15, fileOutput.length()));
             }
 
-            // find codec name
-            // if (fileOutput.startsWith("codec_name=")) {
-            // ui->codecName->setText(fileOutput.mid(11, fileOutput.length()));
-            //}
-
-            // find bit rate
-            if (fileOutput.startsWith("bit_rate=")) {
-                ui->bitRate->setText(fileOutput.mid(9, fileOutput.length()));
-            }
-
-            // find aspect ratio
-            if (fileOutput.startsWith("display_aspect_ratio=")) {
-                ui->aspectRatio->setText(
-                    fileOutput.mid(21, fileOutput.length()));
-            }
         }
     } else {
         qDebug() << "ERROR: cannot access file";
     }
     myReadFile.close();
 }
+
+void VideoInfoWidget::onStatsChange(VlcStats *stats){
+    ui->decodedBlocks->setText(QString::number(stats->decoded_video));
+    ui->bitRate->setText(QString::number(stats->input_bitrate*10000));
+    ui->framesDropped->setText(QString::number(stats->lost_pictures));
+    ui->bytesRead->setText(QString::number(stats->read_bytes/100.0));
+    ui->framesCount->setText(QString::number(stats->displayed_pictures));
+    }

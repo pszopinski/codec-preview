@@ -14,7 +14,6 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
   private:
     Ui::MainWindow *ui;
-
   public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
@@ -30,5 +29,7 @@ class MainWindow : public QMainWindow {
     void on_actionOpen_from_camera_triggered();
     void on_actionCompare_multiple_codecs_triggered();
 };
+
+
 
 #endif // CODECCOMPARISONWINDOW_H

@@ -8,6 +8,7 @@
 #include <QProcess>
 #include <QQueue>
 #include <QWidget>
+#include <VLCQtCore/Stats.h>
 
 #include "constants.h"
 #include "parammanager.h"
@@ -37,6 +38,9 @@ class VideoInfoWidget : public QWidget {
   private slots:
     void parseFrameProbeOutput();
     void parseStreamProbeOutput(int a, QProcess::ExitStatus b);
+
+  public slots:
+    void onStatsChange(VlcStats *stats);
 };
 
 #endif // VIDEOINFOWIDGET_H
