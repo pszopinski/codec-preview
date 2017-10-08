@@ -34,6 +34,7 @@ class MainWindow : public QMainWindow {
     void on_actionChange_encoded_host_triggered();
     void on_actionChange_encoded_port_triggered();
 
+    void on_actionHelp_triggered();
 };
 
 

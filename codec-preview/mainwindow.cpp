@@ -135,3 +135,11 @@ void MainWindow::on_actionChange_encoded_port_triggered()
         stream();
     }
 }
+
+void MainWindow::on_actionHelp_triggered()
+{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Help");
+    msgBox.setText("\t\t\tCodec Preview\n\n\n\nCreated by Kamil Kurp, Piotr Puszkarski and Paweł Szopiński\t");
+    msgBox.exec();
+}
