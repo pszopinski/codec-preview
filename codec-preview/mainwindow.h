@@ -3,6 +3,7 @@
 
 #include <QFileDialog>
 #include <QMainWindow>
+#include <QInputDialog>
 
 //#include "codecselector.h"
 
@@ -28,6 +29,11 @@ class MainWindow : public QMainWindow {
     void on_actionOpen_file_triggered();
     void on_actionOpen_from_camera_triggered();
     void on_actionCompare_multiple_codecs_triggered();
+    void on_actionChange_raw_host_triggered();
+    void on_actionChange_raw_port_triggered();
+    void on_actionChange_encoded_host_triggered();
+    void on_actionChange_encoded_port_triggered();
+
 };
 
 

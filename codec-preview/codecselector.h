@@ -42,6 +42,7 @@ class CodecSelector : public QDialog {
     void on_H264_clicked();
     void on_H265_clicked();
     void on_buttonBox_accepted();
+    void on_buttonBox_rejected();
 };
 
 #endif // CODECSELECTOR_H

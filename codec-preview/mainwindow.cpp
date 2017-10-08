@@ -2,6 +2,12 @@
 #include "codecselector.h"
 #include "ui_mainwindow.h"
 
+QString rawVideoHost = RAW_VIDEO_HOST;
+QString encodedVideoHost = ENCODED_VIDEO_HOST;
+QString rawVideoPort = RAW_VIDEO_PORT;
+QString encodedVideoPort = ENCODED_VIDEO_PORT;
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
     setWindowState(Qt::WindowMaximized);
@@ -74,4 +80,58 @@ void MainWindow::resetPlayback() {
     ui->codecTabs->stopStreaming();
 
     ui->videoInfo->stopProbe();
+}
+
+
+
+
+
+void MainWindow::on_actionChange_raw_host_triggered()
+{
+    bool ok;
+    QString input;
+    input = QInputDialog::getText(this, tr("Change host"), tr("Multicast host for streaming (raw):"), QLineEdit::Normal, rawVideoHost, &ok);
+    if(ok){
+        rawVideoHost = input;
+        resetPlayback();
+        ui->videoPlayback->startPlayers();
+    }
+
+}
+
+void MainWindow::on_actionChange_raw_port_triggered()
+{
+    bool ok;
+    QString input;
+    input = QInputDialog::getText(this, tr("Change port"), tr("Multicast port for streaming (raw):"), QLineEdit::Normal, rawVideoPort, &ok);
+    if(ok){
+        rawVideoPort = input;
+        resetPlayback();
+        stream();
+    }
+}
+
+
+void MainWindow::on_actionChange_encoded_host_triggered()
+{
+    bool ok;
+    QString input;
+    input = QInputDialog::getText(this, tr("Change host"), tr("Multicast host for streaming (encoded):"), QLineEdit::Normal, encodedVideoHost, &ok);
+    if(ok){
+        encodedVideoHost = input;
+        resetPlayback();
+        stream();
+    }
+}
+
+void MainWindow::on_actionChange_encoded_port_triggered()
+{
+    bool ok;
+    QString input;
+    input = QInputDialog::getText(this, tr("Change port"), tr("Multicast port for streaming (encoded):"), QLineEdit::Normal, encodedVideoPort, &ok);
+    if(ok){
+        encodedVideoPort = input;
+        resetPlayback();
+        stream();
+    }
 }

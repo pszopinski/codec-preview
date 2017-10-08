@@ -32,6 +32,8 @@ class CodecTabsWidget : public QWidget {
     bool selectedCodecs[6];
     CodecCompareWindow compareWindow;
 
+
+
   public:
     explicit CodecTabsWidget(QWidget *parent = 0);
     ~CodecTabsWidget();

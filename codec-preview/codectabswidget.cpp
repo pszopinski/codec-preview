@@ -195,25 +195,34 @@ QString CodecTabsWidget::getStreamingParameters() {
 
 void CodecTabsWidget::startStreaming(QString streamingParameters) {
     qDebug() << "starting encoding process...";
+
+    QString rawAddress = RAW_VIDEO_PROTOCOL + "://" + rawVideoHost + ":" + rawVideoPort;
+    QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + encodedVideoHost + ":" + encodedVideoPort;
+
     QString streamingCommand = buildStreamingCommand(
-        inputParameters, inputLocation, streamingParameters, RAW_ADDRESS,
-        ENCODED_ADDRESS);
+        inputParameters, inputLocation, streamingParameters, rawAddress,
+        encodedAddress);
     streamingProcess.start(streamingCommand);
 }
 
 QString CodecTabsWidget::getProbeCommand() {
     qDebug() << "starting probe process...";
 
+    QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + encodedVideoHost + ":" + encodedVideoPort;
+
+
     QString frameProbeCommand = buildProbeCommand(
-        ENCODED_ADDRESS,
+        encodedAddress,
         "-show_frames -show_entries frame=pict_type,width,height");
 
     return frameProbeCommand;
 }
 
 QString CodecTabsWidget::getStreamCommand() {
+    QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + encodedVideoHost + ":" + encodedVideoPort;
+
     QString streamProbeCommand =
-        buildProbeCommand(ENCODED_ADDRESS, "-show_streams -select_streams v:0");
+        buildProbeCommand(encodedAddress, "-show_streams -select_streams v:0");
 
     return streamProbeCommand;
 }
