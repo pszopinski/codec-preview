@@ -5,7 +5,7 @@ MJPEGManager::MJPEGManager(QWidget *parent) : CodecManager(parent, "mjpeg") {
     addParameter("Bitrate", "b:v", "");
     addParameter("Minrate", "minrate", "");
     addParameter("Aspect ratio", "aspect", "");
-    addParameter("Qscale", "qscale:v", "");
+    //addParameter("Qscale", "qscale:v", "");
     addParameter("Resolution", "s", "");
 }
 

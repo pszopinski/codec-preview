@@ -8,6 +8,7 @@ CodecManager::CodecManager(QWidget *parent, QString encoder)
 
     streamingParameters->insert("c:v", encoder);
     addParameter("FPS", "r", "");
+    addParameter("Quantization", "qp", "");
 }
 
 CodecManager::~CodecManager() { delete ui; }
@@ -41,9 +42,10 @@ void CodecManager::addParameter(QString label, QString parameter,
 }
 
 void CodecManager::addParameter(QString label, QString parameter,
-                                QList<QString> values) {
+                                QMap<QString, QString> comboMap) {
     // create new layout for parameter
     QVBoxLayout *layout = new QVBoxLayout();
+
 
     // add QLabel
     QLabel *labelWidget = new QLabel(label, this);
@@ -54,20 +56,21 @@ void CodecManager::addParameter(QString label, QString parameter,
 
     // add QComboBox
     QComboBox *comboBox = new QComboBox(this);
-    comboBox->insertItems(0, values);
+    comboBox->insertItems(0, comboMap.keys());
     layout->addWidget(comboBox);
 
-    // make form interactive
-    streamingParameters->insert(parameter, values[0]);
     connect(comboBox, &QComboBox::currentTextChanged,
             [=](const QString &newValue) {
                 if (newValue != streamingParameters->value(parameter)) {
-                    streamingParameters->insert(parameter, newValue);
+                    streamingParameters->insert(parameter, comboMap.value(newValue));
                     emit parametersChanged();
                 }
             });
 
     insertParameter(layout);
+
+    streamingParameters->insert(parameter, comboMap.values().at(0));
+
 }
 
 void CodecManager::insertParameter(QVBoxLayout *layout) {

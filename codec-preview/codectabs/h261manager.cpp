@@ -1,12 +1,17 @@
 #include "h261manager.h"
 
 H261Manager::H261Manager(QWidget *parent) : CodecManager(parent, "h261") {
-    QList<QString> resolutions({"176:144", "352:288"});
+
+
     addParameter("Bitrate", "b:v", "");
     addParameter("Minrate", "minrate", "");
     addParameter("Maxrate", "maxrate", "");
     addParameter("Aspect ratio", "aspect", "");
-    addParameter("Qscale", "qscale:v", "");
+    //addParameter("Qscale", "qscale:v", "");
+
+    QMap<QString, QString> resolutions;
+    resolutions.insert("176:144", "176x144");
+    resolutions.insert("352:288", "352x288");
     addParameter("Resolution", "s", resolutions);
 }
 

@@ -40,7 +40,7 @@ CodecTabsWidget::~CodecTabsWidget() { delete ui; }
 void CodecTabsWidget::setSelectedCodecs(int first, int second, int third) {
     qDebug() << "selected codecs: " << first << second << third;
 
-    QString streamingParameters1 = "-c:v copy -f nut -an";
+    QString streamingParameters1 = "-c:v mjpeg -f nut -an";
     QString streamingParameters2 =
         parametersToString(codecManagers.at(first)->getStreamingParameters());
     QString streamingParameters3 =
@@ -93,7 +93,8 @@ QString CodecTabsWidget::buildStreamingCommand(QString inputParameters,
     list << inputParameters;
     list << "-i " << inputLocation;
 
-    list << "-c:v copy -f nut -an" << rawLocation + "?ttl=0";
+    //TEMPORARY CHANGE FROM COPY TO MJPEG
+    list << "-c:v mjpeg -f nut -an" << rawLocation + "?ttl=0";
 
     list << outputPrameters << encodedLocation + "?ttl=0";
 

@@ -30,12 +30,14 @@ class CodecManager : public QWidget {
     QMap<QString, QString> *streamingParameters;
 
   public:
-    explicit CodecManager(QWidget *parent = 0, QString encoder = "copy");
+    //TEMPORARY CHANGE FROM COPY TO MJPEG
+
+    explicit CodecManager(QWidget *parent = 0, QString encoder = "mjpeg");
     ~CodecManager();
 
     virtual QMap<QString, QString> *getStreamingParameters();
     void addParameter(QString label, QString parameter, QString value);
-    void addParameter(QString label, QString parameter, QList<QString> values);
+    void addParameter(QString label, QString parameter, QMap<QString, QString> values);
     void insertParameter(QVBoxLayout *layout);
     QString getCodecName();
     void setCodecName(QString codecName);

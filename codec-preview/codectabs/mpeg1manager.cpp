@@ -6,7 +6,7 @@ MPEG1Manager::MPEG1Manager(QWidget *parent)
     addParameter("Minrate", "minrate", "");
     addParameter("Maxrate", "maxrate", "");
     addParameter("Aspect ratio", "aspect", "");
-    addParameter("Qscale", "qscale:v", "");
+    //addParameter("Qscale", "qscale:v", "");
     addParameter("Resolution", "s", "");
 }
 
