@@ -40,7 +40,7 @@ CodecTabsWidget::~CodecTabsWidget() { delete ui; }
 void CodecTabsWidget::setSelectedCodecs(int first, int second, int third) {
     qDebug() << "selected codecs: " << first << second << third;
 
-    QString streamingParameters1 = "-c:v copy -f nut -an";
+    QString streamingParameters1 = "-c:v mjpeg -f nut -an"; // PP: copy -> mjpeg
     QString streamingParameters2 =
         parametersToString(codecManagers.at(first)->getStreamingParameters());
     QString streamingParameters3 =
@@ -93,7 +93,8 @@ QString CodecTabsWidget::buildStreamingCommand(QString inputParameters,
     list << inputParameters;
     list << "-i " << inputLocation;
 
-    list << "-c:v copy -f nut -an" << rawLocation + "?ttl=0";
+    list << "-c:v mjpeg -f nut -an"
+         << rawLocation + "?ttl=0"; // PP: copy -> mjpeg
 
     list << outputPrameters << encodedLocation + "?ttl=0";
 
@@ -162,7 +163,7 @@ void CodecTabsWidget::openFromCamera() {
     cameraNameGetterProcess.start(FFMPEG +
                                   " -list_devices true -f dshow -i dummy");
 
-    // when process is done parseCameraNameProbeOutput runs and opens camera
+// when process is done parseCameraNameProbeOutput runs and opens camera
 
 #else
     inputParameters = "-f v4l2";
@@ -196,20 +197,22 @@ QString CodecTabsWidget::getStreamingParameters() {
 void CodecTabsWidget::startStreaming(QString streamingParameters) {
     qDebug() << "starting encoding process...";
 
-    QString rawAddress = RAW_VIDEO_PROTOCOL + "://" + rawVideoHost + ":" + rawVideoPort;
-    QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + encodedVideoHost + ":" + encodedVideoPort;
+    QString rawAddress =
+        RAW_VIDEO_PROTOCOL + "://" + rawVideoHost + ":" + rawVideoPort;
+    QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + encodedVideoHost +
+                             ":" + encodedVideoPort;
 
-    QString streamingCommand = buildStreamingCommand(
-        inputParameters, inputLocation, streamingParameters, rawAddress,
-        encodedAddress);
+    QString streamingCommand =
+        buildStreamingCommand(inputParameters, inputLocation,
+                              streamingParameters, rawAddress, encodedAddress);
     streamingProcess.start(streamingCommand);
 }
 
 QString CodecTabsWidget::getProbeCommand() {
     qDebug() << "starting probe process...";
 
-    QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + encodedVideoHost + ":" + encodedVideoPort;
-
+    QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + encodedVideoHost +
+                             ":" + encodedVideoPort;
 
     QString frameProbeCommand = buildProbeCommand(
         encodedAddress,
@@ -219,7 +222,8 @@ QString CodecTabsWidget::getProbeCommand() {
 }
 
 QString CodecTabsWidget::getStreamCommand() {
-    QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + encodedVideoHost + ":" + encodedVideoPort;
+    QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + encodedVideoHost +
+                             ":" + encodedVideoPort;
 
     QString streamProbeCommand =
         buildProbeCommand(encodedAddress, "-show_streams -select_streams v:0");
