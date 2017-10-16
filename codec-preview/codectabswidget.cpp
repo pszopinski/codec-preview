@@ -5,6 +5,8 @@ CodecTabsWidget::CodecTabsWidget(QWidget *parent)
     : QWidget(parent), ui(new Ui::CodecTabsWidget) {
     ui->setupUi(this);
 
+
+
     ui->tabWidget->setCurrentIndex(0);
 
     connect(ui->tabWidget, &QTabWidget::currentChanged, this,
@@ -58,13 +60,13 @@ void CodecTabsWidget::setSelectedCodecs(int first, int second, int third) {
         inputParameters, inputLocation,
         {streamingParameters1, streamingParameters2, streamingParameters3,
          streamingParameters4},
-        {VIDEO_PROTOCOLS[0] + "://" + VIDEO_HOSTS[0] + ":" + VIDEO_PORTS[0] +
+        {ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[0] + ":" + compareWindowPorts[0] +
              "?ttl=0",
-         VIDEO_PROTOCOLS[1] + "://" + VIDEO_HOSTS[1] + ":" + VIDEO_PORTS[1] +
+         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[1] + ":" + compareWindowPorts[1] +
              "?ttl=0",
-         VIDEO_PROTOCOLS[2] + "://" + VIDEO_HOSTS[2] + ":" + VIDEO_PORTS[2] +
+         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[2] + ":" + compareWindowPorts[2] +
              "?ttl=0",
-         VIDEO_PROTOCOLS[3] + "://" + VIDEO_HOSTS[3] + ":" + VIDEO_PORTS[3] +
+         RAW_VIDEO_PROTOCOL + "://" + compareWindowHosts[3] + ":" + compareWindowPorts[3] +
              "?ttl=0"});
 
     qDebug() << "streaming command:";
@@ -208,11 +210,11 @@ void CodecTabsWidget::startStreaming(QString streamingParameters) {
     streamingProcess.start(streamingCommand);
 }
 
-QString CodecTabsWidget::getProbeCommand() {
+QString CodecTabsWidget::getFrameProbeCommand(QString host, QString port) {
     qDebug() << "starting probe process...";
 
-    QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + encodedVideoHost +
-                             ":" + encodedVideoPort;
+    QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + host +
+                             ":" + port;
 
     QString frameProbeCommand = buildProbeCommand(
         encodedAddress,
@@ -221,9 +223,9 @@ QString CodecTabsWidget::getProbeCommand() {
     return frameProbeCommand;
 }
 
-QString CodecTabsWidget::getStreamCommand() {
-    QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + encodedVideoHost +
-                             ":" + encodedVideoPort;
+QString CodecTabsWidget::getStreamProbeCommand(QString host, QString port) {
+    QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + host +
+                             ":" + port;
 
     QString streamProbeCommand =
         buildProbeCommand(encodedAddress, "-show_streams -select_streams v:0");

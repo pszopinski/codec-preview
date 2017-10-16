@@ -34,6 +34,7 @@ class CodecTabsWidget : public QWidget {
 
 
 
+
   public:
     explicit CodecTabsWidget(QWidget *parent = 0);
     ~CodecTabsWidget();
@@ -56,8 +57,8 @@ class CodecTabsWidget : public QWidget {
     void selectMultipleCodecs();
     QString getStreamingParameters();
     void startStreaming(QString streamingParameters);
-    QString getProbeCommand();
-    QString getStreamCommand();
+    QString getFrameProbeCommand(QString host, QString port);
+    QString getStreamProbeCommand(QString host, QString port);
     void setCRF(QString value);
     void insertParameter(QVBoxLayout *layout);
 

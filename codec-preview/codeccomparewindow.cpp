@@ -10,8 +10,8 @@ CodecCompareWindow::CodecCompareWindow(QWidget *parent)
 
     for (int i = 0; i < 4; i++) {
         // initialize media objects
-        vlcMedia[i] = new VlcMedia(VIDEO_PROTOCOLS[i] + "://@" +
-                                       VIDEO_HOSTS[i] + ":" + VIDEO_PORTS[i],
+        vlcMedia[i] = new VlcMedia(RAW_VIDEO_PROTOCOL + "://@" +
+                                       compareWindowHosts[i] + ":" + compareWindowPorts[i],
                                    false, vlcInstance);
 
         // initialize video displays
@@ -63,7 +63,15 @@ void CodecCompareWindow::stream(QString streamingCommand) {
     // start streaming process
     streamingProcess.start(streamingCommand);
 
+
     for (int i = 0; i < 4; i++) {
         vlcMediaPlayers[i]->play();
     }
+
+    /*for (int i = 0; i < 4; i++) {
+        QString frameProbeCommand = ui->codecTabs->getFrameProbeCommand("a", "b");
+        ui->videoInfo->startFrameProbe(frameProbeCommand);
+        QString streamProbeCommand = ui->codecTabs->getStreamProbeCommand();
+        ui->videoInfo->startStreamProbe(streamProbeCommand);
+    }*/
 }

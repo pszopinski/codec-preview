@@ -9,7 +9,6 @@ const QString WORKING_DIR = QDir::currentPath();
 const QString FFMPEG = WORKING_DIR + "/ffmpeg/bin/ffmpeg";
 const QString FFPROBE = WORKING_DIR + "/ffmpeg/bin/ffprobe";
 
-const QString VIDEO_PROTOCOLS[4] = {"udp", "udp", "udp", "udp"};
 const QString VIDEO_HOSTS[4] = {"224.0.0.133", "224.0.0.133", "224.0.0.133",
                                 "224.0.0.133"};
 const QString VIDEO_PORTS[4] = {"41291", "41292", "41293", "41294"};
@@ -33,6 +32,8 @@ extern QString encodedVideoHost;
 extern QString rawVideoPort;
 extern QString encodedVideoPort;
 
+extern QString compareWindowHosts[4];
+extern QString compareWindowPorts[4];
 
 
 

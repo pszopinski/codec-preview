@@ -7,6 +7,9 @@ QString encodedVideoHost = ENCODED_VIDEO_HOST;
 QString rawVideoPort = RAW_VIDEO_PORT;
 QString encodedVideoPort = ENCODED_VIDEO_PORT;
 
+QString compareWindowHosts[4] = {VIDEO_HOSTS[0],VIDEO_HOSTS[1],VIDEO_HOSTS[2],VIDEO_HOSTS[3]};
+QString compareWindowPorts[4] = {VIDEO_PORTS[0],VIDEO_PORTS[1],VIDEO_PORTS[2],VIDEO_PORTS[3]};
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -63,9 +66,9 @@ void MainWindow::stream() {
 
     ui->codecTabs->startStreaming(streamingParameters);
 
-    QString frameProbeCommand = ui->codecTabs->getProbeCommand();
+    QString frameProbeCommand = ui->codecTabs->getFrameProbeCommand(encodedVideoHost, encodedVideoPort);
     ui->videoInfo->startFrameProbe(frameProbeCommand);
-    QString streamProbeCommand = ui->codecTabs->getStreamCommand();
+    QString streamProbeCommand = ui->codecTabs->getStreamProbeCommand(encodedVideoHost, encodedVideoPort);
     ui->videoInfo->startStreamProbe(streamProbeCommand);
 
     ui->videoPlayback->startPlayers();
