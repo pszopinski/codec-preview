@@ -17,7 +17,14 @@
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="0" column="0">
-      <layout class="QGridLayout" name="gridLayout" rowstretch="1,10,3">
+      <layout class="QGridLayout" name="gridLayout" rowstretch="1,10,3,0">
+       <item row="1" column="0">
+        <widget class="VlcWidgetVideo" name="rawVideo" native="true">
+         <property name="styleSheet">
+          <string notr="true">Background-color: #000;</string>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="0">
         <widget class="QLabel" name="original">
          <property name="maximumSize">
@@ -34,15 +41,32 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="VlcWidgetVideo" name="rawVideo" native="true">
-         <property name="styleSheet">
-          <string notr="true">Background-color: #000;</string>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="0">
-        <widget class="QWidget" name="widget_1" native="true"/>
+        <widget class="QWidget" name="widget_1" native="true">
+         <widget class="QLabel" name="label">
+          <property name="geometry">
+           <rect>
+            <x>80</x>
+            <y>10</y>
+            <width>52</width>
+            <height>15</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>zzzzzzzz</string>
+          </property>
+         </widget>
+         <widget class="QTextEdit" name="frames0">
+          <property name="geometry">
+           <rect>
+            <x>50</x>
+            <y>30</y>
+            <width>131</width>
+            <height>31</height>
+           </rect>
+          </property>
+         </widget>
+        </widget>
        </item>
       </layout>
      </item>
@@ -137,7 +161,31 @@
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="widget_4" native="true"/>
+        <widget class="QWidget" name="widget_4" native="true">
+         <widget class="QTextEdit" name="frames3">
+          <property name="geometry">
+           <rect>
+            <x>120</x>
+            <y>50</y>
+            <width>131</width>
+            <height>31</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_2">
+          <property name="geometry">
+           <rect>
+            <x>160</x>
+            <y>10</y>
+            <width>52</width>
+            <height>15</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>hmm</string>
+          </property>
+         </widget>
+        </widget>
        </item>
       </layout>
      </item>

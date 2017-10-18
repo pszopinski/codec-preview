@@ -35,6 +35,15 @@ CodecCompareWindow::CodecCompareWindow(QWidget *parent)
     label1 = ui->first;
     label2 = ui->second;
     label3 = ui->third;
+
+
+    // react to frame probe output with parseFrameProbeOutput
+    connect(&frameProbes[0], &QProcess::readyRead, this,
+            &CodecCompareWindow::parseFrameProbeOutput0);
+
+    connect(&frameProbes[3], &QProcess::readyRead, this,
+            &CodecCompareWindow::parseFrameProbeOutput3);
+
 }
 
 CodecCompareWindow::~CodecCompareWindow() { delete ui; }
@@ -79,5 +88,71 @@ void CodecCompareWindow::stream(QString streamingCommand) {
         frameProbes[i].start(frameProbeCommand);
         QString streamProbeCommand = FfmpegCommand::getStreamProbeCommand(compareWindowHosts[i], compareWindowPorts[i]);
         streamProbes[i].start(streamProbeCommand);
+    }
+}
+
+void CodecCompareWindow::parseFrameProbeOutput0() {
+    // read output line by line
+    while (frameProbes[0].canReadLine()) {
+        QString output = frameProbes[0].readLine();
+
+        // find frame type
+        if (output.startsWith("pict_type=")) {
+            // put single character describing frame type into queue
+            framesQueues[0].enqueue(output.toUtf8().constData()[10]);
+
+            // throw out oldest frame types if over queue size limit
+            if (framesQueues[0].size() > 16) {
+                frameProbes[0].kill();
+                frameProbes[0].waitForFinished();
+            }
+            // framesQueue.dequeue();
+
+            // create snapshot of queue to display in widget
+            QString framesQueueSnapshot;
+
+            QListIterator<char> i(framesQueues[0]);
+
+            while (i.hasNext()) {
+                framesQueueSnapshot.append(i.next());
+            }
+
+            ui->frames0->setText(framesQueueSnapshot);
+        }
+    }
+
+
+
+}
+
+
+void CodecCompareWindow::parseFrameProbeOutput3() {
+
+    while (frameProbes[3].canReadLine()) {
+        QString output = frameProbes[3].readLine();
+
+        // find frame type
+        if (output.startsWith("pict_type=")) {
+            // put single character describing frame type into queue
+            framesQueues[3].enqueue(output.toUtf8().constData()[10]);
+
+            // throw out oldest frame types if over queue size limit
+            if (framesQueues[3].size() > 16) {
+                frameProbes[3].kill();
+                frameProbes[3].waitForFinished();
+            }
+            // framesQueue.dequeue();
+
+            // create snapshot of queue to display in widget
+            QString framesQueueSnapshot;
+
+            QListIterator<char> i(framesQueues[3]);
+
+            while (i.hasNext()) {
+                framesQueueSnapshot.append(i.next());
+            }
+
+            ui->frames3->setText(framesQueueSnapshot);
+        }
     }
 }
