@@ -21,7 +21,8 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     parammanager.cpp \
     codeccomparewindow.cpp \
-    codecselector.cpp
+    codecselector.cpp \
+    ffmpegcommand.cpp
 
 
 
@@ -39,7 +40,8 @@ HEADERS  += constants.h \
     mainwindow.h \
     parammanager.h \
     codeccomparewindow.h \
-    codecselector.h
+    codecselector.h \
+    ffmpegcommand.h
 
 
 FORMS    += \

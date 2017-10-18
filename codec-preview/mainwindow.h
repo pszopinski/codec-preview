@@ -6,6 +6,7 @@
 #include <QInputDialog>
 
 //#include "codecselector.h"
+#include "ffmpegcommand.h"
 
 namespace Ui {
 class MainWindow;

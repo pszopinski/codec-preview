@@ -54,6 +54,12 @@ void CodecCompareWindow::stream(QString streamingCommand) {
     for (int i = 0; i < 4; i++) {
         // stop player
         vlcMediaPlayers[i]->stop();
+
+        frameProbes[i].kill();
+        frameProbes[i].waitForFinished();
+
+        streamProbes[i].kill();
+        streamProbes[i].waitForFinished();
     }
 
     // kill streaming process
@@ -68,10 +74,10 @@ void CodecCompareWindow::stream(QString streamingCommand) {
         vlcMediaPlayers[i]->play();
     }
 
-    /*for (int i = 0; i < 4; i++) {
-        QString frameProbeCommand = ui->codecTabs->getFrameProbeCommand("a", "b");
-        ui->videoInfo->startFrameProbe(frameProbeCommand);
-        QString streamProbeCommand = ui->codecTabs->getStreamProbeCommand();
-        ui->videoInfo->startStreamProbe(streamProbeCommand);
-    }*/
+    for (int i = 0; i < 4; i++) {
+        QString frameProbeCommand = FfmpegCommand::getFrameProbeCommand(compareWindowHosts[i], compareWindowPorts[i]);
+        frameProbes[i].start(frameProbeCommand);
+        QString streamProbeCommand = FfmpegCommand::getStreamProbeCommand(compareWindowHosts[i], compareWindowPorts[i]);
+        streamProbes[i].start(streamProbeCommand);
+    }
 }

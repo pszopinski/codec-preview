@@ -12,6 +12,8 @@
 #include "codectabs/mjpegmanager.h"
 #include "codectabs/mpeg1manager.h"
 #include "codectabs/mpeg2manager.h"
+//#include "ffmpegcommand.h"
+
 
 #include "codeccomparewindow.h"
 
@@ -57,8 +59,6 @@ class CodecTabsWidget : public QWidget {
     void selectMultipleCodecs();
     QString getStreamingParameters();
     void startStreaming(QString streamingParameters);
-    QString getFrameProbeCommand(QString host, QString port);
-    QString getStreamProbeCommand(QString host, QString port);
     void setCRF(QString value);
     void insertParameter(QVBoxLayout *layout);
 

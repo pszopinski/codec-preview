@@ -66,9 +66,9 @@ void MainWindow::stream() {
 
     ui->codecTabs->startStreaming(streamingParameters);
 
-    QString frameProbeCommand = ui->codecTabs->getFrameProbeCommand(encodedVideoHost, encodedVideoPort);
+    QString frameProbeCommand = FfmpegCommand::getFrameProbeCommand(encodedVideoHost, encodedVideoPort);
     ui->videoInfo->startFrameProbe(frameProbeCommand);
-    QString streamProbeCommand = ui->codecTabs->getStreamProbeCommand(encodedVideoHost, encodedVideoPort);
+    QString streamProbeCommand = FfmpegCommand::getStreamProbeCommand(encodedVideoHost, encodedVideoPort);
     ui->videoInfo->startStreamProbe(streamProbeCommand);
 
     ui->videoPlayback->startPlayers();

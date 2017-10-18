@@ -15,6 +15,8 @@
 #include <VLCQtCore/MediaPlayer.h>
 #include <VLCQtCore/Stats.h>
 
+#include "ffmpegcommand.h"
+
 namespace Ui {
 class CodecCompareWindow;
 }
@@ -28,6 +30,8 @@ class CodecCompareWindow : public QWidget {
     VlcMedia *vlcMedia[4];
     VlcMediaPlayer *vlcMediaPlayers[4];
     QProcess streamingProcess;
+    QProcess frameProbes[4];
+    QProcess streamProbes[4];
 
   public:
     explicit CodecCompareWindow(QWidget *parent = 0);
