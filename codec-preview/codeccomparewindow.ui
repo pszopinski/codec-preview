@@ -17,7 +17,7 @@
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="0" column="0">
-      <layout class="QGridLayout" name="gridLayout" rowstretch="1,10,3,0">
+      <layout class="QGridLayout" name="gridLayout" rowstretch="1,10,3">
        <item row="1" column="0">
         <widget class="VlcWidgetVideo" name="rawVideo" native="true">
          <property name="styleSheet">
@@ -48,12 +48,12 @@
            <rect>
             <x>80</x>
             <y>10</y>
-            <width>52</width>
-            <height>15</height>
+            <width>81</width>
+            <height>16</height>
            </rect>
           </property>
           <property name="text">
-           <string>zzzzzzzz</string>
+           <string>Frame types</string>
           </property>
          </widget>
          <widget class="QTextEdit" name="frames0">
@@ -96,7 +96,31 @@
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="widget_2" native="true"/>
+        <widget class="QWidget" name="widget_2" native="true">
+         <widget class="QTextEdit" name="frames3_3">
+          <property name="geometry">
+           <rect>
+            <x>100</x>
+            <y>40</y>
+            <width>131</width>
+            <height>31</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_4">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>20</y>
+            <width>71</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Frame types</string>
+          </property>
+         </widget>
+        </widget>
        </item>
       </layout>
      </item>
@@ -126,11 +150,34 @@
          <property name="styleSheet">
           <string notr="true">Background-color: #000;</string>
          </property>
-         <zorder>encodedVideo1</zorder>
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="widget_3" native="true"/>
+        <widget class="QWidget" name="widget_3" native="true">
+         <widget class="QTextEdit" name="frames3_2">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>50</y>
+            <width>131</width>
+            <height>31</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_3">
+          <property name="geometry">
+           <rect>
+            <x>120</x>
+            <y>30</y>
+            <width>71</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Frame types</string>
+          </property>
+         </widget>
+        </widget>
        </item>
       </layout>
      </item>
@@ -157,7 +204,6 @@
          <property name="styleSheet">
           <string notr="true">Background-color: #000;</string>
          </property>
-         <zorder>rawVideo</zorder>
         </widget>
        </item>
        <item>
@@ -176,13 +222,13 @@
           <property name="geometry">
            <rect>
             <x>160</x>
-            <y>10</y>
-            <width>52</width>
-            <height>15</height>
+            <y>30</y>
+            <width>71</width>
+            <height>16</height>
            </rect>
           </property>
           <property name="text">
-           <string>hmm</string>
+           <string>Frame types</string>
           </property>
          </widget>
         </widget>

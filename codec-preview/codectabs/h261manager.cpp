@@ -2,17 +2,30 @@
 
 H261Manager::H261Manager(QWidget *parent) : CodecManager(parent, "h261") {
 
+    QString codecName = "h261";
 
-    addParameter("Bitrate", "b:v", "");
-    addParameter("Minrate", "minrate", "");
-    addParameter("Maxrate", "maxrate", "");
-    addParameter("Aspect ratio", "aspect", "");
-    //addParameter("Qscale", "qscale:v", "");
+    Codec* codec = CodecManager::getCodec(codecName);
 
-    QMap<QString, QString> resolutions;
-    resolutions.insert("176:144", "176x144");
-    resolutions.insert("352:288", "352x288");
-    addParameter("Resolution", "s", resolutions);
+    QList<QString> parameterNames = codec->getParamKeys();
+    QList<QString> comboNames = codec->getComboKeys();
+
+    for(int i = 0; i < parameterNames.size(); i++) {
+        QString paramName = parameterNames.at(i);
+        QMap<QString, QString> paramMap = codec->getParameter(paramName);
+
+        addParameter(paramName, paramMap.value("value"), paramMap.value("default"));
+    }
+
+    for(int i = 0; i < comboNames.size(); i++) {
+        QString paramName = comboNames.at(i);
+        QMap<QString, QString> paramMap = codec->getCombo(paramName);
+        QString paramValue = paramMap.value("value");
+
+        paramMap.remove("value");
+
+        addParameter(paramName, paramValue, paramMap);
+
+    }
 }
 
 QMap<QString, QString> *H261Manager::getStreamingParameters() {

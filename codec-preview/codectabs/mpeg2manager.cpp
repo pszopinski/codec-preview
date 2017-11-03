@@ -2,31 +2,30 @@
 
 MPEG2Manager::MPEG2Manager(QWidget *parent)
     : CodecManager(parent, "mpeg2video") {
-    addParameter("Bitrate", "b:v", "");
-    addParameter("Minrate", "minrate", "");
-    addParameter("Maxrate", "maxrate", "");
-    addParameter("Aspect ratio", "aspect", "");
-    //addParameter("Qscale", "qscale:v", "");
-    addParameter("Resolution", "s", "");
+    QString codecName = "mpeg2";
 
+    Codec* codec = CodecManager::getCodec(codecName);
 
+    QList<QString> parameterNames = codec->getParamKeys();
+    QList<QString> comboNames = codec->getComboKeys();
 
-    QMap<QString, QString> profiles;
-    profiles.insert("422", "0");
-    profiles.insert("HIGH", "1");
-    profiles.insert("SS", "2");
-    profiles.insert("SNR_SCALABLE", "3");
-    profiles.insert("MAIN", "4");
-    profiles.insert("SIMPLE", "5");
-    addParameter("Profile", "profile:v", profiles);
+    for(int i = 0; i < parameterNames.size(); i++) {
+        QString paramName = parameterNames.at(i);
+        QMap<QString, QString> paramMap = codec->getParameter(paramName);
 
-    QMap<QString, QString> levels;
-    levels.insert("422 main", "5");
-    levels.insert("422 high", "2");
-    levels.insert("main", "8");
-    levels.insert("high 1440", "6");
-    levels.insert("high", "4");
-    addParameter("Level", "level:v", levels);
+        addParameter(paramName, paramMap.value("value"), paramMap.value("default"));
+    }
+
+    for(int i = 0; i < comboNames.size(); i++) {
+        QString paramName = comboNames.at(i);
+        QMap<QString, QString> paramMap = codec->getCombo(paramName);
+        QString paramValue = paramMap.value("value");
+
+        paramMap.remove("value");
+
+        addParameter(paramName, paramValue, paramMap);
+
+    }
 }
 
 QMap<QString, QString> *MPEG2Manager::getStreamingParameters() {

@@ -1,13 +1,30 @@
 #include "h265manager.h"
 
 H265Manager::H265Manager(QWidget *parent) : CodecManager(parent, "libx265") {
-    addParameter("Bitrate", "b:v", "");
-    addParameter("Minrate", "minrate", "");
-    addParameter("Maxrate", "maxrate", "");
-    addParameter("Buffer size", "bufsize", "");
-    addParameter("Aspect ratio", "aspect", "");
-    addParameter("Costant Rate Factor", "crf", "");
-    addParameter("Resolution", "s", "");
+    QString codecName = "h265";
+
+    Codec* codec = CodecManager::getCodec(codecName);
+
+    QList<QString> parameterNames = codec->getParamKeys();
+    QList<QString> comboNames = codec->getComboKeys();
+
+    for(int i = 0; i < parameterNames.size(); i++) {
+        QString paramName = parameterNames.at(i);
+        QMap<QString, QString> paramMap = codec->getParameter(paramName);
+
+        addParameter(paramName, paramMap.value("value"), paramMap.value("default"));
+    }
+
+    for(int i = 0; i < comboNames.size(); i++) {
+        QString paramName = comboNames.at(i);
+        QMap<QString, QString> paramMap = codec->getCombo(paramName);
+        QString paramValue = paramMap.value("value");
+
+        paramMap.remove("value");
+
+        addParameter(paramName, paramValue, paramMap);
+
+    }
 }
 
 QMap<QString, QString> *H265Manager::getStreamingParameters() {

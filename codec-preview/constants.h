@@ -14,11 +14,11 @@ const QString VIDEO_HOSTS[4] = {"224.0.0.133", "224.0.0.133", "224.0.0.133",
 const QString VIDEO_PORTS[4] = {"41291", "41292", "41293", "41294"};
 
 const QString RAW_VIDEO_PROTOCOL = "udp";
-const QString RAW_VIDEO_HOST = "224.0.0.133";
+const QString RAW_VIDEO_HOST = "224.0.0.0";
 const QString RAW_VIDEO_PORT = "41291";
 
 const QString ENCODED_VIDEO_PROTOCOL = "udp";
-const QString ENCODED_VIDEO_HOST = "224.0.0.133";
+const QString ENCODED_VIDEO_HOST = "224.0.0.0";
 const QString ENCODED_VIDEO_PORT = "41292";
 
 /*const QString RAW_ADDRESS =

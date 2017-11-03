@@ -12,6 +12,15 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
+#include "codecs/h261.h"
+#include "codecs/h264.h"
+#include "codecs/h265.h"
+#include "codecs/mjpeg.h"
+#include "codecs/mpeg1.h"
+#include "codecs/mpeg2.h"
+#include "codecs/allcodecs.h"
+
+
 namespace Ui {
 class CodecManager;
 }
@@ -41,6 +50,10 @@ class CodecManager : public QWidget {
     void insertParameter(QVBoxLayout *layout);
     QString getCodecName();
     void setCodecName(QString codecName);
+
+
+public:
+    static Codec* getCodec(QString codecName);
 
   signals:
     void parametersChanged();
