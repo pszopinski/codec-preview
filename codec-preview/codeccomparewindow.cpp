@@ -61,6 +61,31 @@ void CodecCompareWindow::closeEvent(QCloseEvent *event) {
     streamingProcess.waitForFinished();
 }
 
+CodecManager* CodecCompareWindow::getManager(int i) {
+
+    switch(i) {
+    case 0:
+        return mjpegManager;
+        break;
+    case 1:
+        return h261Manager;
+        break;
+    case 2:
+        return mpeg1Manager;
+        break;
+    case 3:
+        return mpeg2Manager;
+        break;
+    case 4:
+        return h264Manager;
+        break;
+    case 5:
+        return  h265Manager;
+        break;
+    }
+    return NULL;
+}
+
 void CodecCompareWindow::setManagers(int one, int two, int three)
 {
     ui->encodedParams1->setVisible(false);

@@ -131,7 +131,7 @@ void CodecSelector::on_buttonBox_accepted() {
     }
     if (n == 3) {
         // user selected exactly 3 codecs
-        hndl->setSelectedCodecs(indexes[0], indexes[1], indexes[2]);
+        hndl->compareWindowStream(indexes[0], indexes[1], indexes[2]);
         close();
 
     } else {

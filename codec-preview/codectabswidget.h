@@ -33,6 +33,9 @@ class CodecTabsWidget : public QWidget {
     QString inputLocation;
     bool selectedCodecs[6];
     CodecCompareWindow compareWindow;
+    int previousFirst;
+    int previousSecond;
+    int previousThird;
 
 
 
@@ -40,7 +43,7 @@ class CodecTabsWidget : public QWidget {
   public:
     explicit CodecTabsWidget(QWidget *parent = 0);
     ~CodecTabsWidget();
-    void setSelectedCodecs(int first, int second, int third);
+    void compareWindowStream(int first, int second, int third);
     void stopStreaming();
     static QString buildStreamingCommand(QString inputParameters,
                                          QString inputLocation,
@@ -62,6 +65,7 @@ class CodecTabsWidget : public QWidget {
     void setCRF(QString value);
     void insertParameter(QVBoxLayout *layout);
 
+
   signals:
     void currentTabChanged();
     void settingsChanged();
@@ -69,6 +73,8 @@ class CodecTabsWidget : public QWidget {
   private slots:
     void onTabChange();
     void parseCameraNameProbeOutput(int a, QProcess::ExitStatus b);
+    void compareWindowStream();
+
 };
 
 #endif // CODECTABSWIDGET_H

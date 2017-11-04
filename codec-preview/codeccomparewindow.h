@@ -51,6 +51,7 @@ class CodecCompareWindow : public QWidget {
     void stream(QString streamingCommand);
     void closeEvent(QCloseEvent *event);
     void setManagers(int one, int two, int three);
+    CodecManager* getManager(int i);
 
     QLabel *original;
     QLabel *label1;

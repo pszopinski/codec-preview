@@ -32,6 +32,13 @@ CodecTabsWidget::CodecTabsWidget(QWidget *parent)
                 &CodecTabsWidget::settingsChanged);
     }
 
+    for(int i = 0; i < 6; i++) {
+        //connect(compareWindow.getManager(i), &CodecManager::parametersChanged, this, &CodecTabsWidget::compareWindowStream);
+        connect(compareWindow.getManager(i),
+                SIGNAL(parametersChanged()), this,
+                SLOT(compareWindowStream()));
+    }
+
     connect(&cameraNameGetterProcess,
             SIGNAL(finished(int, QProcess::ExitStatus)), this,
             SLOT(parseCameraNameProbeOutput(int, QProcess::ExitStatus)));
@@ -39,16 +46,65 @@ CodecTabsWidget::CodecTabsWidget(QWidget *parent)
 
 CodecTabsWidget::~CodecTabsWidget() { delete ui; }
 
-void CodecTabsWidget::setSelectedCodecs(int first, int second, int third) {
+void CodecTabsWidget::compareWindowStream(int first, int second, int third) {
+    previousFirst = first;
+    previousSecond = second;
+    previousThird = third;
     qDebug() << "selected codecs: " << first << second << third;
 
     QString streamingParameters1 = "-c:v mjpeg -f nut -an";
     QString streamingParameters2 =
-        parametersToString(codecManagers.at(first)->getStreamingParameters());
+        parametersToString(compareWindow.getManager(first)->getStreamingParameters());
     QString streamingParameters3 =
-        parametersToString(codecManagers.at(second)->getStreamingParameters());
+        parametersToString(compareWindow.getManager(second)->getStreamingParameters());
     QString streamingParameters4 =
-        parametersToString(codecManagers.at(third)->getStreamingParameters());
+        parametersToString(compareWindow.getManager(third)->getStreamingParameters());
+
+    qDebug() << "streaming parameters:";
+    qDebug() << streamingParameters1;
+    qDebug() << streamingParameters2;
+    qDebug() << streamingParameters3;
+    qDebug() << streamingParameters4;
+
+    QString streamingCommand = buildMultipleStreamingCommands(
+        inputParameters, inputLocation,
+        {streamingParameters1, streamingParameters2, streamingParameters3,
+         streamingParameters4},
+        {ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[0] + ":" + compareWindowPorts[0] +
+             "?ttl=0",
+         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[1] + ":" + compareWindowPorts[1] +
+             "?ttl=0",
+         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[2] + ":" + compareWindowPorts[2] +
+             "?ttl=0",
+         RAW_VIDEO_PROTOCOL + "://" + compareWindowHosts[3] + ":" + compareWindowPorts[3] +
+             "?ttl=0"});
+
+    qDebug() << "streaming command:";
+
+    qDebug() << streamingCommand;
+    compareWindow.original->setText("Original");
+    compareWindow.label1->setText(codecManagers.at(first)->getCodecName());
+    compareWindow.label2->setText(codecManagers.at(second)->getCodecName());
+    compareWindow.label3->setText(codecManagers.at(third)->getCodecName());
+    compareWindow.setManagers(first, second, third);
+    compareWindow.show();
+    compareWindow.stream(streamingCommand);
+}
+
+void CodecTabsWidget::compareWindowStream() {
+    int first = previousFirst;
+    int second = previousSecond;
+    int third = previousThird;
+
+    qDebug() << "selected codecs: " << first << second << third;
+
+    QString streamingParameters1 = "-c:v mjpeg -f nut -an";
+    QString streamingParameters2 =
+        parametersToString(compareWindow.getManager(first)->getStreamingParameters());
+    QString streamingParameters3 =
+        parametersToString(compareWindow.getManager(second)->getStreamingParameters());
+    QString streamingParameters4 =
+        parametersToString(compareWindow.getManager(third)->getStreamingParameters());
 
     qDebug() << "streaming parameters:";
     qDebug() << streamingParameters1;
@@ -200,6 +256,7 @@ void CodecTabsWidget::startStreaming(QString streamingParameters) {
                               streamingParameters, rawAddress, encodedAddress);
     streamingProcess.start(streamingCommand);
 }
+
 
 
 
