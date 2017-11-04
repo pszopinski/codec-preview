@@ -30,11 +30,13 @@ CodecCompareWindow::CodecCompareWindow(QWidget *parent)
     vlcMediaPlayers[3]->setVideoWidget(ui->encodedVideo3);
     ui->encodedVideo3->setMediaPlayer(vlcMediaPlayers[3]);
 
+
     // init labels
     original = ui->original;
     label1 = ui->first;
     label2 = ui->second;
     label3 = ui->third;
+
 
 
     // react to frame probe output with parseFrameProbeOutput
@@ -57,6 +59,78 @@ void CodecCompareWindow::closeEvent(QCloseEvent *event) {
     // kill streaming process
     streamingProcess.kill();
     streamingProcess.waitForFinished();
+}
+
+void CodecCompareWindow::setManagers(int one, int two, int three)
+{
+    ui->encodedParams1->setVisible(false);
+    ui->encodedParams2->setVisible(false);
+    ui->encodedParams3->setVisible(false);
+
+    switch(one) {
+    case 0:
+        ui->outerLayout->replaceWidget(ui->encodedParams1, mjpegManager);
+        break;
+    case 1:
+        ui->outerLayout->replaceWidget(ui->encodedParams1, h261Manager);
+        break;
+    case 2:
+        ui->outerLayout->replaceWidget(ui->encodedParams1, mpeg1Manager);
+        break;
+    case 3:
+        ui->outerLayout->replaceWidget(ui->encodedParams1, mpeg2Manager);
+        break;
+    case 4:
+        ui->outerLayout->replaceWidget(ui->encodedParams1, h264Manager);
+        break;
+    case 5:
+        ui->outerLayout->replaceWidget(ui->encodedParams1, h265Manager);
+        break;
+    }
+
+    switch(two) {
+    case 0:
+        ui->outerLayout->replaceWidget(ui->encodedParams2, mjpegManager);
+        break;
+    case 1:
+        ui->outerLayout->replaceWidget(ui->encodedParams2, h261Manager);
+        break;
+    case 2:
+        ui->outerLayout->replaceWidget(ui->encodedParams2, mpeg1Manager);
+        break;
+    case 3:
+        ui->outerLayout->replaceWidget(ui->encodedParams2, mpeg2Manager);
+        break;
+    case 4:
+        ui->outerLayout->replaceWidget(ui->encodedParams2, h264Manager);
+        break;
+    case 5:
+        ui->outerLayout->replaceWidget(ui->encodedParams2, h265Manager);
+        break;
+    }
+
+    switch(three) {
+    case 0:
+        ui->outerLayout->replaceWidget(ui->encodedParams3, mjpegManager);
+        break;
+    case 1:
+        ui->outerLayout->replaceWidget(ui->encodedParams3, h261Manager);
+        break;
+    case 2:
+        ui->outerLayout->replaceWidget(ui->encodedParams3, mpeg1Manager);
+        break;
+    case 3:
+        ui->outerLayout->replaceWidget(ui->encodedParams3, mpeg2Manager);
+        break;
+    case 4:
+        ui->outerLayout->replaceWidget(ui->encodedParams3, h264Manager);
+        break;
+    case 5:
+        ui->outerLayout->replaceWidget(ui->encodedParams3, h265Manager);
+        break;
+    }
+
+
 }
 
 void CodecCompareWindow::stream(QString streamingCommand) {

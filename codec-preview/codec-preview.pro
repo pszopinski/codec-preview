@@ -30,7 +30,7 @@ SOURCES += main.cpp \
     codectabs/mpeg1manager.cpp \
     codectabs/mpeg2manager.cpp \
     codecs/h265.cpp \
-    codecs/allcodecs.cpp
+    codecs/allcodecs.cpp \
 
 
 

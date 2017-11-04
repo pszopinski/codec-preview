@@ -26,7 +26,7 @@
       <enum>QTabWidget::South</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>3</number>
      </property>
      <widget class="MJPEGManager" name="mjpegtab">
       <attribute name="title">

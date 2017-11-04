@@ -76,6 +76,7 @@ void CodecTabsWidget::setSelectedCodecs(int first, int second, int third) {
     compareWindow.label1->setText(codecManagers.at(first)->getCodecName());
     compareWindow.label2->setText(codecManagers.at(second)->getCodecName());
     compareWindow.label3->setText(codecManagers.at(third)->getCodecName());
+    compareWindow.setManagers(first, second, third);
     compareWindow.show();
     compareWindow.stream(streamingCommand);
 }

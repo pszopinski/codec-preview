@@ -45,12 +45,15 @@ void CodecManager::addParameter(QString label, QString parameter,
 
     // add QLabel
     QLabel *labelWidget = new QLabel(label, this);
+    //labelWidget->setMaximumWidth(30);
 
     labelWidget->setToolTip(paramManager.getHint(label)); // add tooltip
     layout->addWidget(labelWidget);
 
     // add QLineEdit
     QLineEdit *lineEdit = new QLineEdit(value, this);
+    //lineEdit->setMaximumWidth(30);
+
     layout->addWidget(lineEdit);
 
     // make form interactive
