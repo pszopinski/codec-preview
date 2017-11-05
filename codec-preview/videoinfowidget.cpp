@@ -83,6 +83,11 @@ void VideoInfoWidget::startStreamProbe(QString command) {
     streamProbeProcess.start(command);
 }
 
+void VideoInfoWidget::setFrameTypeText(QString text)
+{
+    ui->frameTypes->setText(text);
+}
+
 void VideoInfoWidget::parseStreamProbeOutput(int a, QProcess::ExitStatus b) {
     // to silence unused warning
     (void)a;

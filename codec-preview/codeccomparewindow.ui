@@ -17,7 +17,7 @@
    <item row="0" column="0">
     <layout class="QGridLayout" name="outerLayout" rowstretch="1,1" columnstretch="1,1">
      <item row="0" column="0">
-      <layout class="QVBoxLayout" name="verticalLayout_0" stretch="1,10,6">
+      <layout class="QVBoxLayout" name="verticalLayout_0" stretch="1,10,0">
        <item>
         <widget class="QLabel" name="original">
          <property name="maximumSize">
@@ -42,31 +42,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="widget_1" native="true">
-         <widget class="QLabel" name="label">
-          <property name="geometry">
-           <rect>
-            <x>80</x>
-            <y>10</y>
-            <width>81</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Frame types</string>
-          </property>
-         </widget>
-         <widget class="QTextEdit" name="frames0">
-          <property name="geometry">
-           <rect>
-            <x>50</x>
-            <y>30</y>
-            <width>131</width>
-            <height>31</height>
-           </rect>
-          </property>
-         </widget>
-        </widget>
+        <widget class="QWidget" name="widget" native="true"/>
        </item>
       </layout>
      </item>
@@ -96,31 +72,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="widget_2" native="true">
-         <widget class="QTextEdit" name="frames3_3">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>40</y>
-            <width>131</width>
-            <height>31</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_4">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>20</y>
-            <width>71</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Frame types</string>
-          </property>
-         </widget>
-        </widget>
+        <widget class="VideoInfoWidget" name="videoInfo1" native="true"/>
        </item>
        <item>
         <widget class="CodecManager" name="encodedParams1" native="true"/>
@@ -156,31 +108,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="widget_3" native="true">
-         <widget class="QTextEdit" name="frames3_2">
-          <property name="geometry">
-           <rect>
-            <x>90</x>
-            <y>50</y>
-            <width>131</width>
-            <height>31</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_3">
-          <property name="geometry">
-           <rect>
-            <x>120</x>
-            <y>30</y>
-            <width>71</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Frame types</string>
-          </property>
-         </widget>
-        </widget>
+        <widget class="VideoInfoWidget" name="videoInfo2" native="true"/>
        </item>
        <item>
         <widget class="CodecManager" name="encodedParams2" native="true"/>
@@ -213,31 +141,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="widget_4" native="true">
-         <widget class="QTextEdit" name="frames3">
-          <property name="geometry">
-           <rect>
-            <x>120</x>
-            <y>50</y>
-            <width>131</width>
-            <height>31</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_2">
-          <property name="geometry">
-           <rect>
-            <x>160</x>
-            <y>30</y>
-            <width>71</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Frame types</string>
-          </property>
-         </widget>
-        </widget>
+        <widget class="VideoInfoWidget" name="videoInfo3" native="true"/>
        </item>
        <item>
         <widget class="CodecManager" name="encodedParams3" native="true"/>
@@ -260,9 +164,15 @@
    </slots>
   </customwidget>
   <customwidget>
+   <class>VideoInfoWidget</class>
+   <extends>QWidget</extends>
+   <header>videoinfowidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>CodecManager</class>
    <extends>QWidget</extends>
-   <header location="global">codecmanager.h</header>
+   <header location="global">codectabs/codecmanager.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

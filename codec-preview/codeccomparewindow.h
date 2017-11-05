@@ -65,14 +65,16 @@ class CodecCompareWindow : public QWidget {
     MPEG1Manager* mpeg1Manager = new MPEG1Manager();
     MPEG2Manager* mpeg2Manager = new MPEG2Manager();
 
+private slots:
+    void whilePlaying1();
+    void whilePlaying2();
+    void whilePlaying3();
 
+signals:
+    void statsChanged1(VlcStats *stats);
+    void statsChanged2(VlcStats *stats);
+    void statsChanged3(VlcStats *stats);
 
-
-
-
-    private slots:
-    void parseFrameProbeOutput0();
-    void parseFrameProbeOutput3();
 };
 
 #endif // CODECCOMPAREWINDOW_H

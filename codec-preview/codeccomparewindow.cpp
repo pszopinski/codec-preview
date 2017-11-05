@@ -6,7 +6,7 @@ CodecCompareWindow::CodecCompareWindow(QWidget *parent)
     setWindowState(Qt::WindowMaximized);
     ui->setupUi(this);
 
-    vlcInstance = new VlcInstance(VlcCommon::args(), NULL);
+    vlcInstance = new VlcInstance({""}, NULL);
 
     for (int i = 0; i < 4; i++) {
         // initialize media objects
@@ -40,11 +40,27 @@ CodecCompareWindow::CodecCompareWindow(QWidget *parent)
 
 
     // react to frame probe output with parseFrameProbeOutput
-    connect(&frameProbes[0], &QProcess::readyRead, this,
+    /*connect(&frameProbes[0], &QProcess::readyRead, this,
             &CodecCompareWindow::parseFrameProbeOutput0);
 
     connect(&frameProbes[3], &QProcess::readyRead, this,
-            &CodecCompareWindow::parseFrameProbeOutput3);
+            &CodecCompareWindow::parseFrameProbeOutput3);*/
+
+    connect(this, &CodecCompareWindow::statsChanged1, ui->videoInfo1,
+            &VideoInfoWidget::onStatsChange);
+    connect(this, &CodecCompareWindow::statsChanged2, ui->videoInfo2,
+            &VideoInfoWidget::onStatsChange);
+    connect(this, &CodecCompareWindow::statsChanged3, ui->videoInfo3,
+            &VideoInfoWidget::onStatsChange);
+
+
+    connect(vlcMediaPlayers[1], &VlcMediaPlayer::timeChanged, this,
+            &CodecCompareWindow::whilePlaying1);
+    connect(vlcMediaPlayers[2], &VlcMediaPlayer::timeChanged, this,
+            &CodecCompareWindow::whilePlaying2);
+    connect(vlcMediaPlayers[3], &VlcMediaPlayer::timeChanged, this,
+            &CodecCompareWindow::whilePlaying3);
+
 
 }
 
@@ -59,6 +75,11 @@ void CodecCompareWindow::closeEvent(QCloseEvent *event) {
     // kill streaming process
     streamingProcess.kill();
     streamingProcess.waitForFinished();
+
+    ui->videoInfo1->stopProbe();
+    ui->videoInfo2->stopProbe();
+    ui->videoInfo3->stopProbe();
+
 }
 
 CodecManager* CodecCompareWindow::getManager(int i) {
@@ -182,76 +203,40 @@ void CodecCompareWindow::stream(QString streamingCommand) {
         vlcMediaPlayers[i]->play();
     }
 
-    for (int i = 0; i < 4; i++) {
+    /*for (int i = 0; i < 4; i++) {
         QString frameProbeCommand = FfmpegCommand::getFrameProbeCommand(compareWindowHosts[i], compareWindowPorts[i]);
         frameProbes[i].start(frameProbeCommand);
         QString streamProbeCommand = FfmpegCommand::getStreamProbeCommand(compareWindowHosts[i], compareWindowPorts[i]);
         streamProbes[i].start(streamProbeCommand);
-    }
+    }*/
+    QString frameProbeCommand = FfmpegCommand::getFrameProbeCommand(compareWindowHosts[1], compareWindowPorts[1]);
+    ui->videoInfo1->startFrameProbe(frameProbeCommand);
+    QString streamProbeCommand = FfmpegCommand::getStreamProbeCommand(compareWindowHosts[1], compareWindowPorts[1]);
+    ui->videoInfo1->startStreamProbe(streamProbeCommand);
+    frameProbeCommand = FfmpegCommand::getFrameProbeCommand(compareWindowHosts[2], compareWindowPorts[2]);
+    ui->videoInfo2->startFrameProbe(frameProbeCommand);
+    streamProbeCommand = FfmpegCommand::getStreamProbeCommand(compareWindowHosts[2], compareWindowPorts[2]);
+    ui->videoInfo2->startStreamProbe(streamProbeCommand);
+    frameProbeCommand = FfmpegCommand::getFrameProbeCommand(compareWindowHosts[3], compareWindowPorts[3]);
+    ui->videoInfo3->startFrameProbe(frameProbeCommand);
+    streamProbeCommand = FfmpegCommand::getStreamProbeCommand(compareWindowHosts[3], compareWindowPorts[3]);
+    ui->videoInfo3->startStreamProbe(streamProbeCommand);
 }
 
-void CodecCompareWindow::parseFrameProbeOutput0() {
-    // read output line by line
-    while (frameProbes[0].canReadLine()) {
-        QString output = frameProbes[0].readLine();
-
-        // find frame type
-        if (output.startsWith("pict_type=")) {
-            // put single character describing frame type into queue
-            framesQueues[0].enqueue(output.toUtf8().constData()[10]);
-
-            // throw out oldest frame types if over queue size limit
-            if (framesQueues[0].size() > 16) {
-                frameProbes[0].kill();
-                frameProbes[0].waitForFinished();
-            }
-            // framesQueue.dequeue();
-
-            // create snapshot of queue to display in widget
-            QString framesQueueSnapshot;
-
-            QListIterator<char> i(framesQueues[0]);
-
-            while (i.hasNext()) {
-                framesQueueSnapshot.append(i.next());
-            }
-
-            ui->frames0->setText(framesQueueSnapshot);
-        }
-    }
-
+void CodecCompareWindow::whilePlaying1() {
+    emit statsChanged1(vlcMedia[1]->getStats());
 
 
 }
 
+void CodecCompareWindow::whilePlaying2() {
+    emit statsChanged2(vlcMedia[2]->getStats());
 
-void CodecCompareWindow::parseFrameProbeOutput3() {
 
-    while (frameProbes[3].canReadLine()) {
-        QString output = frameProbes[3].readLine();
+}
 
-        // find frame type
-        if (output.startsWith("pict_type=")) {
-            // put single character describing frame type into queue
-            framesQueues[3].enqueue(output.toUtf8().constData()[10]);
+void CodecCompareWindow::whilePlaying3() {
+    emit statsChanged3(vlcMedia[3]->getStats());
 
-            // throw out oldest frame types if over queue size limit
-            if (framesQueues[3].size() > 16) {
-                frameProbes[3].kill();
-                frameProbes[3].waitForFinished();
-            }
-            // framesQueue.dequeue();
 
-            // create snapshot of queue to display in widget
-            QString framesQueueSnapshot;
-
-            QListIterator<char> i(framesQueues[3]);
-
-            while (i.hasNext()) {
-                framesQueueSnapshot.append(i.next());
-            }
-
-            ui->frames3->setText(framesQueueSnapshot);
-        }
-    }
 }
