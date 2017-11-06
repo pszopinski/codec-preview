@@ -2,57 +2,52 @@
 #include "ui_codecmanager.h"
 
 CodecManager::CodecManager(QWidget *parent, QString encoder)
-    : QWidget(parent), ui(new Ui::CodecManager), layoutCounter(0),
-      streamingParameters(new QMap<QString, QString>) {
+    : QWidget(parent), ui(new Ui::CodecManager), layoutCounter(0), streamingParameters(new QMap<QString, QString>) {
     ui->setupUi(this);
 
     streamingParameters->insert("c:v", encoder);
 
     QString codecName = "all";
 
-    Codec* codec = CodecManager::getCodec(codecName);
+    Codec *codec = CodecManager::getCodec(codecName);
 
     QList<QString> parameterNames = codec->getParamKeys();
     QList<QString> comboNames = codec->getComboKeys();
 
-    for(int i = 0; i < parameterNames.size(); i++) {
+    for (int i = 0; i < parameterNames.size(); i++) {
         QString paramName = parameterNames.at(i);
         QMap<QString, QString> paramMap = codec->getParameter(paramName);
 
-        addParameter(paramName, paramMap.value("value"), paramMap.value("default"));
+        addParameterWidget(paramName, paramMap.value("value"), paramMap.value("default"));
     }
 
-    for(int i = 0; i < comboNames.size(); i++) {
+    for (int i = 0; i < comboNames.size(); i++) {
         QString paramName = comboNames.at(i);
         QMap<QString, QString> paramMap = codec->getCombo(paramName);
         QString paramValue = paramMap.value("value");
 
         paramMap.remove("value");
 
-        addParameter(paramName, paramValue, paramMap);
-
+        addParameterWidget(paramName, paramValue, paramMap);
     }
-
-
 }
 
 CodecManager::~CodecManager() { delete ui; }
 
-void CodecManager::addParameter(QString label, QString parameter,
-                                QString value) {
+void CodecManager::addParameterWidget(QString label, QString parameter, QString value) {
     // create new layout for parameter
     QVBoxLayout *layout = new QVBoxLayout();
 
     // add QLabel
     QLabel *labelWidget = new QLabel(label, this);
-    //labelWidget->setMaximumWidth(30);
+    // labelWidget->setMaximumWidth(30);
 
     labelWidget->setToolTip(paramManager.getHint(label)); // add tooltip
     layout->addWidget(labelWidget);
 
     // add QLineEdit
     QLineEdit *lineEdit = new QLineEdit(value, this);
-    //lineEdit->setMaximumWidth(30);
+    // lineEdit->setMaximumWidth(30);
 
     layout->addWidget(lineEdit);
 
@@ -66,14 +61,12 @@ void CodecManager::addParameter(QString label, QString parameter,
         }
     });
 
-    insertParameter(layout);
+    insertParameterWidget(layout);
 }
 
-void CodecManager::addParameter(QString label, QString parameter,
-                                QMap<QString, QString> comboMap) {
+void CodecManager::addParameterWidget(QString label, QString parameter, QMap<QString, QString> comboMap) {
     // create new layout for parameter
     QVBoxLayout *layout = new QVBoxLayout();
-
 
     // add QLabel
     QLabel *labelWidget = new QLabel(label, this);
@@ -87,21 +80,50 @@ void CodecManager::addParameter(QString label, QString parameter,
     comboBox->insertItems(0, comboMap.keys());
     layout->addWidget(comboBox);
 
-    connect(comboBox, &QComboBox::currentTextChanged,
-            [=](const QString &newValue) {
-                if (newValue != streamingParameters->value(parameter)) {
-                    streamingParameters->insert(parameter, comboMap.value(newValue));
-                    emit parametersChanged();
-                }
-            });
+    connect(comboBox, &QComboBox::currentTextChanged, [=](const QString &newValue) {
+        if (newValue != streamingParameters->value(parameter)) {
+            streamingParameters->insert(parameter, comboMap.value(newValue));
+            emit parametersChanged();
+        }
+    });
 
-    insertParameter(layout);
+    insertParameterWidget(layout);
 
     streamingParameters->insert(parameter, comboMap.values().at(0));
-
 }
 
-void CodecManager::insertParameter(QVBoxLayout *layout) {
+void CodecManager::addParameterWidget(QString label, QString command, bool value) {
+    // create new layout for parameter
+    QVBoxLayout *layout = new QVBoxLayout();
+
+    // add QLabel
+    QLabel *labelWidget = new QLabel(label, this);
+    labelWidget->setToolTip(paramManager.getHint(label));
+    layout->addWidget(labelWidget);
+
+    // add QCheckBox
+    QCheckBox *checkBox = new QCheckBox(this);
+    checkBox->setChecked(value);
+
+    // The command is stored as the key with an empty value in streamingParameters
+
+    connect(checkBox, &QCheckBox::toggled, [=](bool checked) {
+        if (checked) {
+            streamingParameters->insert(command, "");
+        } else {
+            streamingParameters->remove(command);
+        }
+        emit parametersChanged();
+    });
+
+    insertParameterWidget(layout);
+
+    if (value) {
+        streamingParameters->insert(command, "");
+    }
+}
+
+void CodecManager::insertParameterWidget(QVBoxLayout *layout) {
     // add stretch to bottom
     layout->addStretch();
 
@@ -118,31 +140,28 @@ QMap<QString, QString> *CodecManager::getStreamingParameters() { return NULL; }
 
 QString CodecManager::getCodecName() { return codecName; }
 
-void CodecManager::setCodecName(QString codecName) {
-    this->codecName = codecName;
-}
+void CodecManager::setCodecName(QString codecName) { this->codecName = codecName; }
 
-Codec* CodecManager::getCodec(QString codecName)
-{
-    if(codecName == "h261") {
+Codec *CodecManager::getCodec(QString codecName) {
+    if (codecName == "h261") {
         return new H261();
     }
-    if(codecName == "h264") {
+    if (codecName == "h264") {
         return new H264();
     }
-    if(codecName == "h265") {
+    if (codecName == "h265") {
         return new H265();
     }
-    if(codecName == "mjpeg") {
+    if (codecName == "mjpeg") {
         return new Mjpeg();
     }
-    if(codecName == "mpeg1") {
+    if (codecName == "mpeg1") {
         return new Mpeg1();
     }
-    if(codecName == "mpeg2") {
+    if (codecName == "mpeg2") {
         return new Mpeg2();
     }
-    if(codecName == "all") {
+    if (codecName == "all") {
         return new AllCodecs();
     }
     return NULL;
