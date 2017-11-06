@@ -13,7 +13,7 @@ MPEG2Manager::MPEG2Manager(QWidget *parent)
         QString paramName = parameterNames.at(i);
         QMap<QString, QString> paramMap = codec->getParameter(paramName);
 
-        addParameter(paramName, paramMap.value("value"), paramMap.value("default"));
+        addParameterWidget(paramName, paramMap.value("value"), paramMap.value("default"));
     }
 
     for(int i = 0; i < comboNames.size(); i++) {
@@ -23,7 +23,7 @@ MPEG2Manager::MPEG2Manager(QWidget *parent)
 
         paramMap.remove("value");
 
-        addParameter(paramName, paramValue, paramMap);
+        addParameterWidget(paramName, paramValue, paramMap);
 
     }
 }

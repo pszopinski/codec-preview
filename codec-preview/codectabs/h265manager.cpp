@@ -12,7 +12,7 @@ H265Manager::H265Manager(QWidget *parent) : CodecManager(parent, "libx265") {
         QString paramName = parameterNames.at(i);
         QMap<QString, QString> paramMap = codec->getParameter(paramName);
 
-        addParameter(paramName, paramMap.value("value"), paramMap.value("default"));
+        addParameterWidget(paramName, paramMap.value("value"), paramMap.value("default"));
     }
 
     for(int i = 0; i < comboNames.size(); i++) {
@@ -22,7 +22,7 @@ H265Manager::H265Manager(QWidget *parent) : CodecManager(parent, "libx265") {
 
         paramMap.remove("value");
 
-        addParameter(paramName, paramValue, paramMap);
+        addParameterWidget(paramName, paramValue, paramMap);
 
     }
 }
