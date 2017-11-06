@@ -19,11 +19,13 @@ MainWindow::MainWindow(QWidget *parent)
     // stream on settings changed
     connect(ui->codecTabs, &CodecTabsWidget::settingsChanged, this,
             &MainWindow::stream);
+
+    // react on stats changed
+    connect(ui->videoPlayback, &VideoPlaybackWidget::statsChanged, ui->videoInfo, &VideoInfoWidget::onStatsChange);
+
     // stream on tab changed
     connect(ui->codecTabs, &CodecTabsWidget::currentTabChanged, this,
             &MainWindow::stream);
-
-    connect(ui->videoPlayback, &VideoPlaybackWidget::statsChanged, ui->videoInfo, &VideoInfoWidget::onStatsChange);
 }
 
 MainWindow::~MainWindow() { delete ui; }
