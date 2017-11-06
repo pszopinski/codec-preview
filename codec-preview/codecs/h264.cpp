@@ -1,7 +1,6 @@
 #include "h264.h"
 
-H264::H264()
-{
+H264::H264() {
     addParameter("Bitrate", "b:v", "");
     addParameter("Minrate", "minrate", "");
     addParameter("Maxrate", "maxrate", "");

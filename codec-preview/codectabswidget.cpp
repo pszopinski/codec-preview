@@ -1,16 +1,12 @@
 #include "codectabswidget.h"
 #include "ui_codectabswidget.h"
 
-CodecTabsWidget::CodecTabsWidget(QWidget *parent)
-    : QWidget(parent), ui(new Ui::CodecTabsWidget) {
+CodecTabsWidget::CodecTabsWidget(QWidget *parent) : QWidget(parent), ui(new Ui::CodecTabsWidget) {
     ui->setupUi(this);
-
-
 
     ui->tabWidget->setCurrentIndex(0);
 
-    connect(ui->tabWidget, &QTabWidget::currentChanged, this,
-            &CodecTabsWidget::onTabChange);
+    connect(ui->tabWidget, &QTabWidget::currentChanged, this, &CodecTabsWidget::onTabChange);
 
     // push all ui tabs into vector
     codecManagers.push_back(ui->mjpegtab);
@@ -28,19 +24,16 @@ CodecTabsWidget::CodecTabsWidget(QWidget *parent)
 
     // connect codec managers' signals to settingsChanged
     for (auto codecManager : codecManagers) {
-        connect(codecManager, &CodecManager::parametersChanged, this,
-                &CodecTabsWidget::settingsChanged);
+        connect(codecManager, &CodecManager::parametersChanged, this, &CodecTabsWidget::settingsChanged);
     }
 
-    for(int i = 0; i < 6; i++) {
-        //connect(compareWindow.getManager(i), &CodecManager::parametersChanged, this, &CodecTabsWidget::compareWindowStream);
-        connect(compareWindow.getManager(i),
-                SIGNAL(parametersChanged()), this,
-                SLOT(compareWindowStream()));
+    for (int i = 0; i < 6; i++) {
+        // connect(compareWindow.getManager(i), &CodecManager::parametersChanged, this,
+        // &CodecTabsWidget::compareWindowStream);
+        connect(compareWindow.getManager(i), SIGNAL(parametersChanged()), this, SLOT(compareWindowStream()));
     }
 
-    connect(&cameraNameGetterProcess,
-            SIGNAL(finished(int, QProcess::ExitStatus)), this,
+    connect(&cameraNameGetterProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this,
             SLOT(parseCameraNameProbeOutput(int, QProcess::ExitStatus)));
 }
 
@@ -53,12 +46,9 @@ void CodecTabsWidget::compareWindowStream(int first, int second, int third) {
     qDebug() << "selected codecs: " << first << second << third;
 
     QString streamingParameters1 = "-c:v mjpeg -f nut -an";
-    QString streamingParameters2 =
-        parametersToString(compareWindow.getManager(first)->getStreamingParameters());
-    QString streamingParameters3 =
-        parametersToString(compareWindow.getManager(second)->getStreamingParameters());
-    QString streamingParameters4 =
-        parametersToString(compareWindow.getManager(third)->getStreamingParameters());
+    QString streamingParameters2 = parametersToString(compareWindow.getManager(first)->getStreamingParameters());
+    QString streamingParameters3 = parametersToString(compareWindow.getManager(second)->getStreamingParameters());
+    QString streamingParameters4 = parametersToString(compareWindow.getManager(third)->getStreamingParameters());
 
     qDebug() << "streaming parameters:";
     qDebug() << streamingParameters1;
@@ -68,16 +58,11 @@ void CodecTabsWidget::compareWindowStream(int first, int second, int third) {
 
     QString streamingCommand = buildMultipleStreamingCommands(
         inputParameters, inputLocation,
-        {streamingParameters1, streamingParameters2, streamingParameters3,
-         streamingParameters4},
-        {ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[0] + ":" + compareWindowPorts[0] +
-             "?ttl=0",
-         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[1] + ":" + compareWindowPorts[1] +
-             "?ttl=0",
-         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[2] + ":" + compareWindowPorts[2] +
-             "?ttl=0",
-         RAW_VIDEO_PROTOCOL + "://" + compareWindowHosts[3] + ":" + compareWindowPorts[3] +
-             "?ttl=0"});
+        {streamingParameters1, streamingParameters2, streamingParameters3, streamingParameters4},
+        {ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[0] + ":" + compareWindowPorts[0] + "?ttl=0",
+         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[1] + ":" + compareWindowPorts[1] + "?ttl=0",
+         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[2] + ":" + compareWindowPorts[2] + "?ttl=0",
+         RAW_VIDEO_PROTOCOL + "://" + compareWindowHosts[3] + ":" + compareWindowPorts[3] + "?ttl=0"});
 
     qDebug() << "streaming command:";
 
@@ -99,12 +84,9 @@ void CodecTabsWidget::compareWindowStream() {
     qDebug() << "selected codecs: " << first << second << third;
 
     QString streamingParameters1 = "-c:v mjpeg -f nut -an";
-    QString streamingParameters2 =
-        parametersToString(compareWindow.getManager(first)->getStreamingParameters());
-    QString streamingParameters3 =
-        parametersToString(compareWindow.getManager(second)->getStreamingParameters());
-    QString streamingParameters4 =
-        parametersToString(compareWindow.getManager(third)->getStreamingParameters());
+    QString streamingParameters2 = parametersToString(compareWindow.getManager(first)->getStreamingParameters());
+    QString streamingParameters3 = parametersToString(compareWindow.getManager(second)->getStreamingParameters());
+    QString streamingParameters4 = parametersToString(compareWindow.getManager(third)->getStreamingParameters());
 
     qDebug() << "streaming parameters:";
     qDebug() << streamingParameters1;
@@ -114,16 +96,11 @@ void CodecTabsWidget::compareWindowStream() {
 
     QString streamingCommand = buildMultipleStreamingCommands(
         inputParameters, inputLocation,
-        {streamingParameters1, streamingParameters2, streamingParameters3,
-         streamingParameters4},
-        {ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[0] + ":" + compareWindowPorts[0] +
-             "?ttl=0",
-         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[1] + ":" + compareWindowPorts[1] +
-             "?ttl=0",
-         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[2] + ":" + compareWindowPorts[2] +
-             "?ttl=0",
-         RAW_VIDEO_PROTOCOL + "://" + compareWindowHosts[3] + ":" + compareWindowPorts[3] +
-             "?ttl=0"});
+        {streamingParameters1, streamingParameters2, streamingParameters3, streamingParameters4},
+        {ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[0] + ":" + compareWindowPorts[0] + "?ttl=0",
+         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[1] + ":" + compareWindowPorts[1] + "?ttl=0",
+         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[2] + ":" + compareWindowPorts[2] + "?ttl=0",
+         RAW_VIDEO_PROTOCOL + "://" + compareWindowHosts[3] + ":" + compareWindowPorts[3] + "?ttl=0"});
 
     qDebug() << "streaming command:";
 
@@ -142,55 +119,59 @@ void CodecTabsWidget::stopStreaming() {
     streamingProcess.waitForFinished();
 }
 
-QString CodecTabsWidget::buildStreamingCommand(QString inputParameters,
-                                               QString inputLocation,
-                                               QString outputPrameters,
-                                               QString rawLocation,
-                                               QString encodedLocation) {
+QString CodecTabsWidget::buildStreamingCommand(QString inputParameters, QString inputLocation, QString outputPrameters,
+                                               QString rawLocation, QString encodedLocation) {
     QStringList list;
     list << FFMPEG;
+    list << "-flags2 +export_mvs";
     list << inputParameters;
     list << "-i " << inputLocation;
 
-    //TEMPORARY CHANGE FROM COPY TO MJPEG
+    // TEMPORARY CHANGE FROM COPY TO MJPEG
     list << "-c:v mjpeg -f nut -an" << rawLocation + "?ttl=0";
 
     list << outputPrameters << encodedLocation + "?ttl=0";
 
     QString command = list.join(" ");
-    qDebug() << "\nproduced following encoding command:\n"
-             << command.toUtf8().constData() << "\n";
+    qDebug() << "\nproduced following encoding command:\n" << command.toUtf8().constData() << "\n";
     return command;
 }
 
-QString CodecTabsWidget::buildMultipleStreamingCommands(
-    QString inputParameters, QString inputLocation,
-    QVector<QString> outputPrameters, QVector<QString> outputLocations) {
+QString CodecTabsWidget::buildMultipleStreamingCommands(QString inputParameters, QString inputLocation,
+                                                        QVector<QString> outputPrameters,
+                                                        QVector<QString> outputLocations) {
     QStringList list;
     list << FFMPEG;
+    list << "-flags2 +export_mvs";
     list << inputParameters;
     list << "-i " << inputLocation;
-    for (int i = 0;
-         i < outputPrameters.length() && i < outputLocations.length(); i++) {
+    for (int i = 0; i < outputPrameters.length() && i < outputLocations.length(); i++) {
         list << outputPrameters[i] << outputLocations[i];
     }
 
     QString command = list.join(" ");
-    qDebug() << "\nproduced following encoding command:\n"
-             << command.toUtf8().constData() << "\n";
+    qDebug() << "\nproduced following encoding command:\n" << command.toUtf8().constData() << "\n";
     return command;
 }
 
-
-
-QString
-CodecTabsWidget::parametersToString(QMap<QString, QString> *parameters) {
+QString CodecTabsWidget::parametersToString(QMap<QString, QString> *parameters) {
     QStringList result;
 
     for (auto key : parameters->keys()) {
+        if (key.startsWith("-")) {
+            // raw option used for check boxes
+            result << key;
+        }
+
         if (!parameters->value(key).isEmpty())
             result << "-" + key << parameters->value(key);
     }
+
+    qDebug();
+    qDebug() << parameters->keys();
+    qDebug() << parameters->values();
+    qDebug() << result.join(" ");
+    qDebug();
 
     return result.join(" ");
 }
@@ -204,21 +185,13 @@ void CodecTabsWidget::openFromFile(QString filePath) {
 }
 
 void CodecTabsWidget::openFromCamera() {
-#ifdef Q_OS_WIN
     inputParameters = "-f dshow";
 
     cameraNameGetterProcess.kill();
     cameraNameGetterProcess.waitForFinished();
-    cameraNameGetterProcess.start(FFMPEG +
-                                  " -list_devices true -f dshow -i dummy");
+    cameraNameGetterProcess.start(FFMPEG + " -list_devices true -f dshow -i dummy");
 
-// when process is done parseCameraNameProbeOutput runs and opens camera
-
-#else
-    inputParameters = "-f v4l2";
-    inputLocation = "/dev/video0";
-    settingsChanged();
-#endif
+    // when process is done parseCameraNameProbeOutput runs and opens camera
 }
 
 void CodecTabsWidget::onTabChange() { currentTabChanged(); }
@@ -227,18 +200,20 @@ QString CodecTabsWidget::getStreamingParameters() {
     if (inputLocation.isEmpty()) {
         return "";
     }
+
     if (inputParameters.isEmpty()) {
         return "";
     }
-    QMap<QString, QString> *streamingParametersMap =
-        codecManagers.at(ui->tabWidget->currentIndex())
-            ->getStreamingParameters();
+
+    CodecManager *codecManager = codecManagers.at(ui->tabWidget->currentIndex());
+    QMap<QString, QString> *streamingParametersMap = codecManager->getStreamingParameters();
+
     if (streamingParametersMap->isEmpty()) {
         return "";
     }
 
-    QString streamingParameters =
-        parametersToString(streamingParametersMap) + " -an";
+    QString streamingParameters = parametersToString(streamingParametersMap) + " -an";
+    qDebug() << "streamingParameters =" << streamingParameters;
 
     return streamingParameters;
 }
@@ -246,32 +221,23 @@ QString CodecTabsWidget::getStreamingParameters() {
 void CodecTabsWidget::startStreaming(QString streamingParameters) {
     qDebug() << "starting encoding process...";
 
-    QString rawAddress =
-        RAW_VIDEO_PROTOCOL + "://" + rawVideoHost + ":" + rawVideoPort;
-    QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + encodedVideoHost +
-                             ":" + encodedVideoPort;
+    QString rawAddress = RAW_VIDEO_PROTOCOL + "://" + rawVideoHost + ":" + rawVideoPort;
+    QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + encodedVideoHost + ":" + encodedVideoPort;
 
     QString streamingCommand =
-        buildStreamingCommand(inputParameters, inputLocation,
-                              streamingParameters, rawAddress, encodedAddress);
+        buildStreamingCommand(inputParameters, inputLocation, streamingParameters, rawAddress, encodedAddress);
     streamingProcess.start(streamingCommand);
 }
 
-
-
-
-void CodecTabsWidget::parseCameraNameProbeOutput(int a,
-                                                 QProcess::ExitStatus b) {
+void CodecTabsWidget::parseCameraNameProbeOutput(int a, QProcess::ExitStatus b) {
     // silence warning
     (void)a;
     (void)b;
 
     QRegularExpression re("\"(.*?)\"");
-    QRegularExpressionMatch match =
-        re.globalMatch(cameraNameGetterProcess.readAllStandardError()).next();
+    QRegularExpressionMatch match = re.globalMatch(cameraNameGetterProcess.readAllStandardError()).next();
 
-    inputLocation =
-        QString("video=") + QString(match.captured().toUtf8().constData());
+    inputLocation = QString("video=") + QString(match.captured().toUtf8().constData());
     settingsChanged();
 
     qDebug() << inputLocation;

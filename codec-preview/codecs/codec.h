@@ -1,32 +1,31 @@
 #ifndef CODEC_H
 #define CODEC_H
 
-#include <QMap>
 #include <QList>
+#include <QMap>
 
-
-class Codec
-{
-public:
+class Codec {
+  public:
     Codec();
 
-protected:
+  protected:
     QMap<QString, QMap<QString, QString>> *parameters = new QMap<QString, QMap<QString, QString>>();
     QMap<QString, QMap<QString, QString>> *comboBoxes = new QMap<QString, QMap<QString, QString>>();
+    QMap<QString, QMap<QString, QString>> *checkBoxes = new QMap<QString, QMap<QString, QString>>();
     QMap<QString, QMap<QString, QString>> *stats = new QMap<QString, QMap<QString, QString>>();
 
-    void addStat();
     void addParameter(QString paramName, QString paramValue, QString paramDefault);
-    void addCombo(QString paramName, QString paramValue, QMap<QString, QString> paramMap);
-public:
+    void addComboBox(QString paramName, QString paramValue, QMap<QString, QString> paramMap);
+    void addCheckBox(QString paramName, QString command, bool state);
+    void addStat();
+
+  public:
     QMap<QString, QString> getParameter(QString paramName);
-    QMap<QString, QString> getCombo(QString paramName);
-    QList<QString> getParamKeys();
-    QList<QString> getComboKeys();
-
-
-
-
+    QMap<QString, QString> getComboBox(QString paramName);
+    QMap<QString, QString> getCheckBox(QString paramName);
+    QList<QString> getParameterKeys();
+    QList<QString> getComboBoxKeys();
+    QList<QString> getCheckBoxKeys();
 };
 
 #endif // CODEC_H

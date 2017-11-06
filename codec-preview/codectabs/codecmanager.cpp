@@ -11,8 +11,9 @@ CodecManager::CodecManager(QWidget *parent, QString encoder)
 
     Codec *codec = CodecManager::getCodec(codecName);
 
-    QList<QString> parameterNames = codec->getParamKeys();
-    QList<QString> comboNames = codec->getComboKeys();
+    QList<QString> parameterNames = codec->getParameterKeys();
+    QList<QString> comboBoxNames = codec->getComboBoxKeys();
+    QList<QString> checkBoxNames = codec->getCheckBoxKeys();
 
     for (int i = 0; i < parameterNames.size(); i++) {
         QString paramName = parameterNames.at(i);
@@ -21,14 +22,23 @@ CodecManager::CodecManager(QWidget *parent, QString encoder)
         addParameterWidget(paramName, paramMap.value("value"), paramMap.value("default"));
     }
 
-    for (int i = 0; i < comboNames.size(); i++) {
-        QString paramName = comboNames.at(i);
-        QMap<QString, QString> paramMap = codec->getCombo(paramName);
+    for (int i = 0; i < comboBoxNames.size(); i++) {
+        QString paramName = comboBoxNames.at(i);
+        QMap<QString, QString> paramMap = codec->getComboBox(paramName);
         QString paramValue = paramMap.value("value");
 
         paramMap.remove("value");
 
         addParameterWidget(paramName, paramValue, paramMap);
+    }
+
+    for (int i = 0; i < checkBoxNames.size(); i++) {
+        QString paramName = checkBoxNames.at(i);
+        QMap<QString, QString> paramMap = codec->getCheckBox(paramName);
+        QString command = paramMap.value("command");
+        bool state = paramMap.value("state") != ""; // empty string for false, anything else for true
+
+        addParameterWidget(paramName, command, state);
     }
 }
 
@@ -104,6 +114,7 @@ void CodecManager::addParameterWidget(QString label, QString command, bool value
     // add QCheckBox
     QCheckBox *checkBox = new QCheckBox(this);
     checkBox->setChecked(value);
+    layout->addWidget(checkBox);
 
     // The command is stored as the key with an empty value in streamingParameters
 
