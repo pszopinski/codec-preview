@@ -30,7 +30,7 @@ QString FfmpegCommand::buildProbeCommand(QString location, QString params) {
     list << params;
 
     QString command = list.join(" ");
-    qDebug() << "produced following probe command:\n"
-             << command.toUtf8().constData();
+    qDebug() << "\nproduced following probe command:\n"
+             << command.toUtf8().constData() << "\n";
     return command;
 }

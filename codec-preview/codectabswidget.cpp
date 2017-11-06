@@ -158,8 +158,8 @@ QString CodecTabsWidget::buildStreamingCommand(QString inputParameters,
     list << outputPrameters << encodedLocation + "?ttl=0";
 
     QString command = list.join(" ");
-    qDebug() << "produced following encoding command:\n"
-             << command.toUtf8().constData();
+    qDebug() << "\nproduced following encoding command:\n"
+             << command.toUtf8().constData() << "\n";
     return command;
 }
 
@@ -176,8 +176,8 @@ QString CodecTabsWidget::buildMultipleStreamingCommands(
     }
 
     QString command = list.join(" ");
-    qDebug() << "produced following encoding command:\n"
-             << command.toUtf8().constData();
+    qDebug() << "\nproduced following encoding command:\n"
+             << command.toUtf8().constData() << "\n";
     return command;
 }
 
