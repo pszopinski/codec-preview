@@ -2,7 +2,8 @@
 #include "ui_codecmanager.h"
 
 CodecManager::CodecManager(QWidget *parent, QString encoder)
-    : QWidget(parent), ui(new Ui::CodecManager), layoutCounter(0), streamingParameters(new QMap<QString, QString>) {
+    : QWidget(parent), ui(new Ui::CodecManager), layoutCounter(0),
+      streamingParameters(new QMap<QString, QString>) {
     ui->setupUi(this);
 
     streamingParameters->insert("c:v", encoder);
@@ -19,7 +20,8 @@ CodecManager::CodecManager(QWidget *parent, QString encoder)
         QString paramName = parameterNames.at(i);
         QMap<QString, QString> paramMap = codec->getParameter(paramName);
 
-        addParameterWidget(paramName, paramMap.value("value"), paramMap.value("default"));
+        addParameterWidget(paramName, paramMap.value("value"),
+                           paramMap.value("default"));
     }
 
     for (int i = 0; i < comboBoxNames.size(); i++) {
@@ -36,7 +38,8 @@ CodecManager::CodecManager(QWidget *parent, QString encoder)
         QString paramName = checkBoxNames.at(i);
         QMap<QString, QString> paramMap = codec->getCheckBox(paramName);
         QString command = paramMap.value("command");
-        bool state = paramMap.value("state") != ""; // empty string for false, anything else for true
+        bool state = paramMap.value("state") !=
+                     ""; // empty string for false, anything else for true
 
         addParameterWidget(paramName, command, state);
     }
@@ -44,7 +47,8 @@ CodecManager::CodecManager(QWidget *parent, QString encoder)
 
 CodecManager::~CodecManager() { delete ui; }
 
-void CodecManager::addParameterWidget(QString label, QString parameter, QString value) {
+void CodecManager::addParameterWidget(QString label, QString parameter,
+                                      QString value) {
     // create new layout for parameter
     QVBoxLayout *layout = new QVBoxLayout();
 
@@ -52,7 +56,8 @@ void CodecManager::addParameterWidget(QString label, QString parameter, QString 
     QLabel *labelWidget = new QLabel(label, this);
     // labelWidget->setMaximumWidth(30);
 
-    labelWidget->setToolTip(paramManager.getHint(label)); // add tooltip
+    // add tooltip
+    labelWidget->setToolTip(paramManager.getHint(label));
     layout->addWidget(labelWidget);
 
     // add QLineEdit
@@ -74,7 +79,8 @@ void CodecManager::addParameterWidget(QString label, QString parameter, QString 
     insertParameterWidget(layout);
 }
 
-void CodecManager::addParameterWidget(QString label, QString parameter, QMap<QString, QString> comboMap) {
+void CodecManager::addParameterWidget(QString label, QString parameter,
+                                      QMap<QString, QString> comboMap) {
     // create new layout for parameter
     QVBoxLayout *layout = new QVBoxLayout();
 
@@ -90,19 +96,22 @@ void CodecManager::addParameterWidget(QString label, QString parameter, QMap<QSt
     comboBox->insertItems(0, comboMap.keys());
     layout->addWidget(comboBox);
 
-    connect(comboBox, &QComboBox::currentTextChanged, [=](const QString &newValue) {
-        if (newValue != streamingParameters->value(parameter)) {
-            streamingParameters->insert(parameter, comboMap.value(newValue));
-            emit parametersChanged();
-        }
-    });
+    connect(comboBox, &QComboBox::currentTextChanged,
+            [=](const QString &newValue) {
+                if (newValue != streamingParameters->value(parameter)) {
+                    streamingParameters->insert(parameter,
+                                                comboMap.value(newValue));
+                    emit parametersChanged();
+                }
+            });
 
     insertParameterWidget(layout);
 
     streamingParameters->insert(parameter, comboMap.values().at(0));
 }
 
-void CodecManager::addParameterWidget(QString label, QString command, bool value) {
+void CodecManager::addParameterWidget(QString label, QString command,
+                                      bool value) {
     // create new layout for parameter
     QVBoxLayout *layout = new QVBoxLayout();
 
@@ -116,7 +125,8 @@ void CodecManager::addParameterWidget(QString label, QString command, bool value
     checkBox->setChecked(value);
     layout->addWidget(checkBox);
 
-    // The command is stored as the key with an empty value in streamingParameters
+    // The command is stored as the key with an empty value in
+    // streamingParameters
 
     connect(checkBox, &QCheckBox::toggled, [=](bool checked) {
         if (checked) {
@@ -151,7 +161,9 @@ QMap<QString, QString> *CodecManager::getStreamingParameters() { return NULL; }
 
 QString CodecManager::getCodecName() { return codecName; }
 
-void CodecManager::setCodecName(QString codecName) { this->codecName = codecName; }
+void CodecManager::setCodecName(QString codecName) {
+    this->codecName = codecName;
+}
 
 Codec *CodecManager::getCodec(QString codecName) {
     if (codecName == "h261") {

@@ -22,4 +22,5 @@ void ParamManager::initTooltips() {
     setHint("Scale", SCALE);
     setHint("Qscale", QSCALE);
     setHint("Bitrate", BITRATE);
+    setHint("Quantization", QUANTIZATION);
 }
