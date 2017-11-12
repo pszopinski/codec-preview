@@ -64,6 +64,8 @@ void CodecManager::addParameterWidget(QString label, QString parameter,
     QLineEdit *lineEdit = new QLineEdit(value, this);
     // lineEdit->setMaximumWidth(30);
 
+    // PP: validation
+    paramValidator.addValidation(lineEdit, parameter);
     layout->addWidget(lineEdit);
 
     // make form interactive

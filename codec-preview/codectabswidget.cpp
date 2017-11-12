@@ -51,8 +51,8 @@ void CodecTabsWidget::compareWindowStream(int first, int second, int third) {
     previousThird = third;
     qDebug() << "selected codecs: " << first << second << third;
 
-    // PP: rawvideo
-    QString streamingParameters1 = "-c:v rawvideo -f nut -an";
+    // PP: mjpeg
+    QString streamingParameters1 = "-c:v mjpeg -f nut -an";
     QString streamingParameters2 = parametersToString(
         compareWindow.getManager(first)->getStreamingParameters());
     QString streamingParameters3 = parametersToString(
@@ -98,8 +98,8 @@ void CodecTabsWidget::compareWindowStream() {
 
     qDebug() << "selected codecs: " << first << second << third;
 
-    // PP: mjpeg -> rawvideo
-    QString streamingParameters1 = "-c:v rawvideo -f nut -an";
+    // PP: mjpeg
+    QString streamingParameters1 = "-c:v mjpeg -f nut -an";
     QString streamingParameters2 = parametersToString(
         compareWindow.getManager(first)->getStreamingParameters());
     QString streamingParameters3 = parametersToString(
@@ -155,8 +155,8 @@ QString CodecTabsWidget::buildStreamingCommand(QString inputParameters,
     list << "-i " << inputLocation;
 
     // TEMPORARY CHANGE FROM COPY TO MJPEG
-    // PP: mjpeg -> rawvideo
-    list << "-c:v rawvideo -f nut -an" << rawLocation + "?ttl=0";
+    // PP: mjpeg
+    list << "-c:v mjpeg -f nut -an" << rawLocation + "?ttl=0";
 
     list << outputPrameters << encodedLocation + "?ttl=0";
 

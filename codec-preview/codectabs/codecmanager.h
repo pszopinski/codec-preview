@@ -20,6 +20,7 @@
 #include "codecs/mjpeg.h"
 #include "codecs/mpeg1.h"
 #include "codecs/mpeg2.h"
+#include "paramsvalidator.h"
 
 namespace Ui {
 class CodecManager;
@@ -34,6 +35,7 @@ class CodecManager : public QWidget {
 
     ParamManager paramManager;
     QString codecName;
+    ParamsValidator paramValidator;
 
   protected:
     QMap<QString, QString> *streamingParameters;
@@ -46,7 +48,8 @@ class CodecManager : public QWidget {
 
     virtual QMap<QString, QString> *getStreamingParameters();
     void addParameterWidget(QString label, QString parameter, QString value);
-    void addParameterWidget(QString label, QString parameter, QMap<QString, QString> values);
+    void addParameterWidget(QString label, QString parameter,
+                            QMap<QString, QString> values);
     void addParameterWidget(QString label, QString command, bool value);
     void insertParameterWidget(QVBoxLayout *layout);
     QString getCodecName();

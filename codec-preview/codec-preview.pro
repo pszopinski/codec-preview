@@ -31,6 +31,7 @@ SOURCES += main.cpp \
     codectabs/mpeg2manager.cpp \
     codecs/h265.cpp \
     codecs/allcodecs.cpp \
+    codectabs/paramsvalidator.cpp
 
 
 
@@ -57,7 +58,8 @@ HEADERS  += constants.h \
     codectabs/mpeg1manager.h \
     codectabs/mpeg2manager.h \
     codecs/h265.h \
-    codecs/allcodecs.h
+    codecs/allcodecs.h \
+    codectabs/paramsvalidator.h
 
 
 FORMS    += \
