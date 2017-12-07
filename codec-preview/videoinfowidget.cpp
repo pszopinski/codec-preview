@@ -18,7 +18,7 @@ VideoInfoWidget::VideoInfoWidget(QWidget *parent)
             this, SLOT(parseStreamProbeOutput(int, QProcess::ExitStatus)));
 
     ui->lBitrate->setToolTip(paramManager.getHint("Bitrate"));
-
+    statistics = new Statistics();
 }
 
 VideoInfoWidget::~VideoInfoWidget() { delete ui; }
@@ -58,15 +58,20 @@ void VideoInfoWidget::parseFrameProbeOutput() {
             ui->frameTypes->setText(framesQueueSnapshot);
         }
 
+        QSize frameSize;
         // find frame width
         if (output.startsWith("width=")) {
             ui->frameWidth->setText(output.mid(6, output.length()));
+            frameSize.setWidth(output.mid(6, output.length()).toInt());
         }
 
         // find frame height
         if (output.startsWith("height=")) {
             ui->frameHeight->setText(output.mid(7, output.length()));
+            frameSize.setHeight(output.mid(7, output.length()).toInt());
         }
+        // PP: w setFrameSize jest XD pamietac
+        statistics->setFrameSize(frameSize);
     }
 }
 
@@ -83,8 +88,7 @@ void VideoInfoWidget::startStreamProbe(QString command) {
     streamProbeProcess.start(command);
 }
 
-void VideoInfoWidget::setFrameTypeText(QString text)
-{
+void VideoInfoWidget::setFrameTypeText(QString text) {
     ui->frameTypes->setText(text);
 }
 
@@ -108,7 +112,6 @@ void VideoInfoWidget::parseStreamProbeOutput(int a, QProcess::ExitStatus b) {
             if (fileOutput.startsWith("avg_frame_rate=")) {
                 ui->frameRate->setText(fileOutput.mid(15, fileOutput.length()));
             }
-
         }
     } else {
         qDebug() << "ERROR: cannot access file";
@@ -116,10 +119,12 @@ void VideoInfoWidget::parseStreamProbeOutput(int a, QProcess::ExitStatus b) {
     myReadFile.close();
 }
 
-void VideoInfoWidget::onStatsChange(VlcStats *stats){
+void VideoInfoWidget::onStatsChange(VlcStats *stats) {
     ui->decodedBlocks->setText(QString::number(stats->decoded_video));
-    ui->bitRate->setText(QString::number(stats->input_bitrate*10000));
+    ui->bitRate->setText(QString::number(stats->input_bitrate * 10000));
     ui->framesDropped->setText(QString::number(stats->lost_pictures));
-    ui->bytesRead->setText(QString::number(stats->read_bytes/100.0));
+    ui->bytesRead->setText(QString::number(stats->read_bytes / 100.0));
     ui->framesCount->setText(QString::number(stats->displayed_pictures));
-    }
+}
+
+Statistics VideoInfoWidget::getStatistics() { return (*statistics); }

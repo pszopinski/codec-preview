@@ -12,6 +12,7 @@
 
 #include "constants.h"
 #include "parammanager.h"
+#include "statistics.h"
 
 namespace Ui {
 class VideoInfoWidget;
@@ -25,6 +26,8 @@ class VideoInfoWidget : public QWidget {
     QProcess streamProbeProcess;
     QQueue<char> framesQueue;
     ParamManager paramManager;
+    Statistics *statistics;
+    QSize frameSize;
 
   public:
     Ui::VideoInfoWidget *ui;
@@ -36,6 +39,7 @@ class VideoInfoWidget : public QWidget {
     void startFrameProbe(QString command);
     void startStreamProbe(QString command);
     void setFrameTypeText(QString text);
+    Statistics getStatistics();
 
   private slots:
     void parseFrameProbeOutput();
