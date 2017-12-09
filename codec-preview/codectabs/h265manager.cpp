@@ -11,14 +11,14 @@ H265Manager::H265Manager(QWidget *parent) : CodecManager(parent, "libx265") {
 
     for (int i = 0; i < parameterNames.size(); i++) {
         QString paramName = parameterNames.at(i);
-        QMap<QString, QString> paramMap = codec->getParameter(paramName);
+        OrderedMap<QString, QString> paramMap = codec->getParameter(paramName);
 
         addParameterWidget(paramName, paramMap.value("value"), paramMap.value("default"));
     }
 
     for (int i = 0; i < comboBoxNames.size(); i++) {
         QString paramName = comboBoxNames.at(i);
-        QMap<QString, QString> paramMap = codec->getComboBox(paramName);
+        OrderedMap<QString, QString> paramMap = codec->getComboBox(paramName);
         QString paramValue = paramMap.value("value");
 
         paramMap.remove("value");
@@ -28,7 +28,7 @@ H265Manager::H265Manager(QWidget *parent) : CodecManager(parent, "libx265") {
 
     for (int i = 0; i < checkBoxNames.size(); i++) {
         QString paramName = checkBoxNames.at(i);
-        QMap<QString, QString> paramMap = codec->getCheckBox(paramName);
+        OrderedMap<QString, QString> paramMap = codec->getCheckBox(paramName);
         QString command = paramMap.value("command");
         bool state = paramMap.value("state") != ""; // empty string for false, anything else for true
 
@@ -36,8 +36,8 @@ H265Manager::H265Manager(QWidget *parent) : CodecManager(parent, "libx265") {
     }
 }
 
-QMap<QString, QString> *H265Manager::getStreamingParameters() {
-    QMap<QString, QString> *parameters(streamingParameters);
+OrderedMap<QString, QString> *H265Manager::getStreamingParameters() {
+    OrderedMap<QString, QString> *parameters(streamingParameters);
     // add final parameters
     // parameters->insert("preset", "ultrafast");
     parameters->insert("an", "");

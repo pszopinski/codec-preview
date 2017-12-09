@@ -10,7 +10,7 @@ class H264Manager : public CodecManager {
 
   public:
     explicit H264Manager(QWidget *parent = 0);
-    QMap<QString, QString> *getStreamingParameters();
+    OrderedMap<QString, QString> *getStreamingParameters();
     ~H264Manager();
 };
 

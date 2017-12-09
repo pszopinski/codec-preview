@@ -8,7 +8,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QList>
-#include <QMap>
+#include <qt-ordered-map/orderedmap.h>
 #include <QString>
 #include <QVBoxLayout>
 #include <QWidget>
@@ -38,7 +38,7 @@ class CodecManager : public QWidget {
     ParamsValidator paramValidator;
 
   protected:
-    QMap<QString, QString> *streamingParameters;
+    OrderedMap<QString, QString> *streamingParameters;
 
   public:
     // TEMPORARY CHANGE FROM COPY TO MJPEG
@@ -46,10 +46,10 @@ class CodecManager : public QWidget {
     explicit CodecManager(QWidget *parent = 0, QString encoder = "mjpeg");
     ~CodecManager();
 
-    virtual QMap<QString, QString> *getStreamingParameters();
+    virtual OrderedMap<QString, QString> *getStreamingParameters();
     void addParameterWidget(QString label, QString parameter, QString value);
     void addParameterWidget(QString label, QString parameter,
-                            QMap<QString, QString> values);
+                            OrderedMap<QString, QString> values);
     void addParameterWidget(QString label, QString command, bool value);
     void insertParameterWidget(QVBoxLayout *layout);
     QString getCodecName();

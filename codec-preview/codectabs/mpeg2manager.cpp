@@ -11,14 +11,14 @@ MPEG2Manager::MPEG2Manager(QWidget *parent) : CodecManager(parent, "mpeg2video")
 
     for (int i = 0; i < parameterNames.size(); i++) {
         QString paramName = parameterNames.at(i);
-        QMap<QString, QString> paramMap = codec->getParameter(paramName);
+        OrderedMap<QString, QString> paramMap = codec->getParameter(paramName);
 
         addParameterWidget(paramName, paramMap.value("value"), paramMap.value("default"));
     }
 
     for (int i = 0; i < comboBoxNames.size(); i++) {
         QString paramName = comboBoxNames.at(i);
-        QMap<QString, QString> paramMap = codec->getComboBox(paramName);
+        OrderedMap<QString, QString> paramMap = codec->getComboBox(paramName);
         QString paramValue = paramMap.value("value");
 
         paramMap.remove("value");
@@ -28,7 +28,7 @@ MPEG2Manager::MPEG2Manager(QWidget *parent) : CodecManager(parent, "mpeg2video")
 
     for (int i = 0; i < checkBoxNames.size(); i++) {
         QString paramName = checkBoxNames.at(i);
-        QMap<QString, QString> paramMap = codec->getCheckBox(paramName);
+        OrderedMap<QString, QString> paramMap = codec->getCheckBox(paramName);
         QString command = paramMap.value("command");
         bool state = paramMap.value("state") != ""; // empty string for false, anything else for true
 
@@ -36,8 +36,8 @@ MPEG2Manager::MPEG2Manager(QWidget *parent) : CodecManager(parent, "mpeg2video")
     }
 }
 
-QMap<QString, QString> *MPEG2Manager::getStreamingParameters() {
-    QMap<QString, QString> *parameters(streamingParameters);
+OrderedMap<QString, QString> *MPEG2Manager::getStreamingParameters() {
+    OrderedMap<QString, QString> *parameters(streamingParameters);
     // add final parameters
     // parameters->insert("preset", "ultrafast");
     parameters->insert("an", "");

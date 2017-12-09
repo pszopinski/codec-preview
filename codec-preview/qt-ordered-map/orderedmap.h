@@ -1,3 +1,5 @@
+// https://github.com/mandeepsandhu/qt-ordered-map
+
 #ifndef ORDEREDMAP_H
 #define ORDEREDMAP_H
 

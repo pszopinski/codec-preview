@@ -186,7 +186,7 @@ QString CodecTabsWidget::buildMultipleStreamingCommands(
 }
 
 QString
-CodecTabsWidget::parametersToString(QMap<QString, QString> *parameters) {
+CodecTabsWidget::parametersToString(OrderedMap<QString, QString> *parameters) {
     QStringList result;
 
     for (auto key : parameters->keys()) {
@@ -240,7 +240,7 @@ QString CodecTabsWidget::getStreamingParameters() {
 
     CodecManager *codecManager =
         codecManagers.at(ui->tabWidget->currentIndex());
-    QMap<QString, QString> *streamingParametersMap =
+    OrderedMap<QString, QString> *streamingParametersMap =
         codecManager->getStreamingParameters();
 
     if (streamingParametersMap->isEmpty()) {
