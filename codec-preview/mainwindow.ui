@@ -51,6 +51,7 @@
      <string>View</string>
     </property>
     <addaction name="actionCompare_multiple_codecs"/>
+    <addaction name="actionMacroblocks"/>
    </widget>
    <widget class="QMenu" name="menuOptions">
     <property name="title">
@@ -110,6 +111,11 @@
   <action name="actionChange_encoded_host">
    <property name="text">
     <string>Change encoded host</string>
+   </property>
+  </action>
+  <action name="actionMacroblocks">
+   <property name="text">
+    <string>Macroblocks</string>
    </property>
   </action>
  </widget>

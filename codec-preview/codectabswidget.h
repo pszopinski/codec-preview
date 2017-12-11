@@ -5,6 +5,9 @@
 #include <QRegularExpression>
 #include <QVector>
 #include <QWidget>
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QGraphicsPixmapItem>
 
 #include "codectabs/codecmanager.h"
 #include "codectabs/h261manager.h"
@@ -12,6 +15,7 @@
 #include "codectabs/mjpegmanager.h"
 #include "codectabs/mpeg1manager.h"
 #include "codectabs/mpeg2manager.h"
+
 //#include "ffmpegcommand.h"
 
 
@@ -29,6 +33,7 @@ class CodecTabsWidget : public QWidget {
     QVector<CodecManager *> codecManagers;
     QProcess streamingProcess;
     QProcess cameraNameGetterProcess;
+    QProcess singleFrameProcess;
     QString inputParameters;
     QString inputLocation;
     bool selectedCodecs[6];
@@ -36,6 +41,10 @@ class CodecTabsWidget : public QWidget {
     int previousFirst;
     int previousSecond;
     int previousThird;
+
+    QGraphicsScene* scene;
+    QGraphicsView* view;
+    QGraphicsPixmapItem *item;
 
 
 
@@ -64,6 +73,7 @@ class CodecTabsWidget : public QWidget {
     void startStreaming(QString streamingParameters);
     void setCRF(QString value);
     void insertParameter(QVBoxLayout *layout);
+    void getSingleFrame();
 
 
   signals:
@@ -74,6 +84,7 @@ class CodecTabsWidget : public QWidget {
     void onTabChange();
     void parseCameraNameProbeOutput(int a, QProcess::ExitStatus b);
     void compareWindowStream();
+    void onSingleFrameGotten(int a, QProcess::ExitStatus b);
 
 };
 
