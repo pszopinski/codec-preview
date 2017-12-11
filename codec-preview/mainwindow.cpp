@@ -146,3 +146,8 @@ void MainWindow::on_actionHelp_triggered()
     msgBox.setText("\t\t\tCodec Preview\n\n\n\nCreated by Kamil Kurp, Piotr Puszkarski and Paweł Szopiński\t");
     msgBox.exec();
 }
+
+void MainWindow::on_actionMacroblocks_triggered()
+{
+    ui->codecTabs->getSingleFrame();
+}
