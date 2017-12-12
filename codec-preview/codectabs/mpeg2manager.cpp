@@ -1,6 +1,7 @@
 #include "mpeg2manager.h"
 
-MPEG2Manager::MPEG2Manager(QWidget *parent) : CodecManager(parent, "mpeg2video") {
+MPEG2Manager::MPEG2Manager(QWidget *parent)
+    : CodecManager(parent, "mpeg2video") {
     QString codecName = "mpeg2";
 
     Codec *codec = CodecManager::getCodec(codecName);
@@ -13,7 +14,8 @@ MPEG2Manager::MPEG2Manager(QWidget *parent) : CodecManager(parent, "mpeg2video")
         QString paramName = parameterNames.at(i);
         OrderedMap<QString, QString> paramMap = codec->getParameter(paramName);
 
-        addParameterWidget(paramName, paramMap.value("value"), paramMap.value("default"));
+        addParameterWidget(paramName, paramMap.value("value"),
+                           paramMap.value("default"));
     }
 
     for (int i = 0; i < comboBoxNames.size(); i++) {
@@ -30,7 +32,8 @@ MPEG2Manager::MPEG2Manager(QWidget *parent) : CodecManager(parent, "mpeg2video")
         QString paramName = checkBoxNames.at(i);
         OrderedMap<QString, QString> paramMap = codec->getCheckBox(paramName);
         QString command = paramMap.value("command");
-        bool state = paramMap.value("state") != ""; // empty string for false, anything else for true
+        bool state = paramMap.value("state") !=
+                     ""; // empty string for false, anything else for true
 
         addParameterWidget(paramName, command, state);
     }

@@ -1,13 +1,13 @@
 #ifndef CODECTABSWIDGET_H
 #define CODECTABSWIDGET_H
 
+#include <QGraphicsPixmapItem>
+#include <QGraphicsScene>
+#include <QGraphicsView>
 #include <QProcess>
 #include <QRegularExpression>
 #include <QVector>
 #include <QWidget>
-#include <QGraphicsScene>
-#include <QGraphicsView>
-#include <QGraphicsPixmapItem>
 
 #include "codectabs/codecmanager.h"
 #include "codectabs/h261manager.h"
@@ -17,7 +17,6 @@
 #include "codectabs/mpeg2manager.h"
 
 //#include "ffmpegcommand.h"
-
 
 #include "codeccomparewindow.h"
 
@@ -42,12 +41,9 @@ class CodecTabsWidget : public QWidget {
     int previousSecond;
     int previousThird;
 
-    QGraphicsScene* scene;
-    QGraphicsView* view;
+    QGraphicsScene *scene;
+    QGraphicsView *view;
     QGraphicsPixmapItem *item;
-
-
-
 
   public:
     explicit CodecTabsWidget(QWidget *parent = 0);
@@ -75,7 +71,6 @@ class CodecTabsWidget : public QWidget {
     void insertParameter(QVBoxLayout *layout);
     void getSingleFrame();
 
-
   signals:
     void currentTabChanged();
     void settingsChanged();
@@ -85,7 +80,6 @@ class CodecTabsWidget : public QWidget {
     void parseCameraNameProbeOutput(int a, QProcess::ExitStatus b);
     void compareWindowStream();
     void onSingleFrameGotten(int a, QProcess::ExitStatus b);
-
 };
 
 #endif // CODECTABSWIDGET_H

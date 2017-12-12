@@ -159,7 +159,9 @@ void CodecManager::insertParameterWidget(QVBoxLayout *layout) {
     layoutCounter++;
 }
 
-OrderedMap<QString, QString> *CodecManager::getStreamingParameters() { return NULL; }
+OrderedMap<QString, QString> *CodecManager::getStreamingParameters() {
+    return NULL;
+}
 
 QString CodecManager::getCodecName() { return codecName; }
 

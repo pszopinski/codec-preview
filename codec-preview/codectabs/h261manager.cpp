@@ -13,7 +13,8 @@ H261Manager::H261Manager(QWidget *parent) : CodecManager(parent, "h261") {
         QString paramName = parameterNames.at(i);
         OrderedMap<QString, QString> paramMap = codec->getParameter(paramName);
 
-        addParameterWidget(paramName, paramMap.value("value"), paramMap.value("default"));
+        addParameterWidget(paramName, paramMap.value("value"),
+                           paramMap.value("default"));
     }
 
     for (int i = 0; i < comboBoxNames.size(); i++) {
@@ -30,7 +31,8 @@ H261Manager::H261Manager(QWidget *parent) : CodecManager(parent, "h261") {
         QString paramName = checkBoxNames.at(i);
         OrderedMap<QString, QString> paramMap = codec->getCheckBox(paramName);
         QString command = paramMap.value("command");
-        bool state = paramMap.value("state") != ""; // empty string for false, anything else for true
+        bool state = paramMap.value("state") !=
+                     ""; // empty string for false, anything else for true
 
         addParameterWidget(paramName, command, state);
     }

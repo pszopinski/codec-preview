@@ -1,8 +1,8 @@
 #ifndef PARAMMANAGER_H
 #define PARAMMANAGER_H
 
-#include <qt-ordered-map/orderedmap.h>
 #include <QString>
+#include <qt-ordered-map/orderedmap.h>
 
 class ParamManager {
   public:
@@ -19,9 +19,9 @@ class ParamManager {
                         "Format: integer\n"
                         "Example: 30";
     const QString QUALITY = "Quality scale\n"
-                           "Format: integer\n"
-                           "range: 1-30\n"
-                           "Example: 15";
+                            "Format: integer\n"
+                            "range: 1-30\n"
+                            "Example: 15";
     const QString RESOLUTION = "Resultion of the video\n"
                                "Format: width:height\n"
                                "Example: 1920:1080";
@@ -29,9 +29,9 @@ class ParamManager {
                                    "This has no effect for camera input.";
     const QString GOP_SIZE = "Group of frames size.\n"
                              "The distance between I frames. Defaults to 12.";
-    const QString B_FRAMES_LIMIT = "The maximum number of consecutive B frames.\n"
-                                   "Enter 0 to disable B frames altogether.";
-
+    const QString B_FRAMES_LIMIT =
+        "The maximum number of consecutive B frames.\n"
+        "Enter 0 to disable B frames altogether.";
 };
 
 #endif // PARAMMANAGER_H

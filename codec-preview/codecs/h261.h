@@ -3,9 +3,8 @@
 
 #include "codecs/codec.h"
 
-class H261 : public Codec
-{
-public:
+class H261 : public Codec {
+  public:
     H261();
 };
 

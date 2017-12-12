@@ -146,7 +146,4 @@ void CodecSelector::setMainWindowHandler(CodecTabsWidget *hndl) {
     this->hndl = hndl;
 }
 
-void CodecSelector::on_buttonBox_rejected()
-{
-    this->close();
-}
+void CodecSelector::on_buttonBox_rejected() { this->close(); }

@@ -9,13 +9,19 @@ class Codec {
     Codec();
 
   protected:
-    OrderedMap<QString, OrderedMap<QString, QString>> *parameters = new OrderedMap<QString, OrderedMap<QString, QString>>();
-    OrderedMap<QString, OrderedMap<QString, QString>> *comboBoxes = new OrderedMap<QString, OrderedMap<QString, QString>>();
-    OrderedMap<QString, OrderedMap<QString, QString>> *checkBoxes = new OrderedMap<QString, OrderedMap<QString, QString>>();
-    OrderedMap<QString, OrderedMap<QString, QString>> *stats = new OrderedMap<QString, OrderedMap<QString, QString>>();
+    OrderedMap<QString, OrderedMap<QString, QString>> *parameters =
+        new OrderedMap<QString, OrderedMap<QString, QString>>();
+    OrderedMap<QString, OrderedMap<QString, QString>> *comboBoxes =
+        new OrderedMap<QString, OrderedMap<QString, QString>>();
+    OrderedMap<QString, OrderedMap<QString, QString>> *checkBoxes =
+        new OrderedMap<QString, OrderedMap<QString, QString>>();
+    OrderedMap<QString, OrderedMap<QString, QString>> *stats =
+        new OrderedMap<QString, OrderedMap<QString, QString>>();
 
-    void addParameter(QString paramName, QString paramValue, QString paramDefault);
-    void addComboBox(QString paramName, QString paramValue, OrderedMap<QString, QString> paramMap);
+    void addParameter(QString paramName, QString paramValue,
+                      QString paramDefault);
+    void addComboBox(QString paramName, QString paramValue,
+                     OrderedMap<QString, QString> paramMap);
     void addCheckBox(QString paramName, QString command, bool state);
     void addStat();
 

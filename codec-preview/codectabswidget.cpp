@@ -42,9 +42,8 @@ CodecTabsWidget::CodecTabsWidget(QWidget *parent)
             SIGNAL(finished(int, QProcess::ExitStatus)), this,
             SLOT(parseCameraNameProbeOutput(int, QProcess::ExitStatus)));
 
-    connect(&singleFrameProcess,
-            SIGNAL(finished(int, QProcess::ExitStatus)), this,
-            SLOT(onSingleFrameGotten(int, QProcess::ExitStatus)));
+    connect(&singleFrameProcess, SIGNAL(finished(int, QProcess::ExitStatus)),
+            this, SLOT(onSingleFrameGotten(int, QProcess::ExitStatus)));
 }
 
 CodecTabsWidget::~CodecTabsWidget() { delete ui; }
@@ -290,10 +289,11 @@ void CodecTabsWidget::parseCameraNameProbeOutput(int a,
 }
 
 void CodecTabsWidget::getSingleFrame() {
-    QString address = RAW_VIDEO_PROTOCOL + "://" + RAW_VIDEO_HOST +
-                             ":" + RAW_VIDEO_PORT;
+    QString address =
+        RAW_VIDEO_PROTOCOL + "://" + RAW_VIDEO_HOST + ":" + RAW_VIDEO_PORT;
 
-    singleFrameProcess.start(FFMPEG + " -i " + address + " -t 1 -vframes 1 -f image2 singleframe.jpg -y");
+    singleFrameProcess.start(FFMPEG + " -i " + address +
+                             " -t 1 -vframes 1 -f image2 singleframe.jpg -y");
 }
 
 void CodecTabsWidget::onSingleFrameGotten(int a, QProcess::ExitStatus b) {

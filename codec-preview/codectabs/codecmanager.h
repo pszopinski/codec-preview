@@ -8,10 +8,10 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QList>
-#include <qt-ordered-map/orderedmap.h>
 #include <QString>
 #include <QVBoxLayout>
 #include <QWidget>
+#include <qt-ordered-map/orderedmap.h>
 
 #include "codecs/allcodecs.h"
 #include "codecs/h261.h"

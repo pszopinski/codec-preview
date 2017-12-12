@@ -3,8 +3,7 @@
 QString FfmpegCommand::getFrameProbeCommand(QString host, QString port) {
     qDebug() << "starting probe process...";
 
-    QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + host +
-                             ":" + port;
+    QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + host + ":" + port;
 
     QString frameProbeCommand = buildProbeCommand(
         encodedAddress,
@@ -14,8 +13,7 @@ QString FfmpegCommand::getFrameProbeCommand(QString host, QString port) {
 }
 
 QString FfmpegCommand::getStreamProbeCommand(QString host, QString port) {
-    QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + host +
-                             ":" + port;
+    QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + host + ":" + port;
 
     QString streamProbeCommand =
         buildProbeCommand(encodedAddress, "-show_streams -select_streams v:0");
