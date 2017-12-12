@@ -1,9 +1,14 @@
 #include "mpeg2.h"
 
 Mpeg2::Mpeg2() {
+    addParameter("Bitrate", "b:v", "");
+    addParameter("Minrate", "minrate", "");
+    addParameter("Maxrate", "maxrate", "");
+    addParameter("Aspect ratio", "aspect", "");
+    // addParameter("Qscale", "qscale:v", "");
     addParameter("Resolution", "s", "");
 
-    OrderedMap<QString, QString> profiles;
+    QMap<QString, QString> profiles;
     profiles.insert("422", "0");
     profiles.insert("HIGH", "1");
     profiles.insert("SS", "2");
@@ -12,7 +17,7 @@ Mpeg2::Mpeg2() {
     profiles.insert("SIMPLE", "5");
     addComboBox("Profile", "profile:v", profiles);
 
-    OrderedMap<QString, QString> levels;
+    QMap<QString, QString> levels;
     levels.insert("422 main", "5");
     levels.insert("422 high", "2");
     levels.insert("main", "8");

@@ -10,7 +10,7 @@ class MJPEGManager : public CodecManager {
 
   public:
     explicit MJPEGManager(QWidget *parent = 0);
-    OrderedMap<QString, QString> *getStreamingParameters();
+    QMap<QString, QString> *getStreamingParameters();
     ~MJPEGManager();
 };
 

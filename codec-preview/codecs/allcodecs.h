@@ -3,8 +3,9 @@
 
 #include "codecs/codec.h"
 
-class AllCodecs : public Codec {
-  public:
+class AllCodecs : public Codec
+{
+public:
     AllCodecs();
 };
 

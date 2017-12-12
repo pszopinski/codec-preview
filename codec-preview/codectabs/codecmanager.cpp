@@ -3,7 +3,7 @@
 
 CodecManager::CodecManager(QWidget *parent, QString encoder)
     : QWidget(parent), ui(new Ui::CodecManager), layoutCounter(0),
-      streamingParameters(new OrderedMap<QString, QString>) {
+      streamingParameters(new QMap<QString, QString>) {
     ui->setupUi(this);
 
     streamingParameters->insert("c:v", encoder);
@@ -18,7 +18,7 @@ CodecManager::CodecManager(QWidget *parent, QString encoder)
 
     for (int i = 0; i < parameterNames.size(); i++) {
         QString paramName = parameterNames.at(i);
-        OrderedMap<QString, QString> paramMap = codec->getParameter(paramName);
+        QMap<QString, QString> paramMap = codec->getParameter(paramName);
 
         addParameterWidget(paramName, paramMap.value("value"),
                            paramMap.value("default"));
@@ -26,7 +26,7 @@ CodecManager::CodecManager(QWidget *parent, QString encoder)
 
     for (int i = 0; i < comboBoxNames.size(); i++) {
         QString paramName = comboBoxNames.at(i);
-        OrderedMap<QString, QString> paramMap = codec->getComboBox(paramName);
+        QMap<QString, QString> paramMap = codec->getComboBox(paramName);
         QString paramValue = paramMap.value("value");
 
         paramMap.remove("value");
@@ -36,7 +36,7 @@ CodecManager::CodecManager(QWidget *parent, QString encoder)
 
     for (int i = 0; i < checkBoxNames.size(); i++) {
         QString paramName = checkBoxNames.at(i);
-        OrderedMap<QString, QString> paramMap = codec->getCheckBox(paramName);
+        QMap<QString, QString> paramMap = codec->getCheckBox(paramName);
         QString command = paramMap.value("command");
         bool state = paramMap.value("state") !=
                      ""; // empty string for false, anything else for true
@@ -82,7 +82,7 @@ void CodecManager::addParameterWidget(QString label, QString parameter,
 }
 
 void CodecManager::addParameterWidget(QString label, QString parameter,
-                                      OrderedMap<QString, QString> comboMap) {
+                                      QMap<QString, QString> comboMap) {
     // create new layout for parameter
     QVBoxLayout *layout = new QVBoxLayout();
 
@@ -159,9 +159,7 @@ void CodecManager::insertParameterWidget(QVBoxLayout *layout) {
     layoutCounter++;
 }
 
-OrderedMap<QString, QString> *CodecManager::getStreamingParameters() {
-    return NULL;
-}
+QMap<QString, QString> *CodecManager::getStreamingParameters() { return NULL; }
 
 QString CodecManager::getCodecName() { return codecName; }
 

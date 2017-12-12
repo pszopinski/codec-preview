@@ -41,9 +41,6 @@ CodecTabsWidget::CodecTabsWidget(QWidget *parent)
     connect(&cameraNameGetterProcess,
             SIGNAL(finished(int, QProcess::ExitStatus)), this,
             SLOT(parseCameraNameProbeOutput(int, QProcess::ExitStatus)));
-
-    connect(&singleFrameProcess, SIGNAL(finished(int, QProcess::ExitStatus)),
-            this, SLOT(onSingleFrameGotten(int, QProcess::ExitStatus)));
 }
 
 CodecTabsWidget::~CodecTabsWidget() { delete ui; }
@@ -189,7 +186,7 @@ QString CodecTabsWidget::buildMultipleStreamingCommands(
 }
 
 QString
-CodecTabsWidget::parametersToString(OrderedMap<QString, QString> *parameters) {
+CodecTabsWidget::parametersToString(QMap<QString, QString> *parameters) {
     QStringList result;
 
     for (auto key : parameters->keys()) {
@@ -243,7 +240,7 @@ QString CodecTabsWidget::getStreamingParameters() {
 
     CodecManager *codecManager =
         codecManagers.at(ui->tabWidget->currentIndex());
-    OrderedMap<QString, QString> *streamingParametersMap =
+    QMap<QString, QString> *streamingParametersMap =
         codecManager->getStreamingParameters();
 
     if (streamingParametersMap->isEmpty()) {
@@ -286,22 +283,4 @@ void CodecTabsWidget::parseCameraNameProbeOutput(int a,
     settingsChanged();
 
     qDebug() << inputLocation;
-}
-
-void CodecTabsWidget::getSingleFrame() {
-    QString address =
-        RAW_VIDEO_PROTOCOL + "://" + RAW_VIDEO_HOST + ":" + RAW_VIDEO_PORT;
-
-    singleFrameProcess.start(FFMPEG + " -i " + address +
-                             " -t 1 -vframes 1 -f image2 singleframe.jpg -y");
-}
-
-void CodecTabsWidget::onSingleFrameGotten(int a, QProcess::ExitStatus b) {
-    qDebug() << "completed";
-
-    scene = new QGraphicsScene();
-    view = new QGraphicsView(scene);
-    item = new QGraphicsPixmapItem(QPixmap("singleframe.jpg"));
-    scene->addItem(item);
-    view->show();
 }

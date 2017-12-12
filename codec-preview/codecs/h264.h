@@ -3,8 +3,9 @@
 
 #include "codecs/codec.h"
 
-class H264 : public Codec {
-  public:
+class H264 : public Codec
+{
+public:
     H264();
 };
 

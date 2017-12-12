@@ -2,8 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QFileDialog>
-#include <QInputDialog>
 #include <QMainWindow>
+#include <QInputDialog>
 
 //#include "codecselector.h"
 #include "ffmpegcommand.h"
@@ -16,7 +16,6 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
   private:
     Ui::MainWindow *ui;
-
   public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
@@ -37,7 +36,8 @@ class MainWindow : public QMainWindow {
     void on_actionChange_encoded_port_triggered();
 
     void on_actionHelp_triggered();
-    void on_actionMacroblocks_triggered();
 };
+
+
 
 #endif // CODECCOMPARISONWINDOW_H

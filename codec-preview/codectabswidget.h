@@ -1,9 +1,6 @@
 #ifndef CODECTABSWIDGET_H
 #define CODECTABSWIDGET_H
 
-#include <QGraphicsPixmapItem>
-#include <QGraphicsScene>
-#include <QGraphicsView>
 #include <QProcess>
 #include <QRegularExpression>
 #include <QVector>
@@ -15,8 +12,8 @@
 #include "codectabs/mjpegmanager.h"
 #include "codectabs/mpeg1manager.h"
 #include "codectabs/mpeg2manager.h"
-
 //#include "ffmpegcommand.h"
+
 
 #include "codeccomparewindow.h"
 
@@ -32,7 +29,6 @@ class CodecTabsWidget : public QWidget {
     QVector<CodecManager *> codecManagers;
     QProcess streamingProcess;
     QProcess cameraNameGetterProcess;
-    QProcess singleFrameProcess;
     QString inputParameters;
     QString inputLocation;
     bool selectedCodecs[6];
@@ -41,9 +37,8 @@ class CodecTabsWidget : public QWidget {
     int previousSecond;
     int previousThird;
 
-    QGraphicsScene *scene;
-    QGraphicsView *view;
-    QGraphicsPixmapItem *item;
+
+
 
   public:
     explicit CodecTabsWidget(QWidget *parent = 0);
@@ -61,7 +56,7 @@ class CodecTabsWidget : public QWidget {
         QVector<QString> outputPrameters, QVector<QString> outputLocations);
 
     static QString buildProbeCommand(QString location, QString params);
-    static QString parametersToString(OrderedMap<QString, QString> *parameters);
+    static QString parametersToString(QMap<QString, QString> *parameters);
     void openFromFile(QString filePath);
     void openFromCamera();
     void selectMultipleCodecs();
@@ -69,7 +64,7 @@ class CodecTabsWidget : public QWidget {
     void startStreaming(QString streamingParameters);
     void setCRF(QString value);
     void insertParameter(QVBoxLayout *layout);
-    void getSingleFrame();
+
 
   signals:
     void currentTabChanged();
@@ -79,7 +74,7 @@ class CodecTabsWidget : public QWidget {
     void onTabChange();
     void parseCameraNameProbeOutput(int a, QProcess::ExitStatus b);
     void compareWindowStream();
-    void onSingleFrameGotten(int a, QProcess::ExitStatus b);
+
 };
 
 #endif // CODECTABSWIDGET_H

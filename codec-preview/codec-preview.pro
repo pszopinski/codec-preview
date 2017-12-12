@@ -59,8 +59,7 @@ HEADERS  += constants.h \
     codectabs/mpeg2manager.h \
     codecs/h265.h \
     codecs/allcodecs.h \
-    codectabs/paramsvalidator.h \
-    qt-ordered-map/orderedmap.h
+    codectabs/paramsvalidator.h
 
 
 FORMS    += \
