@@ -163,7 +163,6 @@ void VideoStatisticsWidget::updateBitrate() {
             if (prevBitrate != "") {
                 bitrate = prevBitrate;
             }
-            qDebug() << bitrate;
         }
     }
     inputFile.close();
