@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CodecCompareWindow</class>
- <widget class="QWidget" name="CodecCompareWindow">
+ <class>CodecComparisonWindow</class>
+ <widget class="QWidget" name="CodecComparisonWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -72,10 +72,10 @@
         </widget>
        </item>
        <item>
-        <widget class="VideoInfoWidget" name="videoInfo1" native="true"/>
+        <widget class="VideoStatisticsWidget" name="videoInfo1" native="true"/>
        </item>
        <item>
-        <widget class="CodecManager" name="encodedParams1" native="true"/>
+        <widget class="CodecParametersWidget" name="encodedParams1" native="true"/>
        </item>
       </layout>
      </item>
@@ -108,10 +108,10 @@
         </widget>
        </item>
        <item>
-        <widget class="VideoInfoWidget" name="videoInfo2" native="true"/>
+        <widget class="VideoStatisticsWidget" name="videoInfo2" native="true"/>
        </item>
        <item>
-        <widget class="CodecManager" name="encodedParams2" native="true"/>
+        <widget class="CodecParametersWidget" name="encodedParams2" native="true"/>
        </item>
       </layout>
      </item>
@@ -141,10 +141,10 @@
         </widget>
        </item>
        <item>
-        <widget class="VideoInfoWidget" name="videoInfo3" native="true"/>
+        <widget class="VideoStatisticsWidget" name="videoInfo3" native="true"/>
        </item>
        <item>
-        <widget class="CodecManager" name="encodedParams3" native="true"/>
+        <widget class="CodecParametersWidget" name="encodedParams3" native="true"/>
        </item>
       </layout>
      </item>
@@ -164,15 +164,15 @@
    </slots>
   </customwidget>
   <customwidget>
-   <class>VideoInfoWidget</class>
+   <class>VideoStatisticsWidget</class>
    <extends>QWidget</extends>
-   <header>videoinfowidget.h</header>
+   <header>VideoStatisticsWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>CodecManager</class>
+   <class>CodecParametersWidget</class>
    <extends>QWidget</extends>
-   <header location="global">codectabs/codecmanager.h</header>
+   <header location="global">CodecParametersWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

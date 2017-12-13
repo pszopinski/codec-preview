@@ -1,9 +1,9 @@
-#include "codecmanager.h"
-#include "ui_codecmanager.h"
+#include "CodecParametersWidget.h"
+#include "ui_CodecParametersWidget.h"
 
 
-CodecManager::CodecManager(QWidget *parent, QString encoder)
-    : QWidget(parent), ui(new Ui::CodecManager), layoutCounter(0),
+CodecParametersWidget::CodecParametersWidget(QWidget *parent, QString encoder)
+    : QWidget(parent), ui(new Ui::CodecParametersWidget), layoutCounter(0),
       streamingParameters(new QMap<QString, QString>) {
     ui->setupUi(this);
 
@@ -12,8 +12,8 @@ CodecManager::CodecManager(QWidget *parent, QString encoder)
     loadCodecParameters("any");
 }
 
-CodecManager::CodecManager(QString codecName, QString optionName, QString codecContainer, QWidget *parent)
-    : QWidget(parent), ui(new Ui::CodecManager), layoutCounter(0),
+CodecParametersWidget::CodecParametersWidget(QString codecName, QString optionName, QString codecContainer, QWidget *parent)
+    : QWidget(parent), ui(new Ui::CodecParametersWidget), layoutCounter(0),
       streamingParameters(new QMap<QString, QString>) {
     ui->setupUi(this);
 
@@ -25,9 +25,9 @@ CodecManager::CodecManager(QString codecName, QString optionName, QString codecC
     loadCodecParameters(codecName);
 }
 
-CodecManager::~CodecManager() { delete ui; }
+CodecParametersWidget::~CodecParametersWidget() { delete ui; }
 
-void CodecManager::addParameterWidget(QString label, QString parameter,
+void CodecParametersWidget::addParameterWidget(QString label, QString parameter,
                                       QString value) {
     // create new layout for parameter
     QVBoxLayout *layout = new QVBoxLayout();
@@ -61,7 +61,7 @@ void CodecManager::addParameterWidget(QString label, QString parameter,
     insertParameterWidget(layout);
 }
 
-void CodecManager::addParameterWidget(QString label, QString parameter,
+void CodecParametersWidget::addParameterWidget(QString label, QString parameter,
                                       QMap<QString, QString> comboMap) {
     // create new layout for parameter
     QVBoxLayout *layout = new QVBoxLayout();
@@ -92,7 +92,7 @@ void CodecManager::addParameterWidget(QString label, QString parameter,
     streamingParameters->insert(parameter, comboMap.values().at(0));
 }
 
-void CodecManager::addParameterWidget(QString label, QString command,
+void CodecParametersWidget::addParameterWidget(QString label, QString command,
                                       bool value) {
     // create new layout for parameter
     QVBoxLayout *layout = new QVBoxLayout();
@@ -126,7 +126,7 @@ void CodecManager::addParameterWidget(QString label, QString command,
     }
 }
 
-void CodecManager::insertParameterWidget(QVBoxLayout *layout) {
+void CodecParametersWidget::insertParameterWidget(QVBoxLayout *layout) {
     // add stretch to bottom
     layout->addStretch();
 
@@ -140,13 +140,13 @@ void CodecManager::insertParameterWidget(QVBoxLayout *layout) {
 }
 
 
-QString CodecManager::getCodecName() { return codecName; }
+QString CodecParametersWidget::getCodecName() { return codecName; }
 
-void CodecManager::setCodecName(QString codecName) {
+void CodecParametersWidget::setCodecName(QString codecName) {
     this->codecName = codecName;
 }
 
-Codec *CodecManager::getCodec(QString codecName) {
+Codec *CodecParametersWidget::getCodec(QString codecName) {
     if (codecName == "h261") {
         return new H261();
     }
@@ -172,8 +172,8 @@ Codec *CodecManager::getCodec(QString codecName) {
 }
 
 
-void CodecManager::loadCodecParameters(QString codecName) {
-    Codec *codec = CodecManager::getCodec(codecName);
+void CodecParametersWidget::loadCodecParameters(QString codecName) {
+    Codec *codec = CodecParametersWidget::getCodec(codecName);
 
     QList<QString> parameterNames = codec->getParameterKeys();
     QList<QString> comboBoxNames = codec->getComboBoxKeys();
@@ -208,7 +208,7 @@ void CodecManager::loadCodecParameters(QString codecName) {
     }
 }
 
-QMap<QString, QString> *CodecManager::getStreamingParameters() {
+QMap<QString, QString> *CodecParametersWidget::getStreamingParameters() {
     QMap<QString, QString> *parameters(streamingParameters);
     // add final parameters
     // parameters->insert("preset", "ultrafast");

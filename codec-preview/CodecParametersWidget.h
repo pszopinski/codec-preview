@@ -1,7 +1,7 @@
-#ifndef CODECMANAGER_H
-#define CODECMANAGER_H
+#ifndef CODECPARAMETERSWIDGET_H
+#define CODECPARAMETERSWIDGET_H
 
-#include "parammanager.h"
+#include "ParameterManager.h"
 #include <QCheckBox>
 #include <QComboBox>
 #include <QDebug>
@@ -20,22 +20,22 @@
 #include "codecs/mjpeg.h"
 #include "codecs/mpeg1.h"
 #include "codecs/mpeg2.h"
-#include "paramsvalidator.h"
+#include "ParameterValidator.h"
 
 namespace Ui {
-class CodecManager;
+class CodecParametersWidget;
 }
 
-class CodecManager : public QWidget {
+class CodecParametersWidget : public QWidget {
     Q_OBJECT
 
   private:
-    Ui::CodecManager *ui;
+    Ui::CodecParametersWidget *ui;
     int layoutCounter;
 
-    ParamManager paramManager;
+    ParameterManager paramManager;
     QString codecName;
-    ParamsValidator paramValidator;
+    ParameterValidator paramValidator;
     QString codecContainer;
 
   protected:
@@ -44,9 +44,9 @@ class CodecManager : public QWidget {
   public:
     // TEMPORARY CHANGE FROM COPY TO MJPEG
 
-    explicit CodecManager(QWidget *parent = 0, QString encoder = "mjpeg");
-    CodecManager(QString codecName, QString optionName, QString codecContainer, QWidget *parent);
-    ~CodecManager();
+    explicit CodecParametersWidget(QWidget *parent = 0, QString encoder = "mjpeg");
+    CodecParametersWidget(QString codecName, QString optionName, QString codecContainer, QWidget *parent);
+    ~CodecParametersWidget();
 
     virtual QMap<QString, QString> *getStreamingParameters();
     void addParameterWidget(QString label, QString parameter, QString value);
@@ -65,4 +65,4 @@ class CodecManager : public QWidget {
     void parametersChanged();
 };
 
-#endif // CODECMANAGER_H
+#endif // CODECPARAMETERSWIDGET_H

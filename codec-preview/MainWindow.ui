@@ -21,7 +21,7 @@
        <widget class="VideoPlaybackWidget" name="videoPlayback" native="true"/>
       </item>
       <item>
-       <widget class="VideoInfoWidget" name="videoInfo" native="true"/>
+       <widget class="VideoStatisticsWidget" name="videoInfo" native="true"/>
       </item>
       <item>
        <widget class="CodecTabsWidget" name="codecTabs" native="true"/>
@@ -122,9 +122,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>VideoInfoWidget</class>
+   <class>VideoStatisticsWidget</class>
    <extends>QWidget</extends>
-   <header>videoinfowidget.h</header>
+   <header>VideoStatisticsWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

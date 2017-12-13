@@ -1,16 +1,16 @@
-#include "parammanager.h"
+#include "ParameterManager.h"
 
-ParamManager::ParamManager() { initTooltips(); }
+ParameterManager::ParameterManager() { initTooltips(); }
 
-QString ParamManager::getHint(QString paramName) {
+QString ParameterManager::getHint(QString paramName) {
     return paramHints->value(paramName, "not found");
 }
 
-void ParamManager::setHint(QString paramName, QString tooltip) {
+void ParameterManager::setHint(QString paramName, QString tooltip) {
     paramHints->insert(paramName, tooltip);
 }
 
-void ParamManager::initTooltips() {
+void ParameterManager::initTooltips() {
     paramHints = new QMap<QString, QString>();
     setHint("FPS", FPS);
     setHint("Minrate", MINRATE);

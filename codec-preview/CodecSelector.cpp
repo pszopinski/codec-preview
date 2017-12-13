@@ -1,4 +1,4 @@
-#include "codecselector.h"
+#include "CodecSelector.h"
 #include "ui_codecselector.h"
 
 CodecSelector::CodecSelector(QWidget *parent)

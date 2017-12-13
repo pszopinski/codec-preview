@@ -7,9 +7,9 @@
 #include <QRegExpValidator>
 #include <QString>
 
-class ParamsValidator {
+class ParameterValidator {
   public:
-    ParamsValidator();
+    ParameterValidator();
     void addValidation(QLineEdit *&lineEdit, QString parameter);
 };
 

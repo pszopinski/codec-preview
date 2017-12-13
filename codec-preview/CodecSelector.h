@@ -6,7 +6,7 @@
 #include <QDialog>
 #include <QMessageBox>
 
-#include "codectabswidget.h"
+#include "CodecTabsWidget.h"
 
 namespace Ui {
 class CodecSelector;

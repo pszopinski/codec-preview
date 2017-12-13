@@ -1,5 +1,5 @@
-#ifndef VIDEOINFOWIDGET_H
-#define VIDEOINFOWIDGET_H
+#ifndef VIDEOSTATISTICSWIDGET_H
+#define VIDEOSTATISTICSWIDGET_H
 
 #include <fstream>
 
@@ -11,26 +11,26 @@
 #include <VLCQtCore/Stats.h>
 
 #include "constants.h"
-#include "parammanager.h"
+#include "ParameterManager.h"
 
 namespace Ui {
-class VideoInfoWidget;
+class VideoStatisticsWidget;
 }
 
-class VideoInfoWidget : public QWidget {
+class VideoStatisticsWidget : public QWidget {
     Q_OBJECT
 
   private:
     QProcess frameProbeProcess;
     QProcess streamProbeProcess;
     QQueue<char> framesQueue;
-    ParamManager paramManager;
+    ParameterManager paramManager;
 
   public:
-    Ui::VideoInfoWidget *ui;
+    Ui::VideoStatisticsWidget *ui;
 
-    explicit VideoInfoWidget(QWidget *parent = 0);
-    ~VideoInfoWidget();
+    explicit VideoStatisticsWidget(QWidget *parent = 0);
+    ~VideoStatisticsWidget();
     void stopProbe();
     void clearFrameQueue();
     void startFrameProbe(QString command);
@@ -45,4 +45,4 @@ class VideoInfoWidget : public QWidget {
     void onStatsChange(VlcStats *stats);
 };
 
-#endif // VIDEOINFOWIDGET_H
+#endif // VIDEOSTATISTICSWIDGET_H

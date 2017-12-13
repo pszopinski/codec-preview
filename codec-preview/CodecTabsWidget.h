@@ -9,17 +9,10 @@
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
 
-#include "codectabs/codecmanager.h"
-#include "codectabs/h261manager.h"
-#include "codectabs/h264manager.h"
-#include "codectabs/mjpegmanager.h"
-#include "codectabs/mpeg1manager.h"
-#include "codectabs/mpeg2manager.h"
-
 //#include "ffmpegcommand.h"
 
 
-#include "codeccomparewindow.h"
+#include "CodecComparisonWindow.h"
 
 namespace Ui {
 class CodecTabsWidget;
@@ -30,14 +23,14 @@ class CodecTabsWidget : public QWidget {
 
   private:
     Ui::CodecTabsWidget *ui;
-    QVector<CodecManager *> codecManagers;
+    QVector<CodecParametersWidget *> codecWidgets;
     QProcess streamingProcess;
     QProcess cameraNameGetterProcess;
     QProcess singleFrameProcess;
     QString inputParameters;
     QString inputLocation;
     bool selectedCodecs[6];
-    CodecCompareWindow compareWindow;
+    CodecComparisonWindow compareWindow;
     int previousFirst;
     int previousSecond;
     int previousThird;

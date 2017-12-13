@@ -1,4 +1,4 @@
-#include "ffmpegcommand.h"
+#include "FFmpegCommand.h"
 
 QString FfmpegCommand::getFrameProbeCommand(QString host, QString port) {
     qDebug() << "starting probe process...";

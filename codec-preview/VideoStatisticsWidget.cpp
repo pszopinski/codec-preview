@@ -1,8 +1,8 @@
-#include "videoinfowidget.h"
-#include "ui_videoinfowidget.h"
+#include "VideoStatisticsWidget.h"
+#include "ui_VideoStatisticsWidget.h"
 
-VideoInfoWidget::VideoInfoWidget(QWidget *parent)
-    : QWidget(parent), ui(new Ui::VideoInfoWidget) {
+VideoStatisticsWidget::VideoStatisticsWidget(QWidget *parent)
+    : QWidget(parent), ui(new Ui::VideoStatisticsWidget) {
     ui->setupUi(this);
 
     // redirect stream probe output to file (cannot read it in any other way
@@ -11,7 +11,7 @@ VideoInfoWidget::VideoInfoWidget(QWidget *parent)
 
     // react to frame probe output with parseFrameProbeOutput
     connect(&frameProbeProcess, &QProcess::readyRead, this,
-            &VideoInfoWidget::parseFrameProbeOutput);
+            &VideoStatisticsWidget::parseFrameProbeOutput);
 
     // react to stream probe output with parseStreamProbeOutput
     connect(&streamProbeProcess, SIGNAL(finished(int, QProcess::ExitStatus)),
@@ -21,16 +21,16 @@ VideoInfoWidget::VideoInfoWidget(QWidget *parent)
 
 }
 
-VideoInfoWidget::~VideoInfoWidget() { delete ui; }
+VideoStatisticsWidget::~VideoStatisticsWidget() { delete ui; }
 
-void VideoInfoWidget::stopProbe() {
+void VideoStatisticsWidget::stopProbe() {
     frameProbeProcess.kill();
     streamProbeProcess.kill();
     frameProbeProcess.waitForFinished();
     streamProbeProcess.waitForFinished();
 }
 
-void VideoInfoWidget::parseFrameProbeOutput() {
+void VideoStatisticsWidget::parseFrameProbeOutput() {
 
     // read output line by line
     while (frameProbeProcess.canReadLine()) {
@@ -70,25 +70,25 @@ void VideoInfoWidget::parseFrameProbeOutput() {
     }
 }
 
-void VideoInfoWidget::clearFrameQueue() {
+void VideoStatisticsWidget::clearFrameQueue() {
     framesQueue.clear();
     ui->frameTypes->setText("");
 }
 
-void VideoInfoWidget::startFrameProbe(QString command) {
+void VideoStatisticsWidget::startFrameProbe(QString command) {
     frameProbeProcess.start(command);
 }
 
-void VideoInfoWidget::startStreamProbe(QString command) {
+void VideoStatisticsWidget::startStreamProbe(QString command) {
     streamProbeProcess.start(command);
 }
 
-void VideoInfoWidget::setFrameTypeText(QString text)
+void VideoStatisticsWidget::setFrameTypeText(QString text)
 {
     ui->frameTypes->setText(text);
 }
 
-void VideoInfoWidget::parseStreamProbeOutput(int a, QProcess::ExitStatus b) {
+void VideoStatisticsWidget::parseStreamProbeOutput(int a, QProcess::ExitStatus b) {
     // to silence unused warning
     (void)a;
     (void)b;
@@ -116,7 +116,7 @@ void VideoInfoWidget::parseStreamProbeOutput(int a, QProcess::ExitStatus b) {
     myReadFile.close();
 }
 
-void VideoInfoWidget::onStatsChange(VlcStats *stats){
+void VideoStatisticsWidget::onStatsChange(VlcStats *stats){
     ui->decodedBlocks->setText(QString::number(stats->decoded_video));
     ui->bitRate->setText(QString::number(stats->input_bitrate*10000));
     ui->framesDropped->setText(QString::number(stats->lost_pictures));

@@ -4,9 +4,9 @@
 #include <QMap>
 #include <QString>
 
-class ParamManager {
+class ParameterManager {
   public:
-    ParamManager();
+    ParameterManager();
     QString getHint(QString paramName);
     void setHint(QString paramName, QString tooltip);
 

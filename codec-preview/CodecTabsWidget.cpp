@@ -1,4 +1,4 @@
-#include "codectabswidget.h"
+#include "CodecTabsWidget.h"
 #include "ui_codectabswidget.h"
 
 CodecTabsWidget::CodecTabsWidget(QWidget *parent)
@@ -11,32 +11,32 @@ CodecTabsWidget::CodecTabsWidget(QWidget *parent)
             &CodecTabsWidget::onTabChange);
 
 
-    codecManagers.push_back(new CodecManager("mjpeg","mjpeg","matroska",this));
-    codecManagers.last()->setCodecName("MJPEG");
-    codecManagers.push_back(new CodecManager("h261","h261","matroska",this));
-    codecManagers.last()->setCodecName("H261");
-    codecManagers.push_back(new CodecManager("mpeg1","mpeg1video","mpegts",this));
-    codecManagers.last()->setCodecName("MPEG1");
-    codecManagers.push_back(new CodecManager("mpeg2","mpeg2video","mpegts",this));
-    codecManagers.last()->setCodecName("MPEG2");
-    codecManagers.push_back(new CodecManager("h264","libx264","matroska",this));
-    codecManagers.last()->setCodecName("H264");
-    codecManagers.push_back(new CodecManager("h265","libx265","matroska",this));
-    codecManagers.last()->setCodecName("H265");
+    codecWidgets.push_back(new CodecParametersWidget("mjpeg","mjpeg","matroska",this));
+    codecWidgets.last()->setCodecName("MJPEG");
+    codecWidgets.push_back(new CodecParametersWidget("h261","h261","matroska",this));
+    codecWidgets.last()->setCodecName("H261");
+    codecWidgets.push_back(new CodecParametersWidget("mpeg1","mpeg1video","mpegts",this));
+    codecWidgets.last()->setCodecName("MPEG1");
+    codecWidgets.push_back(new CodecParametersWidget("mpeg2","mpeg2video","mpegts",this));
+    codecWidgets.last()->setCodecName("MPEG2");
+    codecWidgets.push_back(new CodecParametersWidget("h264","libx264","matroska",this));
+    codecWidgets.last()->setCodecName("H264");
+    codecWidgets.push_back(new CodecParametersWidget("h265","libx265","matroska",this));
+    codecWidgets.last()->setCodecName("H265");
 
 
     // connect codec managers' signals to settingsChanged
-    for (auto codecManager : codecManagers) {
+    for (auto codecWidget : codecWidgets) {
 
-        ui->tabWidget->addTab(codecManager, codecManager->getCodecName());
+        ui->tabWidget->addTab(codecWidget, codecWidget->getCodecName());
 
-        connect(codecManager, &CodecManager::parametersChanged, this,
+        connect(codecWidget, &CodecParametersWidget::parametersChanged, this,
                 &CodecTabsWidget::settingsChanged);
     }
 
     for (int i = 0; i < 6; i++) {
         // connect(compareWindow.getManager(i),
-        // &CodecManager::parametersChanged, this,
+        // &CodecWidget::parametersChanged, this,
         // &CodecTabsWidget::compareWindowStream);
         connect(compareWindow.getManager(i), SIGNAL(parametersChanged()), this,
                 SLOT(compareWindowStream()));
@@ -91,9 +91,9 @@ void CodecTabsWidget::compareWindowStream(int first, int second, int third) {
 
     qDebug() << streamingCommand;
     compareWindow.original->setText("Original");
-    compareWindow.label1->setText(codecManagers.at(first)->getCodecName());
-    compareWindow.label2->setText(codecManagers.at(second)->getCodecName());
-    compareWindow.label3->setText(codecManagers.at(third)->getCodecName());
+    compareWindow.label1->setText(codecWidgets.at(first)->getCodecName());
+    compareWindow.label2->setText(codecWidgets.at(second)->getCodecName());
+    compareWindow.label3->setText(codecWidgets.at(third)->getCodecName());
     compareWindow.setManagers(first, second, third);
     compareWindow.show();
     compareWindow.stream(streamingCommand);
@@ -138,9 +138,9 @@ void CodecTabsWidget::compareWindowStream() {
 
     qDebug() << streamingCommand;
     compareWindow.original->setText("Original");
-    compareWindow.label1->setText(codecManagers.at(first)->getCodecName());
-    compareWindow.label2->setText(codecManagers.at(second)->getCodecName());
-    compareWindow.label3->setText(codecManagers.at(third)->getCodecName());
+    compareWindow.label1->setText(codecWidgets.at(first)->getCodecName());
+    compareWindow.label2->setText(codecWidgets.at(second)->getCodecName());
+    compareWindow.label3->setText(codecWidgets.at(third)->getCodecName());
     compareWindow.setManagers(first, second, third);
     compareWindow.show();
     compareWindow.stream(streamingCommand);
@@ -246,10 +246,10 @@ QString CodecTabsWidget::getStreamingParameters() {
         return "";
     }
 
-    CodecManager *codecManager =
-        codecManagers.at(ui->tabWidget->currentIndex());
+    CodecParametersWidget *codecWidget =
+        codecWidgets.at(ui->tabWidget->currentIndex());
     QMap<QString, QString> *streamingParametersMap =
-        codecManager->getStreamingParameters();
+        codecWidget->getStreamingParameters();
 
     if (streamingParametersMap->isEmpty()) {
         return "";

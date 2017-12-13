@@ -1,4 +1,4 @@
-#include "videoplaybackwidget.h"
+#include "VideoPlaybackWidget.h"
 #include "ui_videoplaybackwidget.h"
 
 

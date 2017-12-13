@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CodecManager</class>
- <widget class="QWidget" name="CodecManager">
+ <class>CodecParametersWidget</class>
+ <widget class="QWidget" name="CodecParametersWidget">
   <property name="geometry">
    <rect>
     <x>0</x>

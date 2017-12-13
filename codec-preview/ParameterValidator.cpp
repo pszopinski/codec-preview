@@ -1,8 +1,8 @@
-#include "paramsvalidator.h"
+#include "ParameterValidator.h"
 
-ParamsValidator::ParamsValidator() {}
+ParameterValidator::ParameterValidator() {}
 
-void ParamsValidator::addValidation(QLineEdit *&lineEdit, QString parameter) {
+void ParameterValidator::addValidation(QLineEdit *&lineEdit, QString parameter) {
     if (parameter == "crf") {
         lineEdit->setValidator(new QIntValidator(0, 31));
     }

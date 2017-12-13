@@ -1,5 +1,5 @@
-#include "mainwindow.h"
-#include "codecselector.h"
+#include "MainWindow.h"
+#include "CodecSelector.h"
 #include "ui_mainwindow.h"
 
 QString rawVideoHost = RAW_VIDEO_HOST;
@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
             &MainWindow::stream);
 
     // react on stats changed
-    connect(ui->videoPlayback, &VideoPlaybackWidget::statsChanged, ui->videoInfo, &VideoInfoWidget::onStatsChange);
+    connect(ui->videoPlayback, &VideoPlaybackWidget::statsChanged, ui->videoInfo, &VideoStatisticsWidget::onStatsChange);
 
     // stream on tab changed
     connect(ui->codecTabs, &CodecTabsWidget::currentTabChanged, this,

@@ -1,8 +1,8 @@
-#include "codeccomparewindow.h"
-#include "ui_codeccomparewindow.h"
+#include "CodecComparisonWindow.h"
+#include "ui_CodecComparisonWindow.h"
 
-CodecCompareWindow::CodecCompareWindow(QWidget *parent)
-    : QWidget(parent), ui(new Ui::CodecCompareWindow) {
+CodecComparisonWindow::CodecComparisonWindow(QWidget *parent)
+    : QWidget(parent), ui(new Ui::CodecComparisonWindow) {
     setWindowState(Qt::WindowMaximized);
     ui->setupUi(this);
 
@@ -46,27 +46,27 @@ CodecCompareWindow::CodecCompareWindow(QWidget *parent)
     connect(&frameProbes[3], &QProcess::readyRead, this,
             &CodecCompareWindow::parseFrameProbeOutput3);*/
 
-    connect(this, &CodecCompareWindow::statsChanged1, ui->videoInfo1,
-            &VideoInfoWidget::onStatsChange);
-    connect(this, &CodecCompareWindow::statsChanged2, ui->videoInfo2,
-            &VideoInfoWidget::onStatsChange);
-    connect(this, &CodecCompareWindow::statsChanged3, ui->videoInfo3,
-            &VideoInfoWidget::onStatsChange);
+    connect(this, &CodecComparisonWindow::statsChanged1, ui->videoInfo1,
+            &VideoStatisticsWidget::onStatsChange);
+    connect(this, &CodecComparisonWindow::statsChanged2, ui->videoInfo2,
+            &VideoStatisticsWidget::onStatsChange);
+    connect(this, &CodecComparisonWindow::statsChanged3, ui->videoInfo3,
+            &VideoStatisticsWidget::onStatsChange);
 
 
     connect(vlcMediaPlayers[1], &VlcMediaPlayer::timeChanged, this,
-            &CodecCompareWindow::whilePlaying1);
+            &CodecComparisonWindow::whilePlaying1);
     connect(vlcMediaPlayers[2], &VlcMediaPlayer::timeChanged, this,
-            &CodecCompareWindow::whilePlaying2);
+            &CodecComparisonWindow::whilePlaying2);
     connect(vlcMediaPlayers[3], &VlcMediaPlayer::timeChanged, this,
-            &CodecCompareWindow::whilePlaying3);
+            &CodecComparisonWindow::whilePlaying3);
 
 
 }
 
-CodecCompareWindow::~CodecCompareWindow() { delete ui; }
+CodecComparisonWindow::~CodecComparisonWindow() { delete ui; }
 
-void CodecCompareWindow::closeEvent(QCloseEvent *event) {
+void CodecComparisonWindow::closeEvent(QCloseEvent *event) {
     (void)event;
     for (int i = 0; i < 4; i++) {
         // stop player
@@ -82,7 +82,7 @@ void CodecCompareWindow::closeEvent(QCloseEvent *event) {
 
 }
 
-CodecManager* CodecCompareWindow::getManager(int i) {
+CodecParametersWidget* CodecComparisonWindow::getManager(int i) {
 
     switch(i) {
     case 0:
@@ -107,7 +107,7 @@ CodecManager* CodecCompareWindow::getManager(int i) {
     return NULL;
 }
 
-void CodecCompareWindow::setManagers(int one, int two, int three)
+void CodecComparisonWindow::setManagers(int one, int two, int three)
 {
     ui->encodedParams1->setVisible(false);
     ui->encodedParams2->setVisible(false);
@@ -179,7 +179,7 @@ void CodecCompareWindow::setManagers(int one, int two, int three)
 
 }
 
-void CodecCompareWindow::stream(QString streamingCommand) {
+void CodecComparisonWindow::stream(QString streamingCommand) {
     for (int i = 0; i < 4; i++) {
         // stop player
         vlcMediaPlayers[i]->stop();
@@ -223,19 +223,19 @@ void CodecCompareWindow::stream(QString streamingCommand) {
     ui->videoInfo3->startStreamProbe(streamProbeCommand);
 }
 
-void CodecCompareWindow::whilePlaying1() {
+void CodecComparisonWindow::whilePlaying1() {
     emit statsChanged1(vlcMedia[1]->getStats());
 
 
 }
 
-void CodecCompareWindow::whilePlaying2() {
+void CodecComparisonWindow::whilePlaying2() {
     emit statsChanged2(vlcMedia[2]->getStats());
 
 
 }
 
-void CodecCompareWindow::whilePlaying3() {
+void CodecComparisonWindow::whilePlaying3() {
     emit statsChanged3(vlcMedia[3]->getStats());
 
 

@@ -8,56 +8,56 @@ TEMPLATE = app
 DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp \
-    codeccomparewindow.cpp \
-    codecselector.cpp \
-    codectabswidget.cpp \
-    ffmpegcommand.cpp \
-    mainwindow.cpp \
-    parammanager.cpp \
-    videoinfowidget.cpp \
-    videoplaybackwidget.cpp \
     codecs/codec.cpp \
     codecs/h261.cpp \
     codecs/h264.cpp \
     codecs/mjpeg.cpp \
     codecs/mpeg1.cpp \
     codecs/mpeg2.cpp \
-    codecmanager.cpp \
     codecs/h265.cpp \
     codecs/allcodecs.cpp \
-    paramsvalidator.cpp
+    CodecComparisonWindow.cpp \
+    CodecSelector.cpp \
+    CodecTabsWidget.cpp \
+    MainWindow.cpp \
+    CodecParametersWidget.cpp \
+    VideoPlaybackWidget.cpp \
+    VideoStatisticsWidget.cpp \
+    ParameterManager.cpp \
+    ParameterValidator.cpp \
+    FFmpegCommand.cpp
 
 
 
 HEADERS  += constants.h \
-    codeccomparewindow.h \
-    codecselector.h \
-    codectabswidget.h \
-    ffmpegcommand.h \
-    mainwindow.h \
-    parammanager.h \
-    videoinfowidget.h \
-    videoplaybackwidget.h \
     codecs/codec.h \
     codecs/h261.h \
     codecs/h264.h \
     codecs/mjpeg.h \
     codecs/mpeg1.h \
     codecs/mpeg2.h \
-    codecmanager.h \
     codecs/h265.h \
     codecs/allcodecs.h \
-    paramsvalidator.h
+    CodecComparisonWindow.h \
+    CodecSelector.h \
+    CodecTabsWidget.h \
+    MainWindow.h \
+    CodecParametersWidget.h \
+    VideoPlaybackWidget.h \
+    VideoStatisticsWidget.h \
+    ParameterManager.h \
+    ParameterValidator.h \
+    FFmpegCommand.h
 
 
 FORMS    += \
-    codeccomparewindow.ui \
-    codecselector.ui \
-    codectabswidget.ui \
-    mainwindow.ui \
-    videoinfowidget.ui \
-    videoplaybackwidget.ui \
-    codecmanager.ui
+    CodecComparisonWindow.ui \
+    CodecSelector.ui \
+    CodecTabsWidget.ui \
+    MainWindow.ui \
+    CodecParametersWidget.ui \
+    VideoPlaybackWidget.ui \
+    VideoStatisticsWidget.ui
 
 	
 win32 {
