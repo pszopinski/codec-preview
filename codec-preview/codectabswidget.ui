@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>386</width>
-    <height>130</height>
+    <width>485</width>
+    <height>155</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,39 +25,6 @@
      <property name="tabPosition">
       <enum>QTabWidget::South</enum>
      </property>
-     <property name="currentIndex">
-      <number>3</number>
-     </property>
-     <widget class="MJPEGManager" name="mjpegtab">
-      <attribute name="title">
-       <string>MJPEG</string>
-      </attribute>
-     </widget>
-     <widget class="H261Manager" name="h261tab">
-      <attribute name="title">
-       <string>H.261</string>
-      </attribute>
-     </widget>
-     <widget class="MPEG1Manager" name="mpeg1tab">
-      <attribute name="title">
-       <string>MPEG1</string>
-      </attribute>
-     </widget>
-     <widget class="MPEG2Manager" name="mpeg2tab">
-      <attribute name="title">
-       <string>MPEG2</string>
-      </attribute>
-     </widget>
-     <widget class="H264Manager" name="h264tab">
-      <attribute name="title">
-       <string>H.264</string>
-      </attribute>
-     </widget>
-     <widget class="H265Manager" name="h265tab">
-      <attribute name="title">
-       <string>H.265</string>
-      </attribute>
-     </widget>
     </widget>
    </item>
   </layout>
@@ -67,12 +34,6 @@
    <class>MJPEGManager</class>
    <extends>QWidget</extends>
    <header>codectabs/mjpegmanager.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>H261Manager</class>
-   <extends>QWidget</extends>
-   <header>codectabs/h261manager.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

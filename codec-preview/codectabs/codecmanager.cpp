@@ -1,6 +1,7 @@
 #include "codecmanager.h"
 #include "ui_codecmanager.h"
 
+
 CodecManager::CodecManager(QWidget *parent, QString encoder)
     : QWidget(parent), ui(new Ui::CodecManager), layoutCounter(0),
       streamingParameters(new QMap<QString, QString>) {
@@ -8,41 +9,20 @@ CodecManager::CodecManager(QWidget *parent, QString encoder)
 
     streamingParameters->insert("c:v", encoder);
 
-    QString codecName = "all";
+    loadCodecParameters("any");
+}
 
-    Codec *codec = CodecManager::getCodec(codecName);
+CodecManager::CodecManager(QString codecName, QString optionName, QString codecContainer, QWidget *parent)
+    : QWidget(parent), ui(new Ui::CodecManager), layoutCounter(0),
+      streamingParameters(new QMap<QString, QString>) {
+    ui->setupUi(this);
 
-    QList<QString> parameterNames = codec->getParameterKeys();
-    QList<QString> comboBoxNames = codec->getComboBoxKeys();
-    QList<QString> checkBoxNames = codec->getCheckBoxKeys();
+    streamingParameters->insert("c:v", optionName);
 
-    for (int i = 0; i < parameterNames.size(); i++) {
-        QString paramName = parameterNames.at(i);
-        QMap<QString, QString> paramMap = codec->getParameter(paramName);
+    this->codecContainer = codecContainer;
 
-        addParameterWidget(paramName, paramMap.value("value"),
-                           paramMap.value("default"));
-    }
-
-    for (int i = 0; i < comboBoxNames.size(); i++) {
-        QString paramName = comboBoxNames.at(i);
-        QMap<QString, QString> paramMap = codec->getComboBox(paramName);
-        QString paramValue = paramMap.value("value");
-
-        paramMap.remove("value");
-
-        addParameterWidget(paramName, paramValue, paramMap);
-    }
-
-    for (int i = 0; i < checkBoxNames.size(); i++) {
-        QString paramName = checkBoxNames.at(i);
-        QMap<QString, QString> paramMap = codec->getCheckBox(paramName);
-        QString command = paramMap.value("command");
-        bool state = paramMap.value("state") !=
-                     ""; // empty string for false, anything else for true
-
-        addParameterWidget(paramName, command, state);
-    }
+    loadCodecParameters("any");
+    loadCodecParameters(codecName);
 }
 
 CodecManager::~CodecManager() { delete ui; }
@@ -159,7 +139,6 @@ void CodecManager::insertParameterWidget(QVBoxLayout *layout) {
     layoutCounter++;
 }
 
-QMap<QString, QString> *CodecManager::getStreamingParameters() { return NULL; }
 
 QString CodecManager::getCodecName() { return codecName; }
 
@@ -186,8 +165,54 @@ Codec *CodecManager::getCodec(QString codecName) {
     if (codecName == "mpeg2") {
         return new Mpeg2();
     }
-    if (codecName == "all") {
+    if (codecName == "any") {
         return new AllCodecs();
     }
     return NULL;
+}
+
+
+void CodecManager::loadCodecParameters(QString codecName) {
+    Codec *codec = CodecManager::getCodec(codecName);
+
+    QList<QString> parameterNames = codec->getParameterKeys();
+    QList<QString> comboBoxNames = codec->getComboBoxKeys();
+    QList<QString> checkBoxNames = codec->getCheckBoxKeys();
+
+    for (int i = 0; i < parameterNames.size(); i++) {
+        QString paramName = parameterNames.at(i);
+        QMap<QString, QString> paramMap = codec->getParameter(paramName);
+
+        addParameterWidget(paramName, paramMap.value("value"),
+                           paramMap.value("default"));
+    }
+
+    for (int i = 0; i < comboBoxNames.size(); i++) {
+        QString paramName = comboBoxNames.at(i);
+        QMap<QString, QString> paramMap = codec->getComboBox(paramName);
+        QString paramValue = paramMap.value("value");
+
+        paramMap.remove("value");
+
+        addParameterWidget(paramName, paramValue, paramMap);
+    }
+
+    for (int i = 0; i < checkBoxNames.size(); i++) {
+        QString paramName = checkBoxNames.at(i);
+        QMap<QString, QString> paramMap = codec->getCheckBox(paramName);
+        QString command = paramMap.value("command");
+        bool state = paramMap.value("state") !=
+                     ""; // empty string for false, anything else for true
+
+        addParameterWidget(paramName, command, state);
+    }
+}
+
+QMap<QString, QString> *CodecManager::getStreamingParameters() {
+    QMap<QString, QString> *parameters(streamingParameters);
+    // add final parameters
+    // parameters->insert("preset", "ultrafast");
+    parameters->insert("an", "");
+    parameters->insert("f", codecContainer);
+    return parameters;
 }

@@ -10,8 +10,23 @@ CodecTabsWidget::CodecTabsWidget(QWidget *parent)
     connect(ui->tabWidget, &QTabWidget::currentChanged, this,
             &CodecTabsWidget::onTabChange);
 
+
+    codecManagers.push_back(new CodecManager("mjpeg","mjpeg","matroska",this));
+    codecManagers.last()->setCodecName("MJPEG");
+    codecManagers.push_back(new CodecManager("h261","h261","mpegts",this));
+    codecManagers.last()->setCodecName("H261");
+    codecManagers.push_back(new CodecManager("mpeg1","mpeg1video","mpegts",this));
+    codecManagers.last()->setCodecName("MPEG1");
+    codecManagers.push_back(new CodecManager("mpeg2","mpeg2video","mpegts",this));
+    codecManagers.last()->setCodecName("MPEG2");
+    codecManagers.push_back(new CodecManager("h264","libx264","matroska",this));
+    codecManagers.last()->setCodecName("H264");
+    codecManagers.push_back(new CodecManager("h265","libx265","matroska",this));
+    codecManagers.last()->setCodecName("H265");
+
+
     // push all ui tabs into vector
-    codecManagers.push_back(ui->mjpegtab);
+    /*codecManagers.push_back(ui->mjpegtab);
     codecManagers.last()->setCodecName("MJPEG");
     codecManagers.push_back(ui->h261tab);
     codecManagers.last()->setCodecName("H261");
@@ -22,10 +37,13 @@ CodecTabsWidget::CodecTabsWidget(QWidget *parent)
     codecManagers.push_back(ui->h264tab);
     codecManagers.last()->setCodecName("H264");
     codecManagers.push_back(ui->h265tab);
-    codecManagers.last()->setCodecName("H265");
+    codecManagers.last()->setCodecName("H265");*/
 
     // connect codec managers' signals to settingsChanged
     for (auto codecManager : codecManagers) {
+
+        ui->tabWidget->addTab(codecManager, codecManager->getCodecName());
+
         connect(codecManager, &CodecManager::parametersChanged, this,
                 &CodecTabsWidget::settingsChanged);
     }
@@ -297,6 +315,9 @@ void CodecTabsWidget::getSingleFrame() {
 }
 
 void CodecTabsWidget::onSingleFrameGotten(int a, QProcess::ExitStatus b) {
+    (void)a;
+    (void)b;
+
     qDebug() << "completed";
 
     scene = new QGraphicsScene();
