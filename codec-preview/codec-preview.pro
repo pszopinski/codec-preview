@@ -22,16 +22,10 @@ SOURCES += main.cpp \
     codecs/mjpeg.cpp \
     codecs/mpeg1.cpp \
     codecs/mpeg2.cpp \
-    codectabs/codecmanager.cpp \
-    codectabs/h261manager.cpp \
-    codectabs/h264manager.cpp \
-    codectabs/h265manager.cpp \
-    codectabs/mjpegmanager.cpp \
-    codectabs/mpeg1manager.cpp \
-    codectabs/mpeg2manager.cpp \
+    codecmanager.cpp \
     codecs/h265.cpp \
     codecs/allcodecs.cpp \
-    codectabs/paramsvalidator.cpp
+    paramsvalidator.cpp
 
 
 
@@ -50,16 +44,10 @@ HEADERS  += constants.h \
     codecs/mjpeg.h \
     codecs/mpeg1.h \
     codecs/mpeg2.h \
-    codectabs/codecmanager.h \
-    codectabs/h261manager.h \
-    codectabs/h264manager.h \
-    codectabs/h265manager.h \
-    codectabs/mjpegmanager.h \
-    codectabs/mpeg1manager.h \
-    codectabs/mpeg2manager.h \
+    codecmanager.h \
     codecs/h265.h \
     codecs/allcodecs.h \
-    codectabs/paramsvalidator.h
+    paramsvalidator.h
 
 
 FORMS    += \
@@ -69,7 +57,7 @@ FORMS    += \
     mainwindow.ui \
     videoinfowidget.ui \
     videoplaybackwidget.ui \
-    codectabs/codecmanager.ui
+    codecmanager.ui
 
 	
 win32 {
