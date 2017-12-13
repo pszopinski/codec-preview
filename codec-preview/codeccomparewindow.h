@@ -58,12 +58,12 @@ class CodecCompareWindow : public QWidget {
     QLabel *label2;
     QLabel *label3;
 
-    H261Manager* h261Manager = new H261Manager();
-    H264Manager* h264Manager = new H264Manager();
-    H265Manager* h265Manager = new H265Manager();
-    MJPEGManager* mjpegManager = new MJPEGManager();
-    MPEG1Manager* mpeg1Manager = new MPEG1Manager();
-    MPEG2Manager* mpeg2Manager = new MPEG2Manager();
+    CodecManager* h261Manager = new CodecManager("h261","h261","matroska",this);
+    CodecManager* h264Manager = new CodecManager("h264","libx264","matroska",this);
+    CodecManager* h265Manager = new CodecManager("h265","libx265","matroska",this);
+    CodecManager* mjpegManager = new CodecManager("mjpeg","mjpeg","matroska",this);
+    CodecManager* mpeg1Manager = new CodecManager("mpeg1","mpeg1video","mpegts",this);
+    CodecManager* mpeg2Manager = new CodecManager("mpeg2","mpeg2video","mpegts",this);
 
 private slots:
     void whilePlaying1();

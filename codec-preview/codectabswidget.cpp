@@ -13,7 +13,7 @@ CodecTabsWidget::CodecTabsWidget(QWidget *parent)
 
     codecManagers.push_back(new CodecManager("mjpeg","mjpeg","matroska",this));
     codecManagers.last()->setCodecName("MJPEG");
-    codecManagers.push_back(new CodecManager("h261","h261","mpegts",this));
+    codecManagers.push_back(new CodecManager("h261","h261","matroska",this));
     codecManagers.last()->setCodecName("H261");
     codecManagers.push_back(new CodecManager("mpeg1","mpeg1video","mpegts",this));
     codecManagers.last()->setCodecName("MPEG1");
@@ -24,20 +24,6 @@ CodecTabsWidget::CodecTabsWidget(QWidget *parent)
     codecManagers.push_back(new CodecManager("h265","libx265","matroska",this));
     codecManagers.last()->setCodecName("H265");
 
-
-    // push all ui tabs into vector
-    /*codecManagers.push_back(ui->mjpegtab);
-    codecManagers.last()->setCodecName("MJPEG");
-    codecManagers.push_back(ui->h261tab);
-    codecManagers.last()->setCodecName("H261");
-    codecManagers.push_back(ui->mpeg1tab);
-    codecManagers.last()->setCodecName("MPEG1");
-    codecManagers.push_back(ui->mpeg2tab);
-    codecManagers.last()->setCodecName("MPEG2");
-    codecManagers.push_back(ui->h264tab);
-    codecManagers.last()->setCodecName("H264");
-    codecManagers.push_back(ui->h265tab);
-    codecManagers.last()->setCodecName("H265");*/
 
     // connect codec managers' signals to settingsChanged
     for (auto codecManager : codecManagers) {
