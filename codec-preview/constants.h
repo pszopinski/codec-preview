@@ -26,7 +26,6 @@ const QString ENCODED_VIDEO_PORT = "41292";
 const QString ENCODED_ADDRESS = ENCODED_VIDEO_PROTOCOL + "://" +
                                 ENCODED_VIDEO_HOST + ":" + ENCODED_VIDEO_PORT;*/
 
-
 extern QString rawVideoHost;
 extern QString encodedVideoHost;
 extern QString rawVideoPort;
@@ -35,9 +34,7 @@ extern QString encodedVideoPort;
 extern QString compareWindowHosts[4];
 extern QString compareWindowPorts[4];
 
-
-
-
 const QString PROBE_FILE_NAME = "PROBEFILE";
+const QString STATS_FILE_NAME = "statistics.txt";
 
 #endif // CONSTANTS_H

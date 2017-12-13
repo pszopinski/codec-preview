@@ -10,20 +10,24 @@ CodecTabsWidget::CodecTabsWidget(QWidget *parent)
     connect(ui->tabWidget, &QTabWidget::currentChanged, this,
             &CodecTabsWidget::onTabChange);
 
-
-    codecWidgets.push_back(new CodecParametersWidget("mjpeg","mjpeg","matroska",this));
+    codecWidgets.push_back(
+        new CodecParametersWidget("mjpeg", "mjpeg", "matroska", this));
     codecWidgets.last()->setCodecName("MJPEG");
-    codecWidgets.push_back(new CodecParametersWidget("h261","h261","matroska",this));
+    codecWidgets.push_back(
+        new CodecParametersWidget("h261", "h261", "matroska", this));
     codecWidgets.last()->setCodecName("H261");
-    codecWidgets.push_back(new CodecParametersWidget("mpeg1","mpeg1video","mpegts",this));
+    codecWidgets.push_back(
+        new CodecParametersWidget("mpeg1", "mpeg1video", "mpegts", this));
     codecWidgets.last()->setCodecName("MPEG1");
-    codecWidgets.push_back(new CodecParametersWidget("mpeg2","mpeg2video","mpegts",this));
+    codecWidgets.push_back(
+        new CodecParametersWidget("mpeg2", "mpeg2video", "mpegts", this));
     codecWidgets.last()->setCodecName("MPEG2");
-    codecWidgets.push_back(new CodecParametersWidget("h264","libx264","matroska",this));
+    codecWidgets.push_back(
+        new CodecParametersWidget("h264", "libx264", "matroska", this));
     codecWidgets.last()->setCodecName("H264");
-    codecWidgets.push_back(new CodecParametersWidget("h265","libx265","matroska",this));
+    codecWidgets.push_back(
+        new CodecParametersWidget("h265", "libx265", "matroska", this));
     codecWidgets.last()->setCodecName("H265");
-
 
     // connect codec managers' signals to settingsChanged
     for (auto codecWidget : codecWidgets) {
@@ -46,9 +50,8 @@ CodecTabsWidget::CodecTabsWidget(QWidget *parent)
             SIGNAL(finished(int, QProcess::ExitStatus)), this,
             SLOT(parseCameraNameProbeOutput(int, QProcess::ExitStatus)));
 
-    connect(&singleFrameProcess,
-            SIGNAL(finished(int, QProcess::ExitStatus)), this,
-            SLOT(onSingleFrameGotten(int, QProcess::ExitStatus)));
+    connect(&singleFrameProcess, SIGNAL(finished(int, QProcess::ExitStatus)),
+            this, SLOT(onSingleFrameGotten(int, QProcess::ExitStatus)));
 }
 
 CodecTabsWidget::~CodecTabsWidget() { delete ui; }
@@ -166,7 +169,8 @@ QString CodecTabsWidget::buildStreamingCommand(QString inputParameters,
     // PP: mjpeg
     list << "-c:v mjpeg -f nut -an" << rawLocation + "?ttl=0";
 
-    list << outputPrameters << encodedLocation + "?ttl=0";
+    list << outputPrameters
+         << encodedLocation + "?ttl=0" + " -vstats_file " + STATS_FILE_NAME;
 
     QString command = list.join(" ");
     qDebug() << "\nproduced following encoding command:\n"
@@ -294,10 +298,11 @@ void CodecTabsWidget::parseCameraNameProbeOutput(int a,
 }
 
 void CodecTabsWidget::getSingleFrame() {
-    QString address = RAW_VIDEO_PROTOCOL + "://" + RAW_VIDEO_HOST +
-                             ":" + RAW_VIDEO_PORT;
+    QString address =
+        RAW_VIDEO_PROTOCOL + "://" + RAW_VIDEO_HOST + ":" + RAW_VIDEO_PORT;
 
-    singleFrameProcess.start(FFMPEG + " -i " + address + " -t 1 -vframes 1 -f image2 singleframe.jpg -y");
+    singleFrameProcess.start(FFMPEG + " -i " + address +
+                             " -t 1 -vframes 1 -f image2 singleframe.jpg -y");
 }
 
 void CodecTabsWidget::onSingleFrameGotten(int a, QProcess::ExitStatus b) {

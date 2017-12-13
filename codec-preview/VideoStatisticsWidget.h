@@ -7,11 +7,12 @@
 #include <QLineEdit>
 #include <QProcess>
 #include <QQueue>
+#include <QTimer>
 #include <QWidget>
 #include <VLCQtCore/Stats.h>
 
-#include "constants.h"
 #include "ParameterManager.h"
+#include "constants.h"
 
 namespace Ui {
 class VideoStatisticsWidget;
@@ -25,6 +26,9 @@ class VideoStatisticsWidget : public QWidget {
     QProcess streamProbeProcess;
     QQueue<char> framesQueue;
     ParameterManager paramManager;
+    QTimer *timer;                    // timer  - reading bitrate
+    int interval;                     // timer interval
+    QString getBitrate(QString line); // parsing a one line from a file
 
   public:
     Ui::VideoStatisticsWidget *ui;
@@ -40,6 +44,7 @@ class VideoStatisticsWidget : public QWidget {
   private slots:
     void parseFrameProbeOutput();
     void parseStreamProbeOutput(int a, QProcess::ExitStatus b);
+    void updateBitrate(); // it is called by the timer
 
   public slots:
     void onStatsChange(VlcStats *stats);
