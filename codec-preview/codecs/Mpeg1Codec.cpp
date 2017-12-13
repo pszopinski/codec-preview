@@ -1,11 +1,10 @@
-#include "h264.h"
+#include "Mpeg1Codec.h"
 
-H264::H264() {
+Mpeg1Codec::Mpeg1Codec() {
     addParameter("Bitrate", "b:v", "");
     addParameter("Minrate", "minrate", "");
     addParameter("Maxrate", "maxrate", "");
-    addParameter("Buffer size", "bufsize", "");
     addParameter("Aspect ratio", "aspect", "");
-    addParameter("Costant Rate Factor", "crf", "");
+    // addParameter("Qscale", "qscale:v", "");
     addParameter("Resolution", "s", "");
 }

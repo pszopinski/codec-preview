@@ -1,12 +1,12 @@
 #ifndef ALLCODECS_H
 #define ALLCODECS_H
 
-#include "codecs/codec.h"
+#include "codecs/Codec.h"
 
-class AllCodecs : public Codec
+class AnyCodec : public Codec
 {
 public:
-    AllCodecs();
+    AnyCodec();
 };
 
 #endif // ALLCODECS_H

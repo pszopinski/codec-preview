@@ -1,6 +1,6 @@
-#include "mjpeg.h"
+#include "MjpegCodec.h"
 
-Mjpeg::Mjpeg() {
+MjpegCodec::MjpegCodec() {
     addParameter("Scale", "s", "");
     addParameter("Bitrate", "b:v", "");
     addParameter("Minrate", "minrate", "");

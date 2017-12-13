@@ -1,6 +1,6 @@
-#include "h261.h"
+#include "H261Codec.h"
 
-H261::H261() {
+H261Codec::H261Codec() {
     addParameter("Bitrate", "b:v", "");
     addParameter("Minrate", "minrate", "");
     addParameter("Maxrate", "maxrate", "");

@@ -1,6 +1,6 @@
-#include "mpeg2.h"
+#include "Mpeg2Codec.h"
 
-Mpeg2::Mpeg2() {
+Mpeg2Codec::Mpeg2Codec() {
     addParameter("Bitrate", "b:v", "");
     addParameter("Minrate", "minrate", "");
     addParameter("Maxrate", "maxrate", "");

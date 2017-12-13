@@ -1,4 +1,4 @@
-#include "codec.h"
+#include "Codec.h"
 
 Codec::Codec() {}
 

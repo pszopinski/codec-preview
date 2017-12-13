@@ -148,25 +148,25 @@ void CodecParametersWidget::setCodecName(QString codecName) {
 
 Codec *CodecParametersWidget::getCodec(QString codecName) {
     if (codecName == "h261") {
-        return new H261();
+        return new H261Codec();
     }
     if (codecName == "h264") {
-        return new H264();
+        return new H264Codec();
     }
     if (codecName == "h265") {
-        return new H265();
+        return new H265Codec();
     }
     if (codecName == "mjpeg") {
-        return new Mjpeg();
+        return new MjpegCodec();
     }
     if (codecName == "mpeg1") {
-        return new Mpeg1();
+        return new Mpeg1Codec();
     }
     if (codecName == "mpeg2") {
-        return new Mpeg2();
+        return new Mpeg2Codec();
     }
     if (codecName == "any") {
-        return new AllCodecs();
+        return new AnyCodec();
     }
     return NULL;
 }

@@ -13,13 +13,13 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
-#include "codecs/allcodecs.h"
-#include "codecs/h261.h"
-#include "codecs/h264.h"
-#include "codecs/h265.h"
-#include "codecs/mjpeg.h"
-#include "codecs/mpeg1.h"
-#include "codecs/mpeg2.h"
+#include "codecs/AnyCodec.h"
+#include "codecs/H261Codec.h"
+#include "codecs/H264Codec.h"
+#include "codecs/H265Codec.h"
+#include "codecs/MjpegCodec.h"
+#include "codecs/Mpeg1Codec.h"
+#include "codecs/Mpeg2Codec.h"
 #include "ParameterValidator.h"
 
 namespace Ui {

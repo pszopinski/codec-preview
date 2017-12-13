@@ -8,14 +8,6 @@ TEMPLATE = app
 DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp \
-    codecs/codec.cpp \
-    codecs/h261.cpp \
-    codecs/h264.cpp \
-    codecs/mjpeg.cpp \
-    codecs/mpeg1.cpp \
-    codecs/mpeg2.cpp \
-    codecs/h265.cpp \
-    codecs/allcodecs.cpp \
     CodecComparisonWindow.cpp \
     CodecSelector.cpp \
     CodecTabsWidget.cpp \
@@ -25,19 +17,19 @@ SOURCES += main.cpp \
     VideoStatisticsWidget.cpp \
     ParameterManager.cpp \
     ParameterValidator.cpp \
-    FFmpegCommand.cpp
+    FFmpegCommand.cpp \
+    codecs/AnyCodec.cpp \
+    codecs/Codec.cpp \
+    codecs/H261Codec.cpp \
+    codecs/H264Codec.cpp \
+    codecs/H265Codec.cpp \
+    codecs/MjpegCodec.cpp \
+    codecs/Mpeg1Codec.cpp \
+    codecs/Mpeg2Codec.cpp
 
 
 
 HEADERS  += constants.h \
-    codecs/codec.h \
-    codecs/h261.h \
-    codecs/h264.h \
-    codecs/mjpeg.h \
-    codecs/mpeg1.h \
-    codecs/mpeg2.h \
-    codecs/h265.h \
-    codecs/allcodecs.h \
     CodecComparisonWindow.h \
     CodecSelector.h \
     CodecTabsWidget.h \
@@ -47,7 +39,15 @@ HEADERS  += constants.h \
     VideoStatisticsWidget.h \
     ParameterManager.h \
     ParameterValidator.h \
-    FFmpegCommand.h
+    FFmpegCommand.h \
+    codecs/AnyCodec.h \
+    codecs/Codec.h \
+    codecs/H261Codec.h \
+    codecs/H264Codec.h \
+    codecs/H265Codec.h \
+    codecs/Mpeg2Codec.h \
+    codecs/Mpeg1Codec.h \
+    codecs/MjpegCodec.h
 
 
 FORMS    += \

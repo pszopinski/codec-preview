@@ -1,6 +1,6 @@
-#include "h265.h"
+#include "H265Codec.h"
 
-H265::H265() {
+H265Codec::H265Codec() {
     addParameter("Bitrate", "b:v", "");
     addParameter("Minrate", "minrate", "");
     addParameter("Maxrate", "maxrate", "");
