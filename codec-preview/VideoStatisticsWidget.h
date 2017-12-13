@@ -40,6 +40,7 @@ class VideoStatisticsWidget : public QWidget {
     void startFrameProbe(QString command);
     void startStreamProbe(QString command);
     void setFrameTypeText(QString text);
+    QSize getFrameSize();
 
   private slots:
     void parseFrameProbeOutput();

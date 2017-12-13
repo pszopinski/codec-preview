@@ -34,6 +34,8 @@ class VideoPlaybackWidget : public QWidget {
     ~VideoPlaybackWidget();
     void stopPlayers();
     void startPlayers();
+    void originalSize(QSize frameSize);
+    void restoreDefaultSize();
 
   private slots:
     void whilePlaying();

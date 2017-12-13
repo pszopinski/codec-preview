@@ -168,3 +168,10 @@ void VideoStatisticsWidget::updateBitrate() {
     inputFile.close();
     ui->bitRate->setText(bitrate);
 }
+
+QSize VideoStatisticsWidget::getFrameSize() {
+    QString width = ui->frameWidth->text();
+    QString height = ui->frameHeight->text();
+    QSize frameSize(width.toInt(), height.toInt());
+    return frameSize;
+}
