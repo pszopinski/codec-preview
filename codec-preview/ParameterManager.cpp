@@ -15,12 +15,11 @@ void ParameterManager::initTooltips() {
     setHint("FPS", FPS);
     setHint("Minrate", MINRATE);
     setHint("Maxrate", MAXRATE);
-    setHint("Aspect ratio", ASPECTRATIO);
-    setHint("Costant Rate Factor", CONSTANTRATEFACTOR);
     setHint("Resolution", RESOLUTION);
     setHint("Buffer size", BUFFERSIZE);
-    setHint("Scale", SCALE);
-    setHint("Qscale", QSCALE);
-    setHint("Bitrate", BITRATE);
     setHint("Quantization", QUANTIZATION);
+    setHint("Bitrate", BITRATE);
+    setHint("Motion vectors", MOTION_VECTORS);
+    setHint("GOP size", GOP_SIZE);
+    setHint("B frames limit", B_FRAMES_LIMIT);
 }
