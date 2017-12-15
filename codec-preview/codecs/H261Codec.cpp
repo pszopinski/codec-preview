@@ -7,6 +7,7 @@ H261Codec::H261Codec() {
     addParameter("Bitrate", "b:v", "");
     addParameter("Minrate", "minrate", "");
     addParameter("Maxrate", "maxrate", "");
+    addParameter("Buffer size", "bufsize", "");
     addCheckBox("Aspect ratio correction", "-vf setdar=r=a", true);
 
     QMap<QString, QString> resolutions;
