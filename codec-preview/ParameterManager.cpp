@@ -29,7 +29,8 @@ void ParameterManager::initTooltips() {
     setHint("Resolution", "Resultion of the video\n"
                           "Format: interger:integer\n"
                           "Example: 1920:1080");
-    setHint("Aspect ratio correction", "Contener-level aspect ratio correction.");
+    setHint("Crop", "Crop the middle part of the video");
+    setHint("Aspect ratio correction", "Contener-level aspect ratio correction");
     setHint("Quantization", "Quantization factor\n"
                             "Format: integer\n"
                             "Range: 1-31 (the lower the better quality)\n"
