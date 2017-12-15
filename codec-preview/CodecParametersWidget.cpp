@@ -3,7 +3,7 @@
 
 CodecParametersWidget::CodecParametersWidget(QWidget *parent, QString encoder)
     : QWidget(parent), ui(new Ui::CodecParametersWidget), layoutCounter(0),
-      streamingParameters(new QMap<QString, QString>) {
+      streamingParameters(new QMultiMap<QString, QString>) {
     ui->setupUi(this);
 
     streamingParameters->insert("c:v", encoder);
@@ -14,7 +14,7 @@ CodecParametersWidget::CodecParametersWidget(QWidget *parent, QString encoder)
 CodecParametersWidget::CodecParametersWidget(QString codecName, QString optionName, QString codecContainer,
                                              QWidget *parent)
     : QWidget(parent), ui(new Ui::CodecParametersWidget), layoutCounter(0),
-      streamingParameters(new QMap<QString, QString>) {
+      streamingParameters(new QMultiMap<QString, QString>) {
     ui->setupUi(this);
 
     streamingParameters->insert("c:v", optionName);
@@ -206,6 +206,7 @@ void CodecParametersWidget::loadCodecParameters(QString codecName) {
 
 QMap<QString, QString> *CodecParametersWidget::getStreamingParameters() {
     QMap<QString, QString> *parameters(streamingParameters);
+
     // add final parameters
     // parameters->insert("preset", "ultrafast");
     parameters->insert("an", "");
