@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>652</width>
-    <height>311</height>
+    <width>711</width>
+    <height>504</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout" stretch="6,1,2">
+     <layout class="QVBoxLayout" name="verticalLayout" stretch="6,1,0">
       <item>
        <widget class="VideoPlaybackWidget" name="videoPlayback" native="true"/>
       </item>
@@ -24,7 +24,8 @@
        <widget class="VideoStatisticsWidget" name="videoInfo" native="true"/>
       </item>
       <item>
-       <widget class="CodecTabsWidget" name="codecTabs" native="true"/>
+       <widget class="QTabWidget" name="codecTabsWidget">
+       </widget>
       </item>
      </layout>
     </item>
@@ -35,7 +36,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>652</width>
+     <width>711</width>
      <height>24</height>
     </rect>
    </property>
@@ -131,12 +132,6 @@
    <class>VideoPlaybackWidget</class>
    <extends>QWidget</extends>
    <header>videoplaybackwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>CodecTabsWidget</class>
-   <extends>QWidget</extends>
-   <header>codectabswidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

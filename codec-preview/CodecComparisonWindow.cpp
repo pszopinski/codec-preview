@@ -6,6 +6,28 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent)
     setWindowState(Qt::WindowMaximized);
     ui->setupUi(this);
 
+    codecWidgets.push_back(mjpegManager);
+    codecWidgets.last()->setCodecName("MJPEG");
+    codecWidgets.push_back(h261Manager);
+    codecWidgets.last()->setCodecName("H261");
+    codecWidgets.push_back(mpeg1Manager);
+    codecWidgets.last()->setCodecName("MPEG1");
+    codecWidgets.push_back(mpeg2Manager);
+    codecWidgets.last()->setCodecName("MPEG2");
+    codecWidgets.push_back(h264Manager);
+    codecWidgets.last()->setCodecName("H264");
+    codecWidgets.push_back(h265Manager);
+    codecWidgets.last()->setCodecName("H265");
+
+
+    for (auto codecWidget : codecWidgets) {
+
+    /*    connect(codecWidget, &CodecParametersWidget::parametersChanged, this,
+                &MainWindow::settingsChanged);*/
+        connect(codecWidget, SIGNAL(parametersChanged()), this,
+                SLOT(compareWindowStream()));
+    }
+
     vlcInstance = new VlcInstance({""}, NULL);
 
     for (int i = 0; i < 4; i++) {
@@ -209,17 +231,17 @@ void CodecComparisonWindow::stream(QString streamingCommand) {
         QString streamProbeCommand = FfmpegCommand::getStreamProbeCommand(compareWindowHosts[i], compareWindowPorts[i]);
         streamProbes[i].start(streamProbeCommand);
     }*/
-    QString frameProbeCommand = FfmpegCommand::getFrameProbeCommand(compareWindowHosts[1], compareWindowPorts[1]);
+    QString frameProbeCommand = FFmpegCommand::getFrameProbeCommand(compareWindowHosts[1], compareWindowPorts[1]);
     ui->videoInfo1->startFrameProbe(frameProbeCommand);
-    QString streamProbeCommand = FfmpegCommand::getStreamProbeCommand(compareWindowHosts[1], compareWindowPorts[1]);
+    QString streamProbeCommand = FFmpegCommand::getStreamProbeCommand(compareWindowHosts[1], compareWindowPorts[1]);
     ui->videoInfo1->startStreamProbe(streamProbeCommand);
-    frameProbeCommand = FfmpegCommand::getFrameProbeCommand(compareWindowHosts[2], compareWindowPorts[2]);
+    frameProbeCommand = FFmpegCommand::getFrameProbeCommand(compareWindowHosts[2], compareWindowPorts[2]);
     ui->videoInfo2->startFrameProbe(frameProbeCommand);
-    streamProbeCommand = FfmpegCommand::getStreamProbeCommand(compareWindowHosts[2], compareWindowPorts[2]);
+    streamProbeCommand = FFmpegCommand::getStreamProbeCommand(compareWindowHosts[2], compareWindowPorts[2]);
     ui->videoInfo2->startStreamProbe(streamProbeCommand);
-    frameProbeCommand = FfmpegCommand::getFrameProbeCommand(compareWindowHosts[3], compareWindowPorts[3]);
+    frameProbeCommand = FFmpegCommand::getFrameProbeCommand(compareWindowHosts[3], compareWindowPorts[3]);
     ui->videoInfo3->startFrameProbe(frameProbeCommand);
-    streamProbeCommand = FfmpegCommand::getStreamProbeCommand(compareWindowHosts[3], compareWindowPorts[3]);
+    streamProbeCommand = FFmpegCommand::getStreamProbeCommand(compareWindowHosts[3], compareWindowPorts[3]);
     ui->videoInfo3->startStreamProbe(streamProbeCommand);
 }
 
@@ -239,4 +261,133 @@ void CodecComparisonWindow::whilePlaying3() {
     emit statsChanged3(vlcMedia[3]->getStats());
 
 
+}
+
+
+void CodecComparisonWindow::compareWindowStream(int first, int second, int third) {
+    previousFirst = first;
+    previousSecond = second;
+    previousThird = third;
+    qDebug() << "selected codecs: " << first << second << third;
+
+    // PP: mjpeg
+    QString streamingParameters1 = "-c:v mjpeg -f nut -an";
+    QString streamingParameters2 = FFmpegCommand::parametersToString(
+        getManager(first)->getStreamingParameters());
+    QString streamingParameters3 = FFmpegCommand::parametersToString(
+        getManager(second)->getStreamingParameters());
+    QString streamingParameters4 = FFmpegCommand::parametersToString(
+        getManager(third)->getStreamingParameters());
+
+    qDebug() << "streaming parameters:";
+    qDebug() << streamingParameters1;
+    qDebug() << streamingParameters2;
+    qDebug() << streamingParameters3;
+    qDebug() << streamingParameters4;
+
+    QString streamingCommand = buildMultipleStreamingCommands(
+        inputParameters, inputLocation,
+        {streamingParameters1, streamingParameters2, streamingParameters3,
+         streamingParameters4},
+        {ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[0] + ":" +
+             compareWindowPorts[0] + "?ttl=0",
+         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[1] + ":" +
+             compareWindowPorts[1] + "?ttl=0",
+         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[2] + ":" +
+             compareWindowPorts[2] + "?ttl=0",
+         RAW_VIDEO_PROTOCOL + "://" + compareWindowHosts[3] + ":" +
+             compareWindowPorts[3] + "?ttl=0"});
+
+    qDebug() << "streaming command:";
+
+    qDebug() << streamingCommand;
+    original->setText("Original");
+    label1->setText(codecWidgets.at(first)->getCodecName());
+    label2->setText(codecWidgets.at(second)->getCodecName());
+    label3->setText(codecWidgets.at(third)->getCodecName());
+    setManagers(first, second, third);
+    show();
+    stream(streamingCommand);
+}
+
+void CodecComparisonWindow::compareWindowStream() {
+    int first = previousFirst;
+    int second = previousSecond;
+    int third = previousThird;
+
+    qDebug() << "selected codecs: " << first << second << third;
+
+    // PP: mjpeg
+    QString streamingParameters1 = "-c:v mjpeg -f nut -an";
+    QString streamingParameters2 = FFmpegCommand::parametersToString(
+        getManager(first)->getStreamingParameters());
+    QString streamingParameters3 = FFmpegCommand::parametersToString(
+        getManager(second)->getStreamingParameters());
+    QString streamingParameters4 = FFmpegCommand::parametersToString(
+        getManager(third)->getStreamingParameters());
+
+    qDebug() << "streaming parameters:";
+    qDebug() << streamingParameters1;
+    qDebug() << streamingParameters2;
+    qDebug() << streamingParameters3;
+    qDebug() << streamingParameters4;
+
+    QString streamingCommand = buildMultipleStreamingCommands(
+        inputParameters, inputLocation,
+        {streamingParameters1, streamingParameters2, streamingParameters3,
+         streamingParameters4},
+        {ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[0] + ":" +
+             compareWindowPorts[0] + "?ttl=0",
+         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[1] + ":" +
+             compareWindowPorts[1] + "?ttl=0",
+         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[2] + ":" +
+             compareWindowPorts[2] + "?ttl=0",
+         RAW_VIDEO_PROTOCOL + "://" + compareWindowHosts[3] + ":" +
+             compareWindowPorts[3] + "?ttl=0"});
+
+    qDebug() << "streaming command:";
+
+    qDebug() << streamingCommand;
+    original->setText("Original");
+    label1->setText(codecWidgets.at(first)->getCodecName());
+    label2->setText(codecWidgets.at(second)->getCodecName());
+    label3->setText(codecWidgets.at(third)->getCodecName());
+    setManagers(first, second, third);
+    show();
+    stream(streamingCommand);
+}
+
+QString CodecComparisonWindow::buildMultipleStreamingCommands(
+    QString inputParameters, QString inputLocation,
+    QVector<QString> outputPrameters, QVector<QString> outputLocations) {
+    QStringList list;
+    list << FFMPEG;
+    list << "-flags2 +export_mvs";
+    list << inputParameters;
+    list << "-i " << inputLocation;
+    for (int i = 0;
+         i < outputPrameters.length() && i < outputLocations.length(); i++) {
+        list << outputPrameters[i] << outputLocations[i];
+    }
+
+    QString command = list.join(" ");
+    qDebug() << "\nproduced following encoding command:\n"
+             << command.toUtf8().constData() << "\n";
+    return command;
+}
+
+
+void CodecComparisonWindow::setInputLocation(QString location) {
+    this->inputLocation = location;
+}
+
+void CodecComparisonWindow::setInputParameters(QString parameters) {
+    this->inputParameters = parameters;
+}
+
+QString CodecComparisonWindow::getInputLocation() {
+    return inputLocation;
+}
+QString CodecComparisonWindow::getInputParameters() {
+    return inputParameters;
 }

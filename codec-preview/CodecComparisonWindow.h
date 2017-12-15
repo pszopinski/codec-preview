@@ -36,6 +36,14 @@ class CodecComparisonWindow : public QWidget {
     QProcess streamProbes[4];
     QQueue<char> framesQueues[4];
 
+    QLabel *original;
+    QLabel *label1;
+    QLabel *label2;
+    QLabel *label3;
+
+    QVector<CodecParametersWidget *> codecWidgets;
+
+
   public:
     explicit CodecComparisonWindow(QWidget *parent = 0);
     ~CodecComparisonWindow();
@@ -43,11 +51,17 @@ class CodecComparisonWindow : public QWidget {
     void closeEvent(QCloseEvent *event);
     void setManagers(int one, int two, int three);
     CodecParametersWidget* getManager(int i);
+    void compareWindowStream(int first, int second, int third);
+    static QString buildMultipleStreamingCommands(
+        QString inputParameters, QString inputLocation,
+        QVector<QString> outputPrameters, QVector<QString> outputLocations);
+    int previousFirst;
+    int previousSecond;
+    int previousThird;
 
-    QLabel *original;
-    QLabel *label1;
-    QLabel *label2;
-    QLabel *label3;
+    QString inputParameters;
+    QString inputLocation;
+
 
     CodecParametersWidget* h261Manager = new CodecParametersWidget("h261","h261","matroska",this);
     CodecParametersWidget* h264Manager = new CodecParametersWidget("h264","libx264","matroska",this);
@@ -56,10 +70,17 @@ class CodecComparisonWindow : public QWidget {
     CodecParametersWidget* mpeg1Manager = new CodecParametersWidget("mpeg1","mpeg1video","mpegts",this);
     CodecParametersWidget* mpeg2Manager = new CodecParametersWidget("mpeg2","mpeg2video","mpegts",this);
 
+    void setInputLocation(QString location);
+    void setInputParameters(QString parameters);
+    QString getInputLocation();
+    QString getInputParameters();
+
 private slots:
     void whilePlaying1();
     void whilePlaying2();
     void whilePlaying3();
+    void compareWindowStream();
+
 
 signals:
     void statsChanged1(VlcStats *stats);

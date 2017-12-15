@@ -1,6 +1,6 @@
 #include "FFmpegCommand.h"
 
-QString FfmpegCommand::getFrameProbeCommand(QString host, QString port) {
+QString FFmpegCommand::getFrameProbeCommand(QString host, QString port) {
     qDebug() << "starting probe process...";
 
     QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + host +
@@ -13,7 +13,7 @@ QString FfmpegCommand::getFrameProbeCommand(QString host, QString port) {
     return frameProbeCommand;
 }
 
-QString FfmpegCommand::getStreamProbeCommand(QString host, QString port) {
+QString FFmpegCommand::getStreamProbeCommand(QString host, QString port) {
     QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + host +
                              ":" + port;
 
@@ -23,7 +23,7 @@ QString FfmpegCommand::getStreamProbeCommand(QString host, QString port) {
     return streamProbeCommand;
 }
 
-QString FfmpegCommand::buildProbeCommand(QString location, QString params) {
+QString FFmpegCommand::buildProbeCommand(QString location, QString params) {
     QStringList list;
     list << FFPROBE;
     list << location;
@@ -33,4 +33,29 @@ QString FfmpegCommand::buildProbeCommand(QString location, QString params) {
     qDebug() << "\nproduced following probe command:\n"
              << command.toUtf8().constData() << "\n";
     return command;
+}
+
+
+
+QString
+FFmpegCommand::parametersToString(QMap<QString, QString> *parameters) {
+    QStringList result;
+
+    for (auto key : parameters->keys()) {
+        if (key.startsWith("-")) {
+            // raw option used for check boxes
+            result << key;
+        }
+
+        if (!parameters->value(key).isEmpty())
+            result << "-" + key << parameters->value(key);
+    }
+
+    qDebug();
+    qDebug() << parameters->keys();
+    qDebug() << parameters->values();
+    qDebug() << result.join(" ");
+    qDebug();
+
+    return result.join(" ");
 }

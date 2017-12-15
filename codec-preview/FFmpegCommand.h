@@ -6,11 +6,12 @@
 
 #include "constants.h"
 
-class FfmpegCommand{
+class FFmpegCommand{
 public:
     static QString getFrameProbeCommand(QString host, QString port);
     static QString getStreamProbeCommand(QString host, QString port);
     static QString buildProbeCommand(QString location, QString params);
+    static QString parametersToString(QMap<QString, QString> *parameters);
 
 };
 

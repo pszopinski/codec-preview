@@ -48,7 +48,7 @@ class CodecParametersWidget : public QWidget {
     CodecParametersWidget(QString codecName, QString optionName, QString codecContainer, QWidget *parent);
     ~CodecParametersWidget();
 
-    virtual QMap<QString, QString> *getStreamingParameters();
+    QMap<QString, QString> *getStreamingParameters();
     void addParameterWidget(QString label, QString parameter, QString value);
     void addParameterWidget(QString label, QString parameter,
                             QMap<QString, QString> values);

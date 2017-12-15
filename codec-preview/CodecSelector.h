@@ -7,6 +7,7 @@
 #include <QMessageBox>
 
 #include "CodecTabsWidget.h"
+#include "CodecComparisonWindow.h"
 
 namespace Ui {
 class CodecSelector;
@@ -20,10 +21,10 @@ class CodecSelector : public QDialog {
     bool selected[6];
     QCheckBox **checkBox;
     int lastChecked;
-    CodecTabsWidget *hndl;
+    CodecComparisonWindow* codecComparisonWindow;
 
   public:
-    explicit CodecSelector(QWidget *parent = 0);
+    explicit CodecSelector(CodecComparisonWindow* codecComparisonWindow, QWidget *parent = 0);
     ~CodecSelector();
     bool getbMpeg1();
     bool getbMpeg2();
@@ -32,7 +33,6 @@ class CodecSelector : public QDialog {
     bool getbH264();
     bool getbH265();
     bool canCheck();
-    void setMainWindowHandler(CodecTabsWidget *hndl);
 
   private slots:
     void on_MPEG1_clicked();

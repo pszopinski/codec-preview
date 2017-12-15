@@ -1,7 +1,7 @@
 #include "CodecSelector.h"
 #include "ui_codecselector.h"
 
-CodecSelector::CodecSelector(QWidget *parent)
+CodecSelector::CodecSelector(CodecComparisonWindow* codecComparisonWindow, QWidget *parent)
     : QDialog(parent), ui(new Ui::CodecSelector) {
     ui->setupUi(this);
     checkBox = new QCheckBox *[6];
@@ -13,6 +13,8 @@ CodecSelector::CodecSelector(QWidget *parent)
     checkBox[5] = ui->H265;
     for (int i = 0; i < 6; i++)
         selected[i] = false;
+
+    this->codecComparisonWindow = codecComparisonWindow;
 }
 
 bool CodecSelector::canCheck() {
@@ -130,9 +132,10 @@ void CodecSelector::on_buttonBox_accepted() {
         }
     }
     if (n == 3) {
-        // user selected exactly 3 codecs
-        hndl->compareWindowStream(indexes[0], indexes[1], indexes[2]);
         close();
+        // user selected exactly 3 codecs
+        codecComparisonWindow->compareWindowStream(indexes[0], indexes[1], indexes[2]);
+
 
     } else {
         // user selected too little codecs
@@ -142,9 +145,7 @@ void CodecSelector::on_buttonBox_accepted() {
     }
 }
 
-void CodecSelector::setMainWindowHandler(CodecTabsWidget *hndl) {
-    this->hndl = hndl;
-}
+
 
 void CodecSelector::on_buttonBox_rejected()
 {

@@ -16,16 +16,56 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowState(Qt::WindowMaximized);
     ui->setupUi(this);
 
+    streamingProcess = new StreamingProcess();
+    codecComparisonWindow = new CodecComparisonWindow();
+    //codecComparisonWindow->setHidden(true);
+
+    ui->codecTabsWidget->setTabPosition(QTabWidget::South);
+    ui->codecTabsWidget->setCurrentIndex(0);
+
+
+    codecWidgets.push_back(new CodecParametersWidget("mjpeg","mjpeg","matroska",this));
+    codecWidgets.last()->setCodecName("MJPEG");
+    codecWidgets.push_back(new CodecParametersWidget("h261","h261","matroska",this));
+    codecWidgets.last()->setCodecName("H261");
+    codecWidgets.push_back(new CodecParametersWidget("mpeg1","mpeg1video","mpegts",this));
+    codecWidgets.last()->setCodecName("MPEG1");
+    codecWidgets.push_back(new CodecParametersWidget("mpeg2","mpeg2video","mpegts",this));
+    codecWidgets.last()->setCodecName("MPEG2");
+    codecWidgets.push_back(new CodecParametersWidget("h264","libx264","matroska",this));
+    codecWidgets.last()->setCodecName("H264");
+    codecWidgets.push_back(new CodecParametersWidget("h265","libx265","matroska",this));
+    codecWidgets.last()->setCodecName("H265");
+
+    for (auto codecWidget : codecWidgets) {
+
+        ui->codecTabsWidget->addTab(codecWidget, codecWidget->getCodecName());
+
+        connect(codecWidget, &CodecParametersWidget::parametersChanged, this,
+                &MainWindow::settingsChanged);
+    }
+
     // stream on settings changed
-    connect(ui->codecTabs, &CodecTabsWidget::settingsChanged, this,
+    connect(this, &MainWindow::settingsChanged, this,
             &MainWindow::stream);
 
     // react on stats changed
     connect(ui->videoPlayback, &VideoPlaybackWidget::statsChanged, ui->videoInfo, &VideoStatisticsWidget::onStatsChange);
 
     // stream on tab changed
-    connect(ui->codecTabs, &CodecTabsWidget::currentTabChanged, this,
-            &MainWindow::stream);
+    connect(ui->codecTabsWidget, &QTabWidget::currentChanged, this,
+            &MainWindow::settingsChanged);
+
+    connect(&cameraNameGetterProcess,
+            SIGNAL(finished(int, QProcess::ExitStatus)), this,
+            SLOT(parseCameraNameProbeOutput(int, QProcess::ExitStatus)));
+
+
+
+    connect(&singleFrameProcess,
+            SIGNAL(finished(int, QProcess::ExitStatus)), this,
+            SLOT(onSingleFrameGotten(int, QProcess::ExitStatus)));
+
 }
 
 MainWindow::~MainWindow() { delete ui; }
@@ -33,7 +73,7 @@ MainWindow::~MainWindow() { delete ui; }
 void MainWindow::closeEvent(QCloseEvent *a) {
     (void)a;
 
-    ui->codecTabs->stopStreaming();
+    streamingProcess->stopStreaming();
     ui->videoInfo->stopProbe();
 }
 
@@ -42,33 +82,33 @@ void MainWindow::on_actionOpen_file_triggered() {
     QString filePath = QFileDialog::getOpenFileName(
         this, tr("Open file"), QDir::homePath(), tr("Multimedia files (*)"),
         Q_NULLPTR, QFileDialog::DontUseNativeDialog);
-    ui->codecTabs->openFromFile(filePath);
+    openFromFile(filePath);
 }
 
 void MainWindow::on_actionOpen_from_camera_triggered() {
-    ui->codecTabs->openFromCamera();
+    openFromCamera();
 }
 
 void MainWindow::on_actionCompare_multiple_codecs_triggered() {
     resetPlayback();
 
-    CodecSelector codecSelector;
-    codecSelector.setMainWindowHandler(ui->codecTabs);
+    CodecSelector codecSelector(codecComparisonWindow, this);
+    //codecSelector.setMainWindowHandler(ui->codecTabs);
     codecSelector.setModal(true);
     codecSelector.exec();
 }
 
 void MainWindow::stream() {
     qDebug() << "starting stream...";
-    QString streamingParameters = ui->codecTabs->getStreamingParameters();
+    QString streamingParameters = getStreamingParameters();
 
     resetPlayback();
 
-    ui->codecTabs->startStreaming(streamingParameters);
+    streamingProcess->startStreaming(streamingParameters);
 
-    QString frameProbeCommand = FfmpegCommand::getFrameProbeCommand(encodedVideoHost, encodedVideoPort);
+    QString frameProbeCommand = FFmpegCommand::getFrameProbeCommand(encodedVideoHost, encodedVideoPort);
     ui->videoInfo->startFrameProbe(frameProbeCommand);
-    QString streamProbeCommand = FfmpegCommand::getStreamProbeCommand(encodedVideoHost, encodedVideoPort);
+    QString streamProbeCommand = FFmpegCommand::getStreamProbeCommand(encodedVideoHost, encodedVideoPort);
     ui->videoInfo->startStreamProbe(streamProbeCommand);
 
     ui->videoPlayback->startPlayers();
@@ -80,7 +120,7 @@ void MainWindow::resetPlayback() {
 
     ui->videoPlayback->stopPlayers();
 
-    ui->codecTabs->stopStreaming();
+    streamingProcess->stopStreaming();
 
     ui->videoInfo->stopProbe();
 }
@@ -149,5 +189,98 @@ void MainWindow::on_actionHelp_triggered()
 
 void MainWindow::on_actionMacroblocks_triggered()
 {
-    ui->codecTabs->getSingleFrame();
+    getSingleFrame();
+}
+
+
+void MainWindow::openFromFile(QString filePath) {
+    if (!filePath.isEmpty()) {
+        streamingProcess->setInputParameters("-re");
+        streamingProcess->setInputLocation("\"" + filePath + "\"");
+        codecComparisonWindow->setInputParameters("-re");
+        codecComparisonWindow->setInputLocation("\"" + filePath + "\"");
+        settingsChanged();
+    }
+}
+
+void MainWindow::openFromCamera() {
+    streamingProcess->setInputParameters("-f dshow");
+    codecComparisonWindow->setInputParameters("-f dshow");
+
+    cameraNameGetterProcess.kill();
+    cameraNameGetterProcess.waitForFinished();
+    cameraNameGetterProcess.start(FFMPEG +
+                                  " -list_devices true -f dshow -i dummy");
+
+     //when process is done parseCameraNameProbeOutput runs and opens camera
+}
+
+
+QString MainWindow::getStreamingParameters() {
+    if (streamingProcess->getInputParameters().isEmpty()) {
+        return "";
+    }
+
+    if (streamingProcess->getInputLocation().isEmpty()) {
+        return "";
+    }
+
+    CodecParametersWidget *codecWidget =
+        codecWidgets.at(ui->codecTabsWidget->currentIndex());
+    QMap<QString, QString> *streamingParametersMap =
+        codecWidget->getStreamingParameters();
+
+    if (streamingParametersMap->isEmpty()) {
+        return "";
+    }
+
+    QString streamingParameters =
+        FFmpegCommand::parametersToString(streamingParametersMap) + " -an";
+    qDebug() << "streamingParameters =" << streamingParameters;
+
+    return streamingParameters;
+}
+
+
+void MainWindow::parseCameraNameProbeOutput(int a,
+                                                 QProcess::ExitStatus b) {
+    // silence warning
+    (void)a;
+    (void)b;
+
+    QRegularExpression re("\"(.*?)\"");
+    QRegularExpressionMatch match =
+        re.globalMatch(cameraNameGetterProcess.readAllStandardError()).next();
+
+    QString inputLocation =
+        QString("video=") + QString(match.captured().toUtf8().constData());
+    //settingsChanged();
+
+    streamingProcess->setInputLocation(inputLocation);
+    codecComparisonWindow->setInputLocation(inputLocation);
+
+    settingsChanged();
+
+    qDebug() << inputLocation;
+}
+
+void MainWindow::getSingleFrame() {
+    QString address = ENCODED_VIDEO_PROTOCOL + "://" + ENCODED_VIDEO_HOST +
+                             ":" + ENCODED_VIDEO_PORT;
+
+    singleFrameProcess.start(FFMPEG + " -i " + address + " -t 1 -vframes 1 -f image2 singleframe.jpg -y");
+    qDebug() << FFMPEG + " -i " + address + " -t 1 -vframes 1 -f image2 singleframe.jpg -y";
+}
+
+void MainWindow::onSingleFrameGotten(int a, QProcess::ExitStatus b) {
+    (void)a;
+    (void)b;
+
+    qDebug() << "completed";
+
+    scene = new QGraphicsScene();
+    view = new QGraphicsView(scene);
+    item = new QGraphicsPixmapItem(QPixmap("singleframe.jpg"));
+    scene->addItem(item);
+    view->show();
 }
