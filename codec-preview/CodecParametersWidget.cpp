@@ -1,7 +1,6 @@
 #include "CodecParametersWidget.h"
 #include "ui_CodecParametersWidget.h"
 
-
 CodecParametersWidget::CodecParametersWidget(QWidget *parent, QString encoder)
     : QWidget(parent), ui(new Ui::CodecParametersWidget), layoutCounter(0),
       streamingParameters(new QMap<QString, QString>) {
@@ -12,7 +11,8 @@ CodecParametersWidget::CodecParametersWidget(QWidget *parent, QString encoder)
     loadCodecParameters("any");
 }
 
-CodecParametersWidget::CodecParametersWidget(QString codecName, QString optionName, QString codecContainer, QWidget *parent)
+CodecParametersWidget::CodecParametersWidget(QString codecName, QString optionName, QString codecContainer,
+                                             QWidget *parent)
     : QWidget(parent), ui(new Ui::CodecParametersWidget), layoutCounter(0),
       streamingParameters(new QMap<QString, QString>) {
     ui->setupUi(this);
@@ -27,22 +27,22 @@ CodecParametersWidget::CodecParametersWidget(QString codecName, QString optionNa
 
 CodecParametersWidget::~CodecParametersWidget() { delete ui; }
 
-void CodecParametersWidget::addParameterWidget(QString label, QString parameter,
-                                      QString value) {
+void CodecParametersWidget::addParameterWidget(QString label, QString parameter, QString value) {
     // create new layout for parameter
     QVBoxLayout *layout = new QVBoxLayout();
 
     // add QLabel
     QLabel *labelWidget = new QLabel(label, this);
-    // labelWidget->setMaximumWidth(30);
-
-    // add tooltip
-    labelWidget->setToolTip(paramManager.getHint(label));
     layout->addWidget(labelWidget);
 
     // add QLineEdit
     QLineEdit *lineEdit = new QLineEdit(value, this);
     // lineEdit->setMaximumWidth(30);
+
+    // add tooltips
+    QString tooltip = paramManager.getHint(label);
+    labelWidget->setToolTip(tooltip);
+    lineEdit->setToolTip(tooltip);
 
     // PP: validation
     paramValidator.addValidation(lineEdit, parameter);
@@ -61,16 +61,12 @@ void CodecParametersWidget::addParameterWidget(QString label, QString parameter,
     insertParameterWidget(layout);
 }
 
-void CodecParametersWidget::addParameterWidget(QString label, QString parameter,
-                                      QMap<QString, QString> comboMap) {
+void CodecParametersWidget::addParameterWidget(QString label, QString parameter, QMap<QString, QString> comboMap) {
     // create new layout for parameter
     QVBoxLayout *layout = new QVBoxLayout();
 
     // add QLabel
     QLabel *labelWidget = new QLabel(label, this);
-
-    labelWidget->setToolTip(paramManager.getHint(label)); // add tooltip
-
     layout->addWidget(labelWidget);
 
     // add QComboBox
@@ -78,34 +74,40 @@ void CodecParametersWidget::addParameterWidget(QString label, QString parameter,
     comboBox->insertItems(0, comboMap.keys());
     layout->addWidget(comboBox);
 
-    connect(comboBox, &QComboBox::currentTextChanged,
-            [=](const QString &newValue) {
-                if (newValue != streamingParameters->value(parameter)) {
-                    streamingParameters->insert(parameter,
-                                                comboMap.value(newValue));
-                    emit parametersChanged();
-                }
-            });
+    // add tooltips
+    QString tooltip = paramManager.getHint(label);
+    labelWidget->setToolTip(tooltip);
+    comboBox->setToolTip(tooltip);
+
+    connect(comboBox, &QComboBox::currentTextChanged, [=](const QString &newValue) {
+        if (newValue != streamingParameters->value(parameter)) {
+            streamingParameters->insert(parameter, comboMap.value(newValue));
+            emit parametersChanged();
+        }
+    });
 
     insertParameterWidget(layout);
 
     streamingParameters->insert(parameter, comboMap.values().at(0));
 }
 
-void CodecParametersWidget::addParameterWidget(QString label, QString command,
-                                      bool value) {
+void CodecParametersWidget::addParameterWidget(QString label, QString command, bool value) {
     // create new layout for parameter
     QVBoxLayout *layout = new QVBoxLayout();
 
     // add QLabel
     QLabel *labelWidget = new QLabel(label, this);
-    labelWidget->setToolTip(paramManager.getHint(label));
     layout->addWidget(labelWidget);
 
     // add QCheckBox
     QCheckBox *checkBox = new QCheckBox(this);
     checkBox->setChecked(value);
     layout->addWidget(checkBox);
+
+    // add tooltips
+    QString tooltip = paramManager.getHint(label);
+    labelWidget->setToolTip(tooltip);
+    checkBox->setToolTip(tooltip);
 
     // The command is stored as the key with an empty value in
     // streamingParameters
@@ -139,12 +141,9 @@ void CodecParametersWidget::insertParameterWidget(QVBoxLayout *layout) {
     layoutCounter++;
 }
 
-
 QString CodecParametersWidget::getCodecName() { return codecName; }
 
-void CodecParametersWidget::setCodecName(QString codecName) {
-    this->codecName = codecName;
-}
+void CodecParametersWidget::setCodecName(QString codecName) { this->codecName = codecName; }
 
 Codec *CodecParametersWidget::getCodec(QString codecName) {
     if (codecName == "h261") {
@@ -171,7 +170,6 @@ Codec *CodecParametersWidget::getCodec(QString codecName) {
     return NULL;
 }
 
-
 void CodecParametersWidget::loadCodecParameters(QString codecName) {
     Codec *codec = CodecParametersWidget::getCodec(codecName);
 
@@ -183,8 +181,7 @@ void CodecParametersWidget::loadCodecParameters(QString codecName) {
         QString paramName = parameterNames.at(i);
         QMap<QString, QString> paramMap = codec->getParameter(paramName);
 
-        addParameterWidget(paramName, paramMap.value("value"),
-                           paramMap.value("default"));
+        addParameterWidget(paramName, paramMap.value("value"), paramMap.value("default"));
     }
 
     for (int i = 0; i < comboBoxNames.size(); i++) {
@@ -201,8 +198,7 @@ void CodecParametersWidget::loadCodecParameters(QString codecName) {
         QString paramName = checkBoxNames.at(i);
         QMap<QString, QString> paramMap = codec->getCheckBox(paramName);
         QString command = paramMap.value("command");
-        bool state = paramMap.value("state") !=
-                     ""; // empty string for false, anything else for true
+        bool state = paramMap.value("state") != ""; // empty string for false, anything else for true
 
         addParameterWidget(paramName, command, state);
     }
