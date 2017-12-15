@@ -6,7 +6,6 @@
 #include <QDialog>
 #include <QMessageBox>
 
-#include "CodecTabsWidget.h"
 #include "CodecComparisonWindow.h"
 
 namespace Ui {

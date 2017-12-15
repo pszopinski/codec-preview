@@ -67,9 +67,6 @@ class MainWindow : public QMainWindow {
 
     void onSingleFrameGotten(int a, QProcess::ExitStatus b);
 
-};
-
-
     void on_actionOriginal_size_toggled(bool arg1);
 };
 
