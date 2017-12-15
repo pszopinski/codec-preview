@@ -60,8 +60,11 @@
     </property>
     <addaction name="actionChange_raw_host"/>
     <addaction name="actionChange_raw_port"/>
+    <addaction name="separator"/>
     <addaction name="actionChange_encoded_host"/>
     <addaction name="actionChange_encoded_port"/>
+    <addaction name="separator"/>
+    <addaction name="actionOriginal_size"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -117,6 +120,14 @@
   <action name="actionMacroblocks">
    <property name="text">
     <string>Macroblocks</string>
+   </property>
+  </action>
+  <action name="actionOriginal_size">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Original size</string>
    </property>
   </action>
  </widget>

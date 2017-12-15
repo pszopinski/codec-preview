@@ -112,12 +112,12 @@
         <item>
          <widget class="QLabel" name="label_8">
           <property name="text">
-           <string>Decoded blocks:</string>
+           <string>Delay:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="decodedBlocks">
+         <widget class="QLineEdit" name="Delay">
           <property name="readOnly">
            <bool>true</bool>
           </property>

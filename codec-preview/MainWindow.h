@@ -2,12 +2,12 @@
 #define MAINWINDOW_H
 
 #include <QFileDialog>
-#include <QMainWindow>
 #include <QInputDialog>
 #include <QTabWidget>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
+#include <QMainWindow>
 
 
 //#include "codecselector.h"
@@ -70,5 +70,7 @@ class MainWindow : public QMainWindow {
 };
 
 
+    void on_actionOriginal_size_toggled(bool arg1);
+};
 
 #endif // CODECCOMPARISONWINDOW_H

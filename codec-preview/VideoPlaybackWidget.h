@@ -27,18 +27,20 @@ class VideoPlaybackWidget : public QWidget {
     VlcMediaPlayer *vlcPlayerRaw;
     VlcMedia *vlcMediaEncoded;
     VlcMediaPlayer *vlcPlayerEncoded;
-    VlcStats* stats;
+    VlcStats *stats;
 
   public:
     explicit VideoPlaybackWidget(QWidget *parent = 0);
     ~VideoPlaybackWidget();
     void stopPlayers();
     void startPlayers();
+    void originalSize(QSize frameSize);
+    void restoreDefaultSize();
 
   private slots:
     void whilePlaying();
 
-signals:
+  signals:
     void statsChanged(VlcStats *stats);
 };
 
