@@ -31,12 +31,14 @@ class VideoStatisticsWidget : public QWidget {
     int interval;                     // timer interval
     QString getBitrate(QString line); // parsing a one line from a file
     int getOut(QString line);
-    QString getDelay(QString *lines,
-                     const int OUTS); // parameter is array of lines; return
-                                      // delay between raw and encoded
-    const int MIN_LENGTH_LINE = 130;  // minimal length of proper line in
-                                      // statistics.txt (vstats_file
-                                      // statistics.txt - in ffmpeg command)
+    QString getDelay(QString *lines, const int OUTS); // parameter is array of lines; return
+                                                      // delay between raw and encoded
+    QString getStreamSize(QString line);
+    QString getFrameSize(QString line);
+    QString getTimeElapsed(QString line);
+    const int MIN_LENGTH_LINE = 130; // minimal length of proper line in
+                                     // statistics.txt (vstats_file
+                                     // statistics.txt - in ffmpeg command)
 
     int width;
     int height;

@@ -67,10 +67,7 @@ void VideoStatisticsWidget::parseFrameProbeOutput() {
         // find frame height
         if (output.startsWith("height=")) {
             height = output.mid(7, output.length()).toInt();
-
         }
-
-
     }
 }
 
@@ -124,7 +121,7 @@ void VideoStatisticsWidget::onStatsChange(VlcStats *stats) {
     // ui->bitRate->setText(QString::number(stats->input_bitrate*10000));
     // bitrate is set in the another way
     ui->framesDropped->setText(QString::number(stats->lost_pictures));
-    //ui->bytesRead->setText(QString::number(stats->read_bytes / 100.0));
+    // ui->bytesRead->setText(QString::number(stats->read_bytes / 100.0));
     ui->framesCount->setText(QString::number(stats->displayed_pictures));
     if (!timer->isActive())
         timer->start(interval);
@@ -153,12 +150,36 @@ QString VideoStatisticsWidget::getDelay(QString *lines, const int OUTS) {
 }
 
 int VideoStatisticsWidget::getOut(QString line) {
-    QRegExp rx3 = QRegExp("out=\\s*[0-1]");
-    rx3.indexIn(line);
-    QString out = rx3.capturedTexts().at(0);
+    QRegExp rx = QRegExp("out=\\s*[0-1]");
+    rx.indexIn(line);
+    QString out = rx.capturedTexts().at(0);
     out = out[out.length() - 1];
     int outNo = out.toInt();
     return outNo;
+}
+
+QString VideoStatisticsWidget::getStreamSize(QString line) {
+    QRegExp rx = QRegExp("s_size=\\s*[0-9]+(.?[0-9]+)?(kB)?(MB)?");
+    QRegExp rx2 = QRegExp("[0-9]+(.?[0-9]+)?(kB)?(MB)?");
+    rx.indexIn(line);
+    rx2.indexIn(rx.capturedTexts().at(0));
+    return rx2.capturedTexts().at(0);
+}
+
+QString VideoStatisticsWidget::getFrameSize(QString line) {
+    QRegExp rx = QRegExp("f_size=\\s*[0-9]+(.?[0-9]+)?");
+    QRegExp rx2 = QRegExp("[0-9]+(.?[0-9]+)?");
+    rx.indexIn(line);
+    rx2.indexIn(rx.capturedTexts().at(0));
+    return rx2.capturedTexts().at(0);
+}
+
+QString VideoStatisticsWidget::getTimeElapsed(QString line) {
+    QRegExp rx = QRegExp("time=\\s*[0-9]+(.?[0-9]+)?");
+    QRegExp rx2 = QRegExp("[0-9]+(.?[0-9]+)?");
+    rx.indexIn(line);
+    rx2.indexIn(rx.capturedTexts().at(0));
+    return rx2.capturedTexts().at(0);
 }
 
 void VideoStatisticsWidget::updateStats() {
@@ -185,6 +206,9 @@ void VideoStatisticsWidget::updateStats() {
     inputFile.close();
     ui->bitRate->setText(getBitrate(lastLines[1]));
     ui->delay->setText(getDelay(lastLines, OUTS));
+    ui->frameSize->setText(getFrameSize(lastLines[1]));
+    ui->streamSize->setText(getStreamSize(lastLines[1]));
+    ui->timeElapsed->setText(getTimeElapsed(lastLines[1]) + "s");
 
     ui->resolution->setText(QString::number(width) + "x" + QString::number(height));
 }
