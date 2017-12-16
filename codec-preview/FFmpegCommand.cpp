@@ -33,21 +33,33 @@ QString FFmpegCommand::buildProbeCommand(QString location, QString params) {
 QString FFmpegCommand::parametersToString(QMap<QString, QString> *parameters) {
     QStringList result;
 
+    // We will store filters to consolidate and consolidate them later
+    QStringList filters;
+
     for (auto key : parameters->keys()) {
         if (key.startsWith("-")) {
-            // raw option used for check boxes
-            result << key;
+            if (key.startsWith("-vf")) {
+                // filter out raw -vf parameter
+                filters << key.mid(4);
+            } else {
+                // add raw parameter
+                result << key;
+            }
         }
 
-        if (!parameters->value(key).isEmpty())
-            result << "-" + key << parameters->value(key);
+        if (!parameters->value(key).isEmpty()) {
+            if (key == "vf") {
+                // filter out regular -vf parameter
+                filters << parameters->value(key);
+            } else {
+                // add a regular parameter
+                result << "-" + key << parameters->value(key);
+            }
+        }
     }
 
-    qDebug();
-    qDebug() << parameters->keys();
-    qDebug() << parameters->values();
-    qDebug() << result.join(" ");
-    qDebug();
+    // Consolidate filters
+    result << "-vf \"" + filters.join(", ") + "\"";
 
     return result.join(" ");
 }

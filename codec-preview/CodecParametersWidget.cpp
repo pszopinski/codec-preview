@@ -61,7 +61,7 @@ void CodecParametersWidget::addParameterWidget(QString label, QString parameter,
     insertParameterWidget(layout);
 }
 
-void CodecParametersWidget::addParameterWidget(QString label, QString parameter, QMap<QString, QString> comboMap) {
+void CodecParametersWidget::addComboBoxWidget(QString label, QString parameter, QMap<QString, QString> comboMap) {
     // create new layout for parameter
     QVBoxLayout *layout = new QVBoxLayout();
 
@@ -91,7 +91,7 @@ void CodecParametersWidget::addParameterWidget(QString label, QString parameter,
     streamingParameters->insert(parameter, comboMap.values().at(0));
 }
 
-void CodecParametersWidget::addParameterWidget(QString label, QString command, bool value) {
+void CodecParametersWidget::addCheckBoxWidget(QString label, QString command, bool value) {
     // create new layout for parameter
     QVBoxLayout *layout = new QVBoxLayout();
 
@@ -126,6 +126,40 @@ void CodecParametersWidget::addParameterWidget(QString label, QString command, b
     if (value) {
         streamingParameters->insert(command, "");
     }
+}
+
+void CodecParametersWidget::addSliderWidget(QString label, QString parameter, QString value, QString min, QString max) {
+    // create new layout for parameter
+    QVBoxLayout *layout = new QVBoxLayout();
+
+    // add QLabel
+    QLabel *labelWidget = new QLabel(label, this);
+    layout->addWidget(labelWidget);
+
+    // add QSlider
+    QSlider *slider = new QSlider(Qt::Horizontal, this);
+    slider->setValue(value.toInt());
+    slider->setMinimum(min.toInt());
+    slider->setMaximum(max.toInt());
+
+    // add tooltips
+    QString tooltip = paramManager.getHint(label);
+    labelWidget->setToolTip(tooltip);
+    slider->setToolTip(tooltip);
+
+    layout->addWidget(slider);
+
+    // make form interactive
+    streamingParameters->insert(parameter, QString(value));
+    connect(slider, &QSlider::valueChanged, [=] {
+        QString newValue = QString::number(slider->value());
+        if (newValue != streamingParameters->value(parameter)) {
+            streamingParameters->insert(parameter, newValue);
+            emit parametersChanged();
+        }
+    });
+
+    insertParameterWidget(layout);
 }
 
 void CodecParametersWidget::insertParameterWidget(QVBoxLayout *layout) {
@@ -176,6 +210,7 @@ void CodecParametersWidget::loadCodecParameters(QString codecName) {
     QList<QString> parameterNames = codec->getParameterKeys();
     QList<QString> comboBoxNames = codec->getComboBoxKeys();
     QList<QString> checkBoxNames = codec->getCheckBoxKeys();
+    QList<QString> sliderNames = codec->getSliderKeys();
 
     for (int i = 0; i < parameterNames.size(); i++) {
         QString paramName = parameterNames.at(i);
@@ -191,7 +226,7 @@ void CodecParametersWidget::loadCodecParameters(QString codecName) {
 
         paramMap.remove("value");
 
-        addParameterWidget(paramName, paramValue, paramMap);
+        addComboBoxWidget(paramName, paramValue, paramMap);
     }
 
     for (int i = 0; i < checkBoxNames.size(); i++) {
@@ -200,7 +235,15 @@ void CodecParametersWidget::loadCodecParameters(QString codecName) {
         QString command = paramMap.value("command");
         bool state = paramMap.value("state") != ""; // empty string for false, anything else for true
 
-        addParameterWidget(paramName, command, state);
+        addCheckBoxWidget(paramName, command, state);
+    }
+
+    for (int i = 0; i < sliderNames.size(); i++) {
+        QString paramName = sliderNames.at(i);
+        QMap<QString, QString> paramMap = codec->getSlider(paramName);
+
+        addSliderWidget(paramName, paramMap.value("value"), paramMap.value("default"), paramMap.value("min"),
+                        paramMap.value("max"));
     }
 }
 

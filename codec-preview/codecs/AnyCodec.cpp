@@ -2,7 +2,7 @@
 
 AnyCodec::AnyCodec() {
     addParameter("FPS", "r", "");
-    addParameter("Quantization", "q:v", "");
+    addSlider("Quantization", "q:v", "24", "1", "51");
 
     QMap<QString, QString> crop_options;
     crop_options.insert("100%", "crop=in_w:in_h");

@@ -22,6 +22,15 @@ void Codec::addCheckBox(QString paramName, QString command, bool state) {
     checkBoxes->insert(paramName, param);
 }
 
+void Codec::addSlider(QString paramName, QString paramValue, QString paramDefault, QString paramMin, QString paramMax) {
+    QMap<QString, QString> param;
+    param.insert("value", paramValue);
+    param.insert("default", paramDefault);
+    param.insert("min", paramMin);
+    param.insert("max", paramMax);
+    sliders->insert(paramName, param);
+}
+
 void Codec::addStat() {}
 
 QMap<QString, QString> Codec::getParameter(QString paramName) { return parameters->value(paramName); }
@@ -30,8 +39,12 @@ QMap<QString, QString> Codec::getComboBox(QString paramName) { return comboBoxes
 
 QMap<QString, QString> Codec::getCheckBox(QString paramName) { return checkBoxes->value(paramName); }
 
+QMap<QString, QString> Codec::getSlider(QString paramName) { return sliders->value(paramName); }
+
 QList<QString> Codec::getParameterKeys() { return parameters->keys(); }
 
 QList<QString> Codec::getComboBoxKeys() { return comboBoxes->keys(); }
 
 QList<QString> Codec::getCheckBoxKeys() { return checkBoxes->keys(); }
+
+QList<QString> Codec::getSliderKeys() { return sliders->keys(); }
