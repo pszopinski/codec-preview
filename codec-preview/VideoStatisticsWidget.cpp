@@ -101,7 +101,14 @@ void VideoStatisticsWidget::parseStreamProbeOutput(int a, QProcess::ExitStatus b
 
             // find frame rate
             if (fileOutput.startsWith("avg_frame_rate=")) {
-                ui->frameRate->setText(fileOutput.mid(15, fileOutput.length()));
+                QRegExp rx("\\d+");
+                rx.indexIn(fileOutput, 15);
+                QString num = rx.cap();
+                rx.lastIndexIn(fileOutput);
+                QString den = rx.cap();
+                qDebug() << "frame rate " << num << " / " << den;
+                float frameRate = float(num.toInt()) / den.toInt();
+                ui->frameRate->setText(QString::number(frameRate));
             }
         }
     } else {
