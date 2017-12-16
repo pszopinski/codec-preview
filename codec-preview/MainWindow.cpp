@@ -1,5 +1,5 @@
 #include "MainWindow.h"
-#include "CodecSelector.h"
+#include "CodecSelectorWindow.h"
 #include "ui_mainwindow.h"
 
 QString rawVideoHost = RAW_VIDEO_HOST;
@@ -94,7 +94,7 @@ void MainWindow::on_actionOpen_from_camera_triggered() {
 void MainWindow::on_actionCompare_multiple_codecs_triggered() {
     resetPlayback();
 
-    CodecSelector codecSelector(codecComparisonWindow, this);
+    CodecSelectorWindow codecSelector(codecComparisonWindow, this);
     //codecSelector.setMainWindowHandler(ui->codecTabs);
     codecSelector.setModal(true);
     codecSelector.exec();

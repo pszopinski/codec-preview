@@ -9,7 +9,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp \
     CodecComparisonWindow.cpp \
-    CodecSelector.cpp \
     MainWindow.cpp \
     CodecParametersWidget.cpp \
     VideoPlaybackWidget.cpp \
@@ -25,13 +24,13 @@ SOURCES += main.cpp \
     codecs/MjpegCodec.cpp \
     codecs/Mpeg1Codec.cpp \
     codecs/Mpeg2Codec.cpp \
-    StreamingProcess.cpp
+    StreamingProcess.cpp \
+    CodecSelectorWindow.cpp
 
 
 
 HEADERS  += constants.h \
     CodecComparisonWindow.h \
-    CodecSelector.h \
     MainWindow.h \
     CodecParametersWidget.h \
     VideoPlaybackWidget.h \
@@ -47,16 +46,17 @@ HEADERS  += constants.h \
     codecs/Mpeg2Codec.h \
     codecs/Mpeg1Codec.h \
     codecs/MjpegCodec.h \
-    StreamingProcess.h
+    StreamingProcess.h \
+    CodecSelectorWindow.h
 
 
 FORMS    += \
     CodecComparisonWindow.ui \
-    CodecSelector.ui \
     MainWindow.ui \
     CodecParametersWidget.ui \
     VideoPlaybackWidget.ui \
-    VideoStatisticsWidget.ui
+    VideoStatisticsWidget.ui \
+    CodecSelectorWindow.ui
 
 	
 win32 {

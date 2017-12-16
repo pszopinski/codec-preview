@@ -12,7 +12,7 @@ namespace Ui {
 class CodecSelector;
 }
 
-class CodecSelector : public QDialog {
+class CodecSelectorWindow : public QDialog {
     Q_OBJECT
 
   private:
@@ -23,8 +23,8 @@ class CodecSelector : public QDialog {
     CodecComparisonWindow* codecComparisonWindow;
 
   public:
-    explicit CodecSelector(CodecComparisonWindow* codecComparisonWindow, QWidget *parent = 0);
-    ~CodecSelector();
+    explicit CodecSelectorWindow(CodecComparisonWindow* codecComparisonWindow, QWidget *parent = 0);
+    ~CodecSelectorWindow();
     bool getbMpeg1();
     bool getbMpeg2();
     bool getbMjpeg();
@@ -42,6 +42,7 @@ class CodecSelector : public QDialog {
     void on_H265_clicked();
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
+    void onCodecClicked(int i);
 };
 
 #endif // CODECSELECTOR_H

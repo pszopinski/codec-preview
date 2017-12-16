@@ -1,7 +1,7 @@
-#include "CodecSelector.h"
+#include "CodecSelectorWindow.h"
 #include "ui_codecselector.h"
 
-CodecSelector::CodecSelector(CodecComparisonWindow* codecComparisonWindow, QWidget *parent)
+CodecSelectorWindow::CodecSelectorWindow(CodecComparisonWindow* codecComparisonWindow, QWidget *parent)
     : QDialog(parent), ui(new Ui::CodecSelector) {
     ui->setupUi(this);
     checkBox = new QCheckBox *[6];
@@ -17,7 +17,7 @@ CodecSelector::CodecSelector(CodecComparisonWindow* codecComparisonWindow, QWidg
     this->codecComparisonWindow = codecComparisonWindow;
 }
 
-bool CodecSelector::canCheck() {
+bool CodecSelectorWindow::canCheck() {
     int count = 0;
     for (int i = 0; i < 6; i++) {
         if (selected[i])
@@ -29,99 +29,48 @@ bool CodecSelector::canCheck() {
         return true;
 }
 
-CodecSelector::~CodecSelector() { delete ui; }
-
-void CodecSelector::on_MPEG1_clicked() {
-    if (selected[2]) {
-        selected[2] = !selected[2];
+void CodecSelectorWindow::onCodecClicked(int i) {
+    if (selected[i]) {
+        selected[i] = !selected[i];
         return;
     }
     if (canCheck()) {
-        selected[2] = !selected[2];
+        selected[i] = !selected[i];
     } else {
         checkBox[lastChecked]->setChecked(false);
         selected[lastChecked] = !selected[lastChecked];
-        selected[2] = !selected[2];
+        selected[i] = !selected[i];
     }
-    lastChecked = 2;
+    lastChecked = i;
 }
 
-void CodecSelector::on_MPEG2_clicked() {
-    if (selected[3]) {
-        selected[3] = !selected[3];
-        return;
-    }
-    if (canCheck()) {
-        selected[3] = !selected[3];
-    } else {
-        checkBox[lastChecked]->setChecked(false);
-        selected[lastChecked] = !selected[lastChecked];
-        selected[3] = !selected[3];
-    }
-    lastChecked = 3;
+CodecSelectorWindow::~CodecSelectorWindow() { delete ui; }
+
+void CodecSelectorWindow::on_MPEG1_clicked() {
+    onCodecClicked(2);
 }
 
-void CodecSelector::on_MJPEG_clicked() {
-    if (selected[0]) {
-        selected[0] = !selected[0];
-        return;
-    }
-    if (canCheck()) {
-        selected[0] = !selected[0];
-    } else {
-        checkBox[lastChecked]->setChecked(false);
-        selected[lastChecked] = !selected[lastChecked];
-        selected[0] = !selected[0];
-    }
-    lastChecked = 0;
+void CodecSelectorWindow::on_MPEG2_clicked() {
+    onCodecClicked(3);
 }
 
-void CodecSelector::on_H261_clicked() {
-    if (selected[1]) {
-        selected[1] = !selected[1];
-        return;
-    }
-    if (canCheck()) {
-        selected[1] = !selected[1];
-    } else {
-        checkBox[lastChecked]->setChecked(false);
-        selected[lastChecked] = !selected[lastChecked];
-        selected[1] = !selected[1];
-    }
-    lastChecked = 1;
+void CodecSelectorWindow::on_MJPEG_clicked() {
+    onCodecClicked(0);
 }
 
-void CodecSelector::on_H264_clicked() {
-    if (selected[4]) {
-        selected[4] = !selected[4];
-        return;
-    }
-    if (canCheck()) {
-        selected[4] = !selected[4];
-    } else {
-        checkBox[lastChecked]->setChecked(false);
-        selected[lastChecked] = !selected[lastChecked];
-        selected[4] = !selected[4];
-    }
-    lastChecked = 4;
+void CodecSelectorWindow::on_H261_clicked() {
+    onCodecClicked(1);
 }
 
-void CodecSelector::on_H265_clicked() {
-    if (selected[5]) {
-        selected[5] = !selected[5];
-        return;
-    }
-    if (canCheck()) {
-        selected[5] = !selected[5];
-    } else {
-        checkBox[lastChecked]->setChecked(false);
-        selected[lastChecked] = !selected[lastChecked];
-        selected[5] = !selected[5];
-    }
-    lastChecked = 5;
+void CodecSelectorWindow::on_H264_clicked() {
+    onCodecClicked(4);
 }
 
-void CodecSelector::on_buttonBox_accepted() {
+void CodecSelectorWindow::on_H265_clicked() {
+    onCodecClicked(5);
+}
+
+void CodecSelectorWindow::on_buttonBox_accepted() {
     int indexes[3];
     int n = 0;
     // locate selected codec indexes
@@ -147,7 +96,7 @@ void CodecSelector::on_buttonBox_accepted() {
 
 
 
-void CodecSelector::on_buttonBox_rejected()
+void CodecSelectorWindow::on_buttonBox_rejected()
 {
     this->close();
 }
