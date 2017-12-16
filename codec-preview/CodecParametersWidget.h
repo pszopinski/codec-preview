@@ -51,8 +51,9 @@ class CodecParametersWidget : public QWidget {
 
     QMap<QString, QString> *getStreamingParameters();
     void addParameterWidget(QString label, QString parameter, QString value);
-    void addParameterWidget(QString label, QString parameter, QMap<QString, QString> values);
-    void addParameterWidget(QString label, QString command, bool value);
+    void addComboBoxWidget(QString label, QString parameter, QMap<QString, QString> values);
+    void addCheckBoxWidget(QString label, QString command, bool value);
+    void addSliderWidget(QString label, QString command, QString value, QString min, QString max);
     void insertParameterWidget(QVBoxLayout *layout);
     QString getCodecName();
     void setCodecName(QString codecName);
