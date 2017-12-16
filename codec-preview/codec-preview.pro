@@ -79,3 +79,5 @@ LIBS += \
     -lVLCQtWidgets
 }
 
+RC_FILE = myapp.rc
+
