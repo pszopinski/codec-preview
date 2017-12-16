@@ -19,7 +19,6 @@ VideoStatisticsWidget::VideoStatisticsWidget(QWidget *parent) : QWidget(parent),
     interval = 200;
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateStats()));
-    timer->start(interval);
     ui->lBitrate->setToolTip(paramManager.getHint("Bitrate"));
 }
 
@@ -124,6 +123,8 @@ void VideoStatisticsWidget::onStatsChange(VlcStats *stats) {
     ui->framesDropped->setText(QString::number(stats->lost_pictures));
     ui->bytesRead->setText(QString::number(stats->read_bytes / 100.0));
     ui->framesCount->setText(QString::number(stats->displayed_pictures));
+    if (!timer->isActive())
+        timer->start(interval);
 }
 
 QString VideoStatisticsWidget::getBitrate(QString line) {
