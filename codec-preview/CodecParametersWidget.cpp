@@ -151,7 +151,7 @@ void CodecParametersWidget::addSliderWidget(QString label, QString parameter, QS
 
     // make form interactive
     streamingParameters->insert(parameter, QString(value));
-    connect(slider, &QSlider::valueChanged, [=] {
+    connect(slider, &QSlider::sliderReleased, [=] {
         QString newValue = QString::number(slider->value());
         if (newValue != streamingParameters->value(parameter)) {
             streamingParameters->insert(parameter, newValue);
