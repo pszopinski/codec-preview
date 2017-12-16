@@ -3,9 +3,8 @@
 
 #include "codecs/Codec.h"
 
-class AnyCodec : public Codec
-{
-public:
+class AnyCodec : public Codec {
+  public:
     AnyCodec();
 };
 

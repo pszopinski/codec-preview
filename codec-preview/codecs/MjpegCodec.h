@@ -3,9 +3,8 @@
 
 #include "codecs/Codec.h"
 
-class MjpegCodec : public Codec
-{
-public:
+class MjpegCodec : public Codec {
+  public:
     MjpegCodec();
 };
 

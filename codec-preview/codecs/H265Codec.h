@@ -3,9 +3,8 @@
 
 #include "codecs/Codec.h"
 
-class H265Codec : public Codec
-{
-public:
+class H265Codec : public Codec {
+  public:
     H265Codec();
 };
 

@@ -3,9 +3,8 @@
 
 #include "codecs/Codec.h"
 
-class Mpeg2Codec : public Codec
-{
-public:
+class Mpeg2Codec : public Codec {
+  public:
     Mpeg2Codec();
 };
 

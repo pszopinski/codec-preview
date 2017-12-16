@@ -1,7 +1,7 @@
 #include "CodecSelectorWindow.h"
 #include "ui_codecselector.h"
 
-CodecSelectorWindow::CodecSelectorWindow(CodecComparisonWindow* codecComparisonWindow, QWidget *parent)
+CodecSelectorWindow::CodecSelectorWindow(CodecComparisonWindow *codecComparisonWindow, QWidget *parent)
     : QDialog(parent), ui(new Ui::CodecSelector) {
     ui->setupUi(this);
     checkBox = new QCheckBox *[6];
@@ -46,29 +46,17 @@ void CodecSelectorWindow::onCodecClicked(int i) {
 
 CodecSelectorWindow::~CodecSelectorWindow() { delete ui; }
 
-void CodecSelectorWindow::on_MPEG1_clicked() {
-    onCodecClicked(2);
-}
+void CodecSelectorWindow::on_MPEG1_clicked() { onCodecClicked(2); }
 
-void CodecSelectorWindow::on_MPEG2_clicked() {
-    onCodecClicked(3);
-}
+void CodecSelectorWindow::on_MPEG2_clicked() { onCodecClicked(3); }
 
-void CodecSelectorWindow::on_MJPEG_clicked() {
-    onCodecClicked(0);
-}
+void CodecSelectorWindow::on_MJPEG_clicked() { onCodecClicked(0); }
 
-void CodecSelectorWindow::on_H261_clicked() {
-    onCodecClicked(1);
-}
+void CodecSelectorWindow::on_H261_clicked() { onCodecClicked(1); }
 
-void CodecSelectorWindow::on_H264_clicked() {
-    onCodecClicked(4);
-}
+void CodecSelectorWindow::on_H264_clicked() { onCodecClicked(4); }
 
-void CodecSelectorWindow::on_H265_clicked() {
-    onCodecClicked(5);
-}
+void CodecSelectorWindow::on_H265_clicked() { onCodecClicked(5); }
 
 void CodecSelectorWindow::on_buttonBox_accepted() {
     int indexes[3];
@@ -85,18 +73,11 @@ void CodecSelectorWindow::on_buttonBox_accepted() {
         // user selected exactly 3 codecs
         codecComparisonWindow->compareWindowStream(indexes[0], indexes[1], indexes[2]);
 
-
     } else {
         // user selected too little codecs
-        QMessageBox::information(this, "Codec selection",
-                                 "Too little codecs selected!", QMessageBox::Ok,
+        QMessageBox::information(this, "Codec selection", "Too little codecs selected!", QMessageBox::Ok,
                                  QMessageBox::Ok);
     }
 }
 
-
-
-void CodecSelectorWindow::on_buttonBox_rejected()
-{
-    this->close();
-}
+void CodecSelectorWindow::on_buttonBox_rejected() { this->close(); }

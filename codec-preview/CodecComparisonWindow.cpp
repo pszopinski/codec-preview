@@ -1,8 +1,7 @@
 #include "CodecComparisonWindow.h"
 #include "ui_CodecComparisonWindow.h"
 
-CodecComparisonWindow::CodecComparisonWindow(QWidget *parent)
-    : QWidget(parent), ui(new Ui::CodecComparisonWindow) {
+CodecComparisonWindow::CodecComparisonWindow(QWidget *parent) : QWidget(parent), ui(new Ui::CodecComparisonWindow) {
     setWindowState(Qt::WindowMaximized);
     ui->setupUi(this);
 
@@ -19,21 +18,18 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent)
     codecWidgets.push_back(h265Manager);
     codecWidgets.last()->setCodecName("H265");
 
-
     for (auto codecWidget : codecWidgets) {
 
-    /*    connect(codecWidget, &CodecParametersWidget::parametersChanged, this,
-                &MainWindow::settingsChanged);*/
-        connect(codecWidget, SIGNAL(parametersChanged()), this,
-                SLOT(compareWindowStream()));
+        /*    connect(codecWidget, &CodecParametersWidget::parametersChanged, this,
+                    &MainWindow::settingsChanged);*/
+        connect(codecWidget, SIGNAL(parametersChanged()), this, SLOT(compareWindowStream()));
     }
 
     vlcInstance = new VlcInstance({""}, NULL);
 
     for (int i = 0; i < 4; i++) {
         // initialize media objects
-        vlcMedia[i] = new VlcMedia(RAW_VIDEO_PROTOCOL + "://@" +
-                                       compareWindowHosts[i] + ":" + compareWindowPorts[i],
+        vlcMedia[i] = new VlcMedia(RAW_VIDEO_PROTOCOL + "://@" + compareWindowHosts[i] + ":" + compareWindowPorts[i],
                                    false, vlcInstance);
 
         // initialize video displays
@@ -52,14 +48,11 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent)
     vlcMediaPlayers[3]->setVideoWidget(ui->encodedVideo3);
     ui->encodedVideo3->setMediaPlayer(vlcMediaPlayers[3]);
 
-
     // init labels
     original = ui->original;
     label1 = ui->first;
     label2 = ui->second;
     label3 = ui->third;
-
-
 
     // react to frame probe output with parseFrameProbeOutput
     /*connect(&frameProbes[0], &QProcess::readyRead, this,
@@ -68,22 +61,13 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent)
     connect(&frameProbes[3], &QProcess::readyRead, this,
             &CodecCompareWindow::parseFrameProbeOutput3);*/
 
-    connect(this, &CodecComparisonWindow::statsChanged1, ui->videoInfo1,
-            &VideoStatisticsWidget::onStatsChange);
-    connect(this, &CodecComparisonWindow::statsChanged2, ui->videoInfo2,
-            &VideoStatisticsWidget::onStatsChange);
-    connect(this, &CodecComparisonWindow::statsChanged3, ui->videoInfo3,
-            &VideoStatisticsWidget::onStatsChange);
+    connect(this, &CodecComparisonWindow::statsChanged1, ui->videoInfo1, &VideoStatisticsWidget::onStatsChange);
+    connect(this, &CodecComparisonWindow::statsChanged2, ui->videoInfo2, &VideoStatisticsWidget::onStatsChange);
+    connect(this, &CodecComparisonWindow::statsChanged3, ui->videoInfo3, &VideoStatisticsWidget::onStatsChange);
 
-
-    connect(vlcMediaPlayers[1], &VlcMediaPlayer::timeChanged, this,
-            &CodecComparisonWindow::whilePlaying1);
-    connect(vlcMediaPlayers[2], &VlcMediaPlayer::timeChanged, this,
-            &CodecComparisonWindow::whilePlaying2);
-    connect(vlcMediaPlayers[3], &VlcMediaPlayer::timeChanged, this,
-            &CodecComparisonWindow::whilePlaying3);
-
-
+    connect(vlcMediaPlayers[1], &VlcMediaPlayer::timeChanged, this, &CodecComparisonWindow::whilePlaying1);
+    connect(vlcMediaPlayers[2], &VlcMediaPlayer::timeChanged, this, &CodecComparisonWindow::whilePlaying2);
+    connect(vlcMediaPlayers[3], &VlcMediaPlayer::timeChanged, this, &CodecComparisonWindow::whilePlaying3);
 }
 
 CodecComparisonWindow::~CodecComparisonWindow() { delete ui; }
@@ -101,12 +85,11 @@ void CodecComparisonWindow::closeEvent(QCloseEvent *event) {
     ui->videoInfo1->stopProbe();
     ui->videoInfo2->stopProbe();
     ui->videoInfo3->stopProbe();
-
 }
 
-CodecParametersWidget* CodecComparisonWindow::getManager(int i) {
+CodecParametersWidget *CodecComparisonWindow::getManager(int i) {
 
-    switch(i) {
+    switch (i) {
     case 0:
         return mjpegManager;
         break;
@@ -123,19 +106,18 @@ CodecParametersWidget* CodecComparisonWindow::getManager(int i) {
         return h264Manager;
         break;
     case 5:
-        return  h265Manager;
+        return h265Manager;
         break;
     }
     return NULL;
 }
 
-void CodecComparisonWindow::setManagers(int one, int two, int three)
-{
+void CodecComparisonWindow::setManagers(int one, int two, int three) {
     ui->encodedParams1->setVisible(false);
     ui->encodedParams2->setVisible(false);
     ui->encodedParams3->setVisible(false);
 
-    switch(one) {
+    switch (one) {
     case 0:
         ui->outerLayout->replaceWidget(ui->encodedParams1, mjpegManager);
         break;
@@ -156,7 +138,7 @@ void CodecComparisonWindow::setManagers(int one, int two, int three)
         break;
     }
 
-    switch(two) {
+    switch (two) {
     case 0:
         ui->outerLayout->replaceWidget(ui->encodedParams2, mjpegManager);
         break;
@@ -177,7 +159,7 @@ void CodecComparisonWindow::setManagers(int one, int two, int three)
         break;
     }
 
-    switch(three) {
+    switch (three) {
     case 0:
         ui->outerLayout->replaceWidget(ui->encodedParams3, mjpegManager);
         break;
@@ -197,8 +179,6 @@ void CodecComparisonWindow::setManagers(int one, int two, int three)
         ui->outerLayout->replaceWidget(ui->encodedParams3, h265Manager);
         break;
     }
-
-
 }
 
 void CodecComparisonWindow::stream(QString streamingCommand) {
@@ -220,17 +200,10 @@ void CodecComparisonWindow::stream(QString streamingCommand) {
     // start streaming process
     streamingProcess.start(streamingCommand);
 
-
     for (int i = 0; i < 4; i++) {
         vlcMediaPlayers[i]->play();
     }
 
-    /*for (int i = 0; i < 4; i++) {
-        QString frameProbeCommand = FfmpegCommand::getFrameProbeCommand(compareWindowHosts[i], compareWindowPorts[i]);
-        frameProbes[i].start(frameProbeCommand);
-        QString streamProbeCommand = FfmpegCommand::getStreamProbeCommand(compareWindowHosts[i], compareWindowPorts[i]);
-        streamProbes[i].start(streamProbeCommand);
-    }*/
     QString frameProbeCommand = FFmpegCommand::getFrameProbeCommand(compareWindowHosts[1], compareWindowPorts[1]);
     ui->videoInfo1->startFrameProbe(frameProbeCommand);
     QString streamProbeCommand = FFmpegCommand::getStreamProbeCommand(compareWindowHosts[1], compareWindowPorts[1]);
@@ -245,24 +218,11 @@ void CodecComparisonWindow::stream(QString streamingCommand) {
     ui->videoInfo3->startStreamProbe(streamProbeCommand);
 }
 
-void CodecComparisonWindow::whilePlaying1() {
-    emit statsChanged1(vlcMedia[1]->getStats());
+void CodecComparisonWindow::whilePlaying1() { emit statsChanged1(vlcMedia[1]->getStats()); }
 
+void CodecComparisonWindow::whilePlaying2() { emit statsChanged2(vlcMedia[2]->getStats()); }
 
-}
-
-void CodecComparisonWindow::whilePlaying2() {
-    emit statsChanged2(vlcMedia[2]->getStats());
-
-
-}
-
-void CodecComparisonWindow::whilePlaying3() {
-    emit statsChanged3(vlcMedia[3]->getStats());
-
-
-}
-
+void CodecComparisonWindow::whilePlaying3() { emit statsChanged3(vlcMedia[3]->getStats()); }
 
 void CodecComparisonWindow::compareWindowStream(int first, int second, int third) {
     previousFirst = first;
@@ -272,12 +232,9 @@ void CodecComparisonWindow::compareWindowStream(int first, int second, int third
 
     // PP: mjpeg
     QString streamingParameters1 = "-c:v mjpeg -f nut -an";
-    QString streamingParameters2 = FFmpegCommand::parametersToString(
-        getManager(first)->getStreamingParameters());
-    QString streamingParameters3 = FFmpegCommand::parametersToString(
-        getManager(second)->getStreamingParameters());
-    QString streamingParameters4 = FFmpegCommand::parametersToString(
-        getManager(third)->getStreamingParameters());
+    QString streamingParameters2 = FFmpegCommand::parametersToString(getManager(first)->getStreamingParameters());
+    QString streamingParameters3 = FFmpegCommand::parametersToString(getManager(second)->getStreamingParameters());
+    QString streamingParameters4 = FFmpegCommand::parametersToString(getManager(third)->getStreamingParameters());
 
     qDebug() << "streaming parameters:";
     qDebug() << streamingParameters1;
@@ -287,16 +244,11 @@ void CodecComparisonWindow::compareWindowStream(int first, int second, int third
 
     QString streamingCommand = buildMultipleStreamingCommands(
         inputParameters, inputLocation,
-        {streamingParameters1, streamingParameters2, streamingParameters3,
-         streamingParameters4},
-        {ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[0] + ":" +
-             compareWindowPorts[0] + "?ttl=0",
-         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[1] + ":" +
-             compareWindowPorts[1] + "?ttl=0",
-         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[2] + ":" +
-             compareWindowPorts[2] + "?ttl=0",
-         RAW_VIDEO_PROTOCOL + "://" + compareWindowHosts[3] + ":" +
-             compareWindowPorts[3] + "?ttl=0"});
+        {streamingParameters1, streamingParameters2, streamingParameters3, streamingParameters4},
+        {ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[0] + ":" + compareWindowPorts[0] + "?ttl=0",
+         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[1] + ":" + compareWindowPorts[1] + "?ttl=0",
+         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[2] + ":" + compareWindowPorts[2] + "?ttl=0",
+         RAW_VIDEO_PROTOCOL + "://" + compareWindowHosts[3] + ":" + compareWindowPorts[3] + "?ttl=0"});
 
     qDebug() << "streaming command:";
 
@@ -319,12 +271,9 @@ void CodecComparisonWindow::compareWindowStream() {
 
     // PP: mjpeg
     QString streamingParameters1 = "-c:v mjpeg -f nut -an";
-    QString streamingParameters2 = FFmpegCommand::parametersToString(
-        getManager(first)->getStreamingParameters());
-    QString streamingParameters3 = FFmpegCommand::parametersToString(
-        getManager(second)->getStreamingParameters());
-    QString streamingParameters4 = FFmpegCommand::parametersToString(
-        getManager(third)->getStreamingParameters());
+    QString streamingParameters2 = FFmpegCommand::parametersToString(getManager(first)->getStreamingParameters());
+    QString streamingParameters3 = FFmpegCommand::parametersToString(getManager(second)->getStreamingParameters());
+    QString streamingParameters4 = FFmpegCommand::parametersToString(getManager(third)->getStreamingParameters());
 
     qDebug() << "streaming parameters:";
     qDebug() << streamingParameters1;
@@ -334,16 +283,11 @@ void CodecComparisonWindow::compareWindowStream() {
 
     QString streamingCommand = buildMultipleStreamingCommands(
         inputParameters, inputLocation,
-        {streamingParameters1, streamingParameters2, streamingParameters3,
-         streamingParameters4},
-        {ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[0] + ":" +
-             compareWindowPorts[0] + "?ttl=0",
-         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[1] + ":" +
-             compareWindowPorts[1] + "?ttl=0",
-         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[2] + ":" +
-             compareWindowPorts[2] + "?ttl=0",
-         RAW_VIDEO_PROTOCOL + "://" + compareWindowHosts[3] + ":" +
-             compareWindowPorts[3] + "?ttl=0"});
+        {streamingParameters1, streamingParameters2, streamingParameters3, streamingParameters4},
+        {ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[0] + ":" + compareWindowPorts[0] + "?ttl=0",
+         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[1] + ":" + compareWindowPorts[1] + "?ttl=0",
+         ENCODED_VIDEO_PROTOCOL + "://" + compareWindowHosts[2] + ":" + compareWindowPorts[2] + "?ttl=0",
+         RAW_VIDEO_PROTOCOL + "://" + compareWindowHosts[3] + ":" + compareWindowPorts[3] + "?ttl=0"});
 
     qDebug() << "streaming command:";
 
@@ -357,37 +301,26 @@ void CodecComparisonWindow::compareWindowStream() {
     stream(streamingCommand);
 }
 
-QString CodecComparisonWindow::buildMultipleStreamingCommands(
-    QString inputParameters, QString inputLocation,
-    QVector<QString> outputPrameters, QVector<QString> outputLocations) {
+QString CodecComparisonWindow::buildMultipleStreamingCommands(QString inputParameters, QString inputLocation,
+                                                              QVector<QString> outputPrameters,
+                                                              QVector<QString> outputLocations) {
     QStringList list;
     list << FFMPEG;
     list << "-flags2 +export_mvs";
     list << inputParameters;
     list << "-i " << inputLocation;
-    for (int i = 0;
-         i < outputPrameters.length() && i < outputLocations.length(); i++) {
+    for (int i = 0; i < outputPrameters.length() && i < outputLocations.length(); i++) {
         list << outputPrameters[i] << outputLocations[i];
     }
 
     QString command = list.join(" ");
-    qDebug() << "\nproduced following encoding command:\n"
-             << command.toUtf8().constData() << "\n";
+    qDebug() << "\nproduced following encoding command:\n" << command.toUtf8().constData() << "\n";
     return command;
 }
 
+void CodecComparisonWindow::setInputLocation(QString location) { this->inputLocation = location; }
 
-void CodecComparisonWindow::setInputLocation(QString location) {
-    this->inputLocation = location;
-}
+void CodecComparisonWindow::setInputParameters(QString parameters) { this->inputParameters = parameters; }
 
-void CodecComparisonWindow::setInputParameters(QString parameters) {
-    this->inputParameters = parameters;
-}
-
-QString CodecComparisonWindow::getInputLocation() {
-    return inputLocation;
-}
-QString CodecComparisonWindow::getInputParameters() {
-    return inputParameters;
-}
+QString CodecComparisonWindow::getInputLocation() { return inputLocation; }
+QString CodecComparisonWindow::getInputParameters() { return inputParameters; }

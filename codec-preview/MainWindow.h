@@ -2,19 +2,18 @@
 #define MAINWINDOW_H
 
 #include <QFileDialog>
-#include <QInputDialog>
-#include <QTabWidget>
+#include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
 #include <QGraphicsView>
-#include <QGraphicsPixmapItem>
+#include <QInputDialog>
 #include <QMainWindow>
-
+#include <QTabWidget>
 
 //#include "codecselector.h"
+#include "CodecComparisonWindow.h"
 #include "CodecParametersWidget.h"
 #include "FFmpegCommand.h"
 #include "StreamingProcess.h"
-#include "CodecComparisonWindow.h"
 
 namespace Ui {
 class MainWindow;
@@ -29,9 +28,9 @@ class MainWindow : public QMainWindow {
     QProcess cameraNameGetterProcess;
     CodecComparisonWindow *codecComparisonWindow;
     QProcess singleFrameProcess;
-        QGraphicsScene* scene;
-        QGraphicsView* view;
-        QGraphicsPixmapItem *item;
+    QGraphicsScene *scene;
+    QGraphicsView *view;
+    QGraphicsPixmapItem *item;
 
   public:
     explicit MainWindow(QWidget *parent = 0);
@@ -44,12 +43,8 @@ class MainWindow : public QMainWindow {
     QString getStreamingParameters();
     void getSingleFrame();
 
-
-
-
   signals:
     void settingsChanged();
-
 
   private slots:
     void on_actionOpen_file_triggered();

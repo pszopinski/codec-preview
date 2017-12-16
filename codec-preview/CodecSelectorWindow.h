@@ -20,17 +20,11 @@ class CodecSelectorWindow : public QDialog {
     bool selected[6];
     QCheckBox **checkBox;
     int lastChecked;
-    CodecComparisonWindow* codecComparisonWindow;
+    CodecComparisonWindow *codecComparisonWindow;
 
   public:
-    explicit CodecSelectorWindow(CodecComparisonWindow* codecComparisonWindow, QWidget *parent = 0);
+    explicit CodecSelectorWindow(CodecComparisonWindow *codecComparisonWindow, QWidget *parent = 0);
     ~CodecSelectorWindow();
-    bool getbMpeg1();
-    bool getbMpeg2();
-    bool getbMjpeg();
-    bool getbH261();
-    bool getbH264();
-    bool getbH265();
     bool canCheck();
 
   private slots:
