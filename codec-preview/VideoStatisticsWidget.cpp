@@ -105,7 +105,6 @@ void VideoStatisticsWidget::parseStreamProbeOutput(int a, QProcess::ExitStatus b
                 QString num = rx.cap();
                 rx.lastIndexIn(fileOutput);
                 QString den = rx.cap();
-                qDebug() << "frame rate " << num << " / " << den;
                 float frameRate = float(num.toInt()) / den.toInt();
                 ui->frameRate->setText(QString::number(frameRate));
             }

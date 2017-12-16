@@ -1,5 +1,3 @@
 #include "MjpegCodec.h"
 
-MjpegCodec::MjpegCodec() {
-
-}
+MjpegCodec::MjpegCodec() {}

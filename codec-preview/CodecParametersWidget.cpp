@@ -211,9 +211,10 @@ void CodecParametersWidget::loadCodecParameters(QString codecName) {
     QList<QString> comboBoxNames = codec->getComboBoxKeys();
     QList<QString> checkBoxNames = codec->getCheckBoxKeys();
     QList<QString> sliderNames = codec->getSliderKeys();
+    QList<QString> *parameterOrder = codec->getParameterOrder();
 
-    for (int i = 0; i < parameterNames.size(); i++) {
-        QString paramName = parameterNames.at(i);
+    for (int i = 0; i < parameterOrder->size(); i++) {
+        QString paramName = parameterOrder->at(i);
         QMap<QString, QString> paramMap = codec->getParameter(paramName);
 
         addParameterWidget(paramName, paramMap.value("value"), paramMap.value("default"));

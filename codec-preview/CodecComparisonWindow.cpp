@@ -19,9 +19,6 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent) : QWidget(parent),
     codecWidgets.last()->setCodecName("H265");
 
     for (auto codecWidget : codecWidgets) {
-
-        /*    connect(codecWidget, &CodecParametersWidget::parametersChanged, this,
-                    &MainWindow::settingsChanged);*/
         connect(codecWidget, SIGNAL(parametersChanged()), this, SLOT(compareWindowStream()));
     }
 
@@ -53,13 +50,6 @@ CodecComparisonWindow::CodecComparisonWindow(QWidget *parent) : QWidget(parent),
     label1 = ui->first;
     label2 = ui->second;
     label3 = ui->third;
-
-    // react to frame probe output with parseFrameProbeOutput
-    /*connect(&frameProbes[0], &QProcess::readyRead, this,
-            &CodecCompareWindow::parseFrameProbeOutput0);
-
-    connect(&frameProbes[3], &QProcess::readyRead, this,
-            &CodecCompareWindow::parseFrameProbeOutput3);*/
 
     connect(this, &CodecComparisonWindow::statsChanged1, ui->videoInfo1, &VideoStatisticsWidget::onStatsChange);
     connect(this, &CodecComparisonWindow::statsChanged2, ui->videoInfo2, &VideoStatisticsWidget::onStatsChange);

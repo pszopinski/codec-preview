@@ -14,6 +14,7 @@ class Codec {
     QMap<QString, QMap<QString, QString>> *checkBoxes = new QMap<QString, QMap<QString, QString>>();
     QMap<QString, QMap<QString, QString>> *sliders = new QMap<QString, QMap<QString, QString>>();
     QMap<QString, QMap<QString, QString>> *stats = new QMap<QString, QMap<QString, QString>>();
+    QList<QString> *parameterOrder;
 
     void addParameter(QString paramName, QString paramValue, QString paramDefault);
     void addComboBox(QString paramName, QString paramValue, QMap<QString, QString> paramMap);
@@ -30,6 +31,7 @@ class Codec {
     QList<QString> getComboBoxKeys();
     QList<QString> getCheckBoxKeys();
     QList<QString> getSliderKeys();
+    QList<QString> *getParameterOrder();
 };
 
 #endif // CODEC_H

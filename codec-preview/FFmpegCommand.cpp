@@ -1,7 +1,7 @@
 #include "FFmpegCommand.h"
 
 QString FFmpegCommand::getFrameProbeCommand(QString host, QString port) {
-    qDebug() << "starting probe process...";
+    qDebug() << "DEBUG: starting probe process";
 
     QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + host + ":" + port;
 
@@ -26,7 +26,7 @@ QString FFmpegCommand::buildProbeCommand(QString location, QString params) {
     list << params;
 
     QString command = list.join(" ");
-    qDebug() << "\nproduced following probe command:\n" << command.toUtf8().constData() << "\n";
+    qDebug() << "DEBUG: probe command:\n" << command.toUtf8().constData();
     return command;
 }
 

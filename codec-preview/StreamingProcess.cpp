@@ -17,12 +17,12 @@ QString StreamingProcess::buildStreamingCommand(QString inputParameters, QString
     list << outputPrameters << encodedLocation + "?ttl=0" + " -vstats_file " + STATS_FILE_NAME;
 
     QString command = list.join(" ");
-    qDebug() << "\nproduced following encoding command:\n" << command.toUtf8().constData() << "\n";
+    qDebug() << "DEBUG: encoding command:" << command.toUtf8().constData() << "\n";
     return command;
 }
 
 void StreamingProcess::startStreaming(QString streamingParameters) {
-    qDebug() << "starting encoding process...";
+    qDebug() << "DEBUG: starting encoding process";
 
     QString rawAddress = RAW_VIDEO_PROTOCOL + "://" + rawVideoHost + ":" + rawVideoPort;
     QString encodedAddress = ENCODED_VIDEO_PROTOCOL + "://" + encodedVideoHost + ":" + encodedVideoPort;

@@ -87,7 +87,6 @@ void MainWindow::on_actionCompare_multiple_codecs_triggered() {
 }
 
 void MainWindow::stream() {
-    qDebug() << "starting stream...";
     QString streamingParameters = getStreamingParameters();
 
     resetPlayback();
@@ -101,7 +100,7 @@ void MainWindow::stream() {
     ui->videoInfo->startStreamProbe(streamProbeCommand);
 
     ui->videoPlayback->startPlayers();
-    qDebug() << "started stream";
+    qDebug() << "DEBUG: started stream";
 }
 
 void MainWindow::resetPlayback() {
@@ -209,7 +208,7 @@ QString MainWindow::getStreamingParameters() {
     }
 
     QString streamingParameters = FFmpegCommand::parametersToString(streamingParametersMap) + " -an";
-    qDebug() << "streamingParameters =" << streamingParameters;
+    qDebug() << "DEBUG: streaming parameters:" << streamingParameters;
 
     return streamingParameters;
 }
@@ -229,22 +228,17 @@ void MainWindow::parseCameraNameProbeOutput(int a, QProcess::ExitStatus b) {
     codecComparisonWindow->setInputLocation(inputLocation);
 
     settingsChanged();
-
-    qDebug() << inputLocation;
 }
 
 void MainWindow::getSingleFrame() {
     QString address = ENCODED_VIDEO_PROTOCOL + "://" + ENCODED_VIDEO_HOST + ":" + ENCODED_VIDEO_PORT;
 
     singleFrameProcess.start(FFMPEG + " -i " + address + " -t 1 -vframes 1 -f image2 singleframe.jpg -y");
-    qDebug() << FFMPEG + " -i " + address + " -t 1 -vframes 1 -f image2 singleframe.jpg -y";
 }
 
 void MainWindow::onSingleFrameGotten(int a, QProcess::ExitStatus b) {
     (void)a;
     (void)b;
-
-    qDebug() << "completed";
 
     scene = new QGraphicsScene();
     view = new QGraphicsView(scene);

@@ -1,12 +1,13 @@
 #include "Codec.h"
 
-Codec::Codec() {}
+Codec::Codec() { parameterOrder = new QList<QString>(); }
 
 void Codec::addParameter(QString paramName, QString paramValue, QString paramDefault) {
     QMap<QString, QString> param;
     param.insert("value", paramValue);
     param.insert("default", paramDefault);
     parameters->insert(paramName, param);
+    parameterOrder->append(paramName);
 }
 
 void Codec::addComboBox(QString paramName, QString paramValue, QMap<QString, QString> paramMap) {
@@ -48,3 +49,5 @@ QList<QString> Codec::getComboBoxKeys() { return comboBoxes->keys(); }
 QList<QString> Codec::getCheckBoxKeys() { return checkBoxes->keys(); }
 
 QList<QString> Codec::getSliderKeys() { return sliders->keys(); }
+
+QList<QString> *Codec::getParameterOrder() { return parameterOrder; }
