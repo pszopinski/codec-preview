@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     ui->codecTabsWidget->setTabPosition(QTabWidget::South);
     ui->codecTabsWidget->setCurrentIndex(0);
+    ui->codecTabsWidget->tabBar()->setStyleSheet("QTabBar {font-size:14pt;}");
 
     codecWidgets.push_back(new CodecParametersWidget("mjpeg", "mjpeg", "matroska", this));
     codecWidgets.last()->setCodecName("MJPEG");
@@ -95,8 +96,8 @@ void MainWindow::stream() {
 
     QString frameProbeCommand = FFmpegCommand::getFrameProbeCommand(encodedVideoHost, encodedVideoPort);
     ui->videoInfo->startFrameProbe(frameProbeCommand);
-    QString streamProbeCommand = FFmpegCommand::getStreamProbeCommand(encodedVideoHost, encodedVideoPort);
 
+    QString streamProbeCommand = FFmpegCommand::getStreamProbeCommand(encodedVideoHost, encodedVideoPort);
     ui->videoInfo->startStreamProbe(streamProbeCommand);
 
     ui->videoPlayback->startPlayers();

@@ -61,13 +61,16 @@ void VideoStatisticsWidget::parseFrameProbeOutput() {
 
         // find frame width
         if (output.startsWith("width=")) {
-            ui->frameWidth->setText(output.mid(6, output.length()));
+            width = output.mid(6, output.length()).toInt();
         }
 
         // find frame height
         if (output.startsWith("height=")) {
-            ui->frameHeight->setText(output.mid(7, output.length()));
+            height = output.mid(7, output.length()).toInt();
+
         }
+
+
     }
 }
 
@@ -121,7 +124,7 @@ void VideoStatisticsWidget::onStatsChange(VlcStats *stats) {
     // ui->bitRate->setText(QString::number(stats->input_bitrate*10000));
     // bitrate is set in the another way
     ui->framesDropped->setText(QString::number(stats->lost_pictures));
-    ui->bytesRead->setText(QString::number(stats->read_bytes / 100.0));
+    //ui->bytesRead->setText(QString::number(stats->read_bytes / 100.0));
     ui->framesCount->setText(QString::number(stats->displayed_pictures));
     if (!timer->isActive())
         timer->start(interval);
@@ -181,12 +184,12 @@ void VideoStatisticsWidget::updateStats() {
 
     inputFile.close();
     ui->bitRate->setText(getBitrate(lastLines[1]));
-    ui->Delay->setText(getDelay(lastLines, OUTS));
+    ui->delay->setText(getDelay(lastLines, OUTS));
+
+    ui->resolution->setText(QString::number(width) + "x" + QString::number(height));
 }
 
 QSize VideoStatisticsWidget::getFrameSize() {
-    QString width = ui->frameWidth->text();
-    QString height = ui->frameHeight->text();
-    QSize frameSize(width.toInt(), height.toInt());
+    QSize frameSize(width, height);
     return frameSize;
 }

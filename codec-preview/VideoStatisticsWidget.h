@@ -38,6 +38,9 @@ class VideoStatisticsWidget : public QWidget {
                                       // statistics.txt (vstats_file
                                       // statistics.txt - in ffmpeg command)
 
+    int width;
+    int height;
+
   public:
     Ui::VideoStatisticsWidget *ui;
 

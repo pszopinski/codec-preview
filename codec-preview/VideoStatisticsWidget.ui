@@ -77,12 +77,12 @@
         <item>
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>Frame width:</string>
+           <string>Resolution:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="frameWidth">
+         <widget class="QLineEdit" name="resolution">
           <property name="palette">
            <palette>
             <active>
@@ -127,62 +127,7 @@
         </item>
        </layout>
       </item>
-      <item row="0" column="2">
-       <layout class="QVBoxLayout" name="verticalLayout_9">
-        <item>
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Frame height:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="frameHeight">
-          <property name="palette">
-           <palette>
-            <active>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </active>
-            <inactive>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </inactive>
-            <disabled>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </disabled>
-           </palette>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="0" column="5">
+      <item row="0" column="4">
        <layout class="QVBoxLayout" name="verticalLayout_7" stretch="0,0">
         <item>
          <widget class="QLabel" name="label_6">
@@ -237,17 +182,20 @@
         </item>
        </layout>
       </item>
+      <item row="0" column="5">
+       <layout class="QVBoxLayout" name="verticalLayout_6" stretch=""/>
+      </item>
       <item row="0" column="6">
-       <layout class="QVBoxLayout" name="verticalLayout_6" stretch="0,0">
+       <layout class="QVBoxLayout" name="verticalLayout_12" stretch="0,0">
         <item>
-         <widget class="QLabel" name="label_5">
+         <widget class="QLabel" name="label_8">
           <property name="text">
-           <string>Kilobytes read:</string>
+           <string>Delay:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="bytesRead">
+         <widget class="QLineEdit" name="delay">
           <property name="palette">
            <palette>
             <active>
@@ -293,61 +241,6 @@
        </layout>
       </item>
       <item row="0" column="7">
-       <layout class="QVBoxLayout" name="verticalLayout_12" stretch="0,0">
-        <item>
-         <widget class="QLabel" name="label_8">
-          <property name="text">
-           <string>Delay:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="Delay">
-          <property name="palette">
-           <palette>
-            <active>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </active>
-            <inactive>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </inactive>
-            <disabled>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </disabled>
-           </palette>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="0" column="8">
        <layout class="QVBoxLayout" name="verticalLayout_14" stretch="0,0">
         <item>
          <widget class="QLabel" name="label_9">
@@ -403,16 +296,16 @@
        </layout>
       </item>
       <item row="0" column="3">
-       <layout class="QVBoxLayout" name="verticalLayout_13">
+       <layout class="QVBoxLayout" name="verticalLayout_11" stretch="0,0">
         <item>
-         <widget class="QLabel" name="label_7">
+         <widget class="QLabel" name="lBitrate">
           <property name="text">
-           <string>FPS:</string>
+           <string>Bitrate:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="frameRate">
+         <widget class="QLineEdit" name="bitRate">
           <property name="palette">
            <palette>
             <active>
@@ -457,17 +350,17 @@
         </item>
        </layout>
       </item>
-      <item row="0" column="4">
-       <layout class="QVBoxLayout" name="verticalLayout_11" stretch="0,0">
+      <item row="0" column="2">
+       <layout class="QVBoxLayout" name="verticalLayout_13">
         <item>
-         <widget class="QLabel" name="lBitrate">
+         <widget class="QLabel" name="label_7">
           <property name="text">
-           <string>Bitrate:</string>
+           <string>FPS:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="bitRate">
+         <widget class="QLineEdit" name="frameRate">
           <property name="palette">
            <palette>
             <active>
