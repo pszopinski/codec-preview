@@ -27,48 +27,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="frameTypes">
-          <property name="palette">
-           <palette>
-            <active>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </active>
-            <inactive>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </inactive>
-            <disabled>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </disabled>
-           </palette>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
+         <widget class="QLabel" name="frameTypes"/>
         </item>
        </layout>
       </item>
@@ -82,46 +41,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="resolution">
-          <property name="palette">
-           <palette>
-            <active>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </active>
-            <inactive>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </inactive>
-            <disabled>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </disabled>
-           </palette>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
+         <widget class="QLabel" name="resolution">
+          <property name="text">
+           <string/>
           </property>
          </widget>
         </item>
@@ -137,55 +59,15 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="framesDropped">
-          <property name="palette">
-           <palette>
-            <active>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </active>
-            <inactive>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </inactive>
-            <disabled>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </disabled>
-           </palette>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
+         <widget class="QLabel" name="framesDropped">
+          <property name="text">
+           <string/>
           </property>
          </widget>
         </item>
        </layout>
       </item>
       <item row="0" column="5">
-       <layout class="QVBoxLayout" name="verticalLayout_6" stretch=""/>
-      </item>
-      <item row="0" column="6">
        <layout class="QVBoxLayout" name="verticalLayout_12" stretch="0,0">
         <item>
          <widget class="QLabel" name="label_8">
@@ -195,101 +77,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="delay">
-          <property name="palette">
-           <palette>
-            <active>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </active>
-            <inactive>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </inactive>
-            <disabled>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </disabled>
-           </palette>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="0" column="7">
-       <layout class="QVBoxLayout" name="verticalLayout_14" stretch="0,0">
-        <item>
-         <widget class="QLabel" name="label_9">
+         <widget class="QLabel" name="delay">
           <property name="text">
-           <string>Frames count:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="framesCount">
-          <property name="palette">
-           <palette>
-            <active>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </active>
-            <inactive>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </inactive>
-            <disabled>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </disabled>
-           </palette>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
+           <string/>
           </property>
          </widget>
         </item>
@@ -305,46 +95,27 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="bitRate">
-          <property name="palette">
-           <palette>
-            <active>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </active>
-            <inactive>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </inactive>
-            <disabled>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </disabled>
-           </palette>
+         <widget class="QLabel" name="bitRate">
+          <property name="text">
+           <string/>
           </property>
-          <property name="readOnly">
-           <bool>true</bool>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="6">
+       <layout class="QVBoxLayout" name="verticalLayout_14" stretch="0,0">
+        <item>
+         <widget class="QLabel" name="label_9">
+          <property name="text">
+           <string>Frames count:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="framesCount">
+          <property name="text">
+           <string/>
           </property>
          </widget>
         </item>
@@ -360,46 +131,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="frameRate">
-          <property name="palette">
-           <palette>
-            <active>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </active>
-            <inactive>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </inactive>
-            <disabled>
-             <colorrole role="Base">
-              <brush brushstyle="SolidPattern">
-               <color alpha="255">
-                <red>240</red>
-                <green>240</green>
-                <blue>240</blue>
-               </color>
-              </brush>
-             </colorrole>
-            </disabled>
-           </palette>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
+         <widget class="QLabel" name="frameRate">
+          <property name="text">
+           <string/>
           </property>
          </widget>
         </item>
