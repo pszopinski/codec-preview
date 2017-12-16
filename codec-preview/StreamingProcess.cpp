@@ -14,7 +14,7 @@ QString StreamingProcess::buildStreamingCommand(QString inputParameters, QString
     // PP: mjpeg
     list << "-f nut -an" << rawLocation + "?ttl=0";
 
-    list << outputPrameters << encodedLocation + "?ttl=0";
+    list << outputPrameters << encodedLocation + "?ttl=0" + " -vstats_file " + STATS_FILE_NAME;
 
     QString command = list.join(" ");
     qDebug() << "\nproduced following encoding command:\n" << command.toUtf8().constData() << "\n";
