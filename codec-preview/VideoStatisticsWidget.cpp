@@ -146,7 +146,7 @@ QString VideoStatisticsWidget::getDelay(QString *lines, const int OUTS) {
         times[i] = rx2.capturedTexts().at(0);
     }
     double delay = qFabs(times[1].toDouble() - times[0].toDouble());
-    return QString::number(delay);
+    return QString::number(delay) + "s";
 }
 
 int VideoStatisticsWidget::getOut(QString line) {
@@ -171,7 +171,7 @@ QString VideoStatisticsWidget::getFrameSize(QString line) {
     QRegExp rx2 = QRegExp("[0-9]+(.?[0-9]+)?");
     rx.indexIn(line);
     rx2.indexIn(rx.capturedTexts().at(0));
-    return rx2.capturedTexts().at(0);
+    return rx2.capturedTexts().at(0) + "B";
 }
 
 QString VideoStatisticsWidget::getTimeElapsed(QString line) {
