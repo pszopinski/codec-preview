@@ -241,9 +241,11 @@ void MainWindow::onSingleFrameGotten(int a, QProcess::ExitStatus b) {
     (void)b;
 
     scene = new QGraphicsScene();
-    view = new QGraphicsView(scene);
+    view = new MacroblockPickerView(scene);
     item = new QGraphicsPixmapItem(QPixmap("singleframe.jpg"));
     scene->addItem(item);
+    view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->show();
 }
 

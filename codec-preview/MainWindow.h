@@ -13,6 +13,7 @@
 #include "CodecComparisonWindow.h"
 #include "CodecParametersWidget.h"
 #include "FFmpegCommand.h"
+#include "MacroblockPickerView.h"
 #include "StreamingProcess.h"
 
 namespace Ui {
@@ -29,8 +30,9 @@ class MainWindow : public QMainWindow {
     CodecComparisonWindow *codecComparisonWindow;
     QProcess singleFrameProcess;
     QGraphicsScene *scene;
-    QGraphicsView *view;
+    MacroblockPickerView *view;
     QGraphicsPixmapItem *item;
+    QPixmap *pixmap;
 
   public:
     explicit MainWindow(QWidget *parent = 0);

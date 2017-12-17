@@ -25,7 +25,8 @@ SOURCES += main.cpp \
     codecs/Mpeg1Codec.cpp \
     codecs/Mpeg2Codec.cpp \
     StreamingProcess.cpp \
-    CodecSelectorWindow.cpp
+    CodecSelectorWindow.cpp \
+    MacroblockPickerView.cpp
 
 
 
@@ -47,7 +48,8 @@ HEADERS  += constants.h \
     codecs/Mpeg1Codec.h \
     codecs/MjpegCodec.h \
     StreamingProcess.h \
-    CodecSelectorWindow.h
+    CodecSelectorWindow.h \
+    MacroblockPickerView.h
 
 
 FORMS    += \
