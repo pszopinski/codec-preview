@@ -88,7 +88,7 @@
   </action>
   <action name="actionCompare_multiple_codecs">
    <property name="text">
-    <string>Compare multiple codecs</string>
+    <string>Multiple codec comarison</string>
    </property>
   </action>
   <action name="actionHelp">
@@ -118,7 +118,7 @@
   </action>
   <action name="actionMacroblocks">
    <property name="text">
-    <string>Macroblocks</string>
+    <string>Macroblock picker</string>
    </property>
   </action>
   <action name="actionOriginal_size">

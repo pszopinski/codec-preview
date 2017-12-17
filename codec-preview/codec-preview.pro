@@ -26,7 +26,8 @@ SOURCES += main.cpp \
     codecs/Mpeg2Codec.cpp \
     StreamingProcess.cpp \
     CodecSelectorWindow.cpp \
-    MacroblockPickerView.cpp
+    MacroblockPickerView.cpp \
+    MacroblocksWindow.cpp
 
 
 
@@ -49,7 +50,8 @@ HEADERS  += constants.h \
     codecs/MjpegCodec.h \
     StreamingProcess.h \
     CodecSelectorWindow.h \
-    MacroblockPickerView.h
+    MacroblockPickerView.h \
+    MacroblocksWindow.h
 
 
 FORMS    += \
@@ -58,7 +60,8 @@ FORMS    += \
     CodecParametersWidget.ui \
     VideoPlaybackWidget.ui \
     VideoStatisticsWidget.ui \
-    CodecSelectorWindow.ui
+    CodecSelectorWindow.ui \
+    MacroblocksWindow.ui
 
 	
 win32 {

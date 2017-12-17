@@ -233,7 +233,7 @@ void MainWindow::parseCameraNameProbeOutput(int a, QProcess::ExitStatus b) {
 void MainWindow::getSingleFrame() {
     QString address = ENCODED_VIDEO_PROTOCOL + "://" + ENCODED_VIDEO_HOST + ":" + ENCODED_VIDEO_PORT;
 
-    singleFrameProcess.start(FFMPEG + " -i " + address + " -t 1 -vframes 1 -f image2 singleframe.jpg -y");
+    singleFrameProcess.start(FFMPEG + " -i " + address + " -t 1 -vframes 1 -f image2 singleframe.bmp -y");
 }
 
 void MainWindow::onSingleFrameGotten(int a, QProcess::ExitStatus b) {
@@ -241,8 +241,9 @@ void MainWindow::onSingleFrameGotten(int a, QProcess::ExitStatus b) {
     (void)b;
 
     scene = new QGraphicsScene();
-    view = new MacroblockPickerView(scene);
-    item = new QGraphicsPixmapItem(QPixmap("singleframe.jpg"));
+    pixmap = new QPixmap("singleframe.bmp");
+    view = new MacroblockPickerView(scene, pixmap);
+    item = new QGraphicsPixmapItem(*pixmap);
     scene->addItem(item);
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
