@@ -5,6 +5,11 @@
 #include <QGraphicsScene>
 #include <QPixmap>
 #include <QWidget>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+
+#include "OpenCVUtils.h"
 
 namespace Ui {
 class MacroblocksWindow;
@@ -23,6 +28,14 @@ class MacroblocksWindow : public QWidget {
     QPixmap *macroblockPixmap;
     QGraphicsScene *scene;
     QGraphicsPixmapItem *item;
+
+    cv::Mat macroblockImage;
+    cv::Mat dctImage;
+    cv::Mat greyImage;
+
+    QPixmap *dctPixmap;
+    QGraphicsScene *dctScene;
+    QGraphicsPixmapItem *dctItem;
 };
 
 #endif // MACROBLOCKSWINDOW_H
