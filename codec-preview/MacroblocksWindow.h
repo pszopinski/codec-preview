@@ -23,19 +23,11 @@ class MacroblocksWindow : public QWidget {
     ~MacroblocksWindow();
 
   private:
+    static void insertGraphic(QGraphicsView *graphicsView, QPixmap *pixmap, int scale);
+    static cv::Mat computeSingleChannel(cv::Mat inputImage, int channelNum, cv::Mat channels[]);
+
+  private:
     Ui::MacroblocksWindow *ui;
-
-    QPixmap *macroblockPixmap;
-    QGraphicsScene *scene;
-    QGraphicsPixmapItem *item;
-
-    cv::Mat macroblockImage;
-    cv::Mat dctImage;
-    cv::Mat greyImage;
-
-    QPixmap *dctPixmap;
-    QGraphicsScene *dctScene;
-    QGraphicsPixmapItem *dctItem;
 };
 
 #endif // MACROBLOCKSWINDOW_H
