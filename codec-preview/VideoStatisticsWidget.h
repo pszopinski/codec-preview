@@ -36,6 +36,7 @@ class VideoStatisticsWidget : public QWidget {
     QString getStreamSize(QString line);
     QString getFrameSize(QString line);
     QString getTimeElapsed(QString line);
+    QString getQuantization(QString line);
     const int MIN_LENGTH_LINE = 130; // minimal length of proper line in
                                      // statistics.txt (vstats_file
                                      // statistics.txt - in ffmpeg command)

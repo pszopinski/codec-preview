@@ -193,6 +193,24 @@
         </item>
        </layout>
       </item>
+	  <item row="0" column="10">
+       <layout class="QVBoxLayout" name="verticalLayout_18">
+        <item>
+         <widget class="QLabel" name="label_13">
+          <property name="text">
+           <string>Quantization:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="quantization">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
      </layout>
     </widget>
    </item>

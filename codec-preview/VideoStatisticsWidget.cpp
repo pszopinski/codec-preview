@@ -181,6 +181,14 @@ QString VideoStatisticsWidget::getTimeElapsed(QString line) {
     return rx2.capturedTexts().at(0);
 }
 
+QString VideoStatisticsWidget::getQuantization(QString line) {
+    QRegExp rx = QRegExp("q=\\s*[0-9]+(.?[0-9]+)?");
+    QRegExp rx2 = QRegExp("[0-9]+(.?[0-9]+)?");
+    rx.indexIn(line);
+    rx2.indexIn(rx.capturedTexts().at(0));
+    return rx2.capturedTexts().at(0);
+}
+
 void VideoStatisticsWidget::updateStats() {
     // XD
     const int OUTS = 2;
@@ -208,6 +216,7 @@ void VideoStatisticsWidget::updateStats() {
     ui->frameSize->setText(getFrameSize(lastLines[1]));
     ui->streamSize->setText(getStreamSize(lastLines[1]));
     ui->timeElapsed->setText(getTimeElapsed(lastLines[1]) + "s");
+    ui->quantization->setText(getQuantization(lastLines[1]));
 
     ui->resolution->setText(QString::number(width) + "x" + QString::number(height));
 }
