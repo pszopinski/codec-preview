@@ -4,6 +4,7 @@
 CodecSelectorWindow::CodecSelectorWindow(CodecComparisonWindow *codecComparisonWindow, QWidget *parent)
     : QDialog(parent), ui(new Ui::CodecSelector) {
     ui->setupUi(this);
+    this->setWindowTitle("Select codecs");
     checkBox = new QCheckBox *[6];
     checkBox[0] = ui->MJPEG;
     checkBox[1] = ui->H261;

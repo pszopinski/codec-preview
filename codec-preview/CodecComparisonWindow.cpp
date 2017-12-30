@@ -4,7 +4,7 @@
 CodecComparisonWindow::CodecComparisonWindow(QWidget *parent) : QWidget(parent), ui(new Ui::CodecComparisonWindow) {
     setWindowState(Qt::WindowMaximized);
     ui->setupUi(this);
-
+    this->setWindowTitle("The extended view");
     codecWidgets.push_back(mjpegManager);
     codecWidgets.last()->setCodecName("MJPEG");
     codecWidgets.push_back(h261Manager);
