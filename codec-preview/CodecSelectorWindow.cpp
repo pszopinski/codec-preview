@@ -1,5 +1,5 @@
 #include "CodecSelectorWindow.h"
-#include "ui_codecselector.h"
+#include "ui_CodecSelectorWindow.h"
 
 CodecSelectorWindow::CodecSelectorWindow(CodecComparisonWindow *codecComparisonWindow, QWidget *parent)
     : QDialog(parent), ui(new Ui::CodecSelector) {

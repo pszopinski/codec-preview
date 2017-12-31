@@ -12,9 +12,10 @@
 class MacroblockPickerView : public QGraphicsView {
   private:
     QGraphicsPixmapItem *item;
-    QPixmap *framePixmap;
-    QPixmap *macroblockPixmap;
+    QPixmap *pixmap;
     MacroblocksWindow *macroblocksWindow;
+    bool zoomed = false;
+    int zoomScale = 5;
 
   public:
     MacroblockPickerView();
