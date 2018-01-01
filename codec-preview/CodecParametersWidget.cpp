@@ -61,7 +61,8 @@ void CodecParametersWidget::addParameterWidget(QString label, QString parameter,
     insertParameterWidget(layout);
 }
 
-void CodecParametersWidget::addComboBoxWidget(QString label, QString parameter, QMap<QString, QString> comboMap) {
+void CodecParametersWidget::addComboBoxWidget(QString label, QString parameter, QMap<QString, QString> comboMap,
+                                              QString defaultValue) {
     // create new layout for parameter
     QVBoxLayout *layout = new QVBoxLayout();
 
@@ -72,6 +73,12 @@ void CodecParametersWidget::addComboBoxWidget(QString label, QString parameter, 
     // add QComboBox
     QComboBox *comboBox = new QComboBox(this);
     comboBox->insertItems(0, comboMap.keys());
+
+    int index = comboBox->findText(defaultValue);
+    if (index != -1) {
+        comboBox->setCurrentIndex(index);
+    }
+
     layout->addWidget(comboBox);
 
     // add tooltips
@@ -88,7 +95,7 @@ void CodecParametersWidget::addComboBoxWidget(QString label, QString parameter, 
 
     insertParameterWidget(layout);
 
-    streamingParameters->insert(parameter, comboMap.values().at(0));
+    streamingParameters->insert(parameter, comboMap.values().at(index));
 }
 
 void CodecParametersWidget::addCheckBoxWidget(QString label, QString command, bool value) {
@@ -224,10 +231,11 @@ void CodecParametersWidget::loadCodecParameters(QString codecName) {
         QString paramName = comboBoxNames.at(i);
         QMap<QString, QString> paramMap = codec->getComboBox(paramName);
         QString paramValue = paramMap.value("value");
+        QString defaultValue = paramMap.value("default");
 
         paramMap.remove("value");
 
-        addComboBoxWidget(paramName, paramValue, paramMap);
+        addComboBoxWidget(paramName, paramValue, paramMap, defaultValue);
     }
 
     for (int i = 0; i < checkBoxNames.size(); i++) {

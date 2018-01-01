@@ -10,9 +10,10 @@ void Codec::addParameter(QString paramName, QString paramValue, QString paramDef
     parameterOrder->append(paramName);
 }
 
-void Codec::addComboBox(QString paramName, QString paramValue, QMap<QString, QString> paramMap) {
+void Codec::addComboBox(QString paramName, QString paramValue, QMap<QString, QString> paramMap, QString paramDefault) {
     QMap<QString, QString> comboCopy = QMap<QString, QString>(paramMap);
     comboCopy.insert("value", paramValue);
+    comboCopy.insert("default", paramDefault);
     comboBoxes->insert(paramName, comboCopy);
 }
 

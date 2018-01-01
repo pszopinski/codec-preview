@@ -17,7 +17,7 @@ class Codec {
     QList<QString> *parameterOrder;
 
     void addParameter(QString paramName, QString paramValue, QString paramDefault);
-    void addComboBox(QString paramName, QString paramValue, QMap<QString, QString> paramMap);
+    void addComboBox(QString paramName, QString paramValue, QMap<QString, QString> paramMap, QString paramDefault);
     void addCheckBox(QString paramName, QString command, bool state);
     void addSlider(QString paramName, QString paramValue, QString paramDefault, QString paramMin, QString paramMax);
     void addStat();

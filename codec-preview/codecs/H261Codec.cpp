@@ -9,5 +9,5 @@ H261Codec::H261Codec() {
     QMap<QString, QString> resolutions;
     resolutions.insert("176:144", "176x144");
     resolutions.insert("352:288", "352x288");
-    addComboBox("Resolution", "s", resolutions);
+    addComboBox("Resolution", "s", resolutions, "176:144");
 }

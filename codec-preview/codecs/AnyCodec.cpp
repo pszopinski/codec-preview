@@ -9,7 +9,7 @@ AnyCodec::AnyCodec() {
     crop_options.insert("75%", "crop=0.75*in_w:0.75*in_h");
     crop_options.insert("50%", "crop=0.50*in_w:0.50*in_h");
     crop_options.insert("25%", "crop=0.25*in_w:0.25*in_h");
-    addComboBox("Crop", "vf", crop_options);
+    addComboBox("Crop", "vf", crop_options, "100%");
 
     addParameter("Bitrate", "b:v", "");
     addParameter("Minrate", "minrate", "");
