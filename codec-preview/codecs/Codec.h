@@ -24,7 +24,7 @@ class Codec {
 
   public:
     QMap<QString, QString> getParameter(QString paramName);
-    QMap<QString, QString> getComboBox(QString paramName);
+    QMap<QString, QString> getComboBox(QString &paramName);
     QMap<QString, QString> getCheckBox(QString paramName);
     QMap<QString, QString> getSlider(QString paramName);
     QList<QString> getParameterKeys();

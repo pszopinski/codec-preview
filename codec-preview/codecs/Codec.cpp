@@ -36,7 +36,7 @@ void Codec::addStat() {}
 
 QMap<QString, QString> Codec::getParameter(QString paramName) { return parameters->value(paramName); }
 
-QMap<QString, QString> Codec::getComboBox(QString paramName) { return comboBoxes->value(paramName); }
+QMap<QString, QString> Codec::getComboBox(QString &paramName) { return comboBoxes->value(paramName); }
 
 QMap<QString, QString> Codec::getCheckBox(QString paramName) { return checkBoxes->value(paramName); }
 
