@@ -99,7 +99,7 @@ void CodecParametersWidget::addComboBoxWidget(QString label, QString parameter, 
 
     connect(comboBox, &QComboBox::currentTextChanged, [=](const QString &newValue) {
         if (newValue != streamingParameters->value(parameter)) {
-            streamingParameters->insert(parameter, comboMap.value(newValue));
+            streamingParameters->replace(parameter, comboMap.value(newValue));
             emit parametersChanged();
         }
     });
