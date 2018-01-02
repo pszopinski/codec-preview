@@ -233,6 +233,14 @@ void CodecParametersWidget::loadCodecParameters(QString codecName) {
     QList<QString> sliderNames = codec->getSliderKeys();
     QList<QString> *parameterOrder = codec->getParameterOrder();
 
+    for (int i = 0; i < sliderNames.size(); i++) {
+        QString paramName = sliderNames.at(i);
+        QMap<QString, QString> paramMap = codec->getSlider(paramName);
+
+        addSliderWidget(paramName, paramMap.value("value"), paramMap.value("default"), paramMap.value("min"),
+                        paramMap.value("max"));
+    }
+
     for (int i = 0; i < parameterOrder->size(); i++) {
         QString paramName = parameterOrder->at(i);
         QMap<QString, QString> paramMap = codec->getParameter(paramName);
@@ -260,14 +268,6 @@ void CodecParametersWidget::loadCodecParameters(QString codecName) {
         bool state = paramMap.value("state") != ""; // empty string for false, anything else for true
 
         addCheckBoxWidget(paramName, command, state);
-    }
-
-    for (int i = 0; i < sliderNames.size(); i++) {
-        QString paramName = sliderNames.at(i);
-        QMap<QString, QString> paramMap = codec->getSlider(paramName);
-
-        addSliderWidget(paramName, paramMap.value("value"), paramMap.value("default"), paramMap.value("min"),
-                        paramMap.value("max"));
     }
 }
 

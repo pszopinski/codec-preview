@@ -1,3 +1,3 @@
 #include "MjpegCodec.h"
 
-MjpegCodec::MjpegCodec() {}
+MjpegCodec::MjpegCodec() { addSlider("Quantization", "q:v", "24", "1", "51"); }

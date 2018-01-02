@@ -1,7 +1,7 @@
 #include "AnyCodec.h"
 
 AnyCodec::AnyCodec() {
-    addSlider("Quantization", "q:v", "24", "1", "51");
+    // addSlider("Quantization", "q:v", "24", "1", "51");
 
     addParameter("FPS", "r", "", "50");
 
