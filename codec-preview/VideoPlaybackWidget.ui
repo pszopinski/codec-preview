@@ -60,7 +60,6 @@
          <property name="styleSheet">
           <string notr="true">Background-color: #000;</string>
          </property>
-         <zorder>rawVideo</zorder>
         </widget>
        </item>
       </layout>

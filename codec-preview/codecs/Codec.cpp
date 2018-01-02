@@ -2,10 +2,11 @@
 
 Codec::Codec() { parameterOrder = new QList<QString>(); }
 
-void Codec::addParameter(QString paramName, QString paramValue, QString paramDefault) {
+void Codec::addParameter(QString paramName, QString paramValue, QString paramDefault, QString width) {
     QMap<QString, QString> param;
     param.insert("value", paramValue);
     param.insert("default", paramDefault);
+    param.insert("width", width);
     parameters->insert(paramName, param);
     parameterOrder->append(paramName);
 }

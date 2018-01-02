@@ -2,8 +2,8 @@
 
 H261Codec::H261Codec() {
     addCheckBox("Motion vectors", "-vf codecview=mv=pf+bf+bb", false);
-    addParameter("GOP size", "g", "");
-    addParameter("B frames limit", "bf", "");
+    addParameter("GOP size", "g", "", "50");
+    addParameter("B frames limit", "bf", "", "50");
     addCheckBox("Aspect ratio correction", "-vf setdar=r=a", true);
 
     QMap<QString, QString> resolutions;

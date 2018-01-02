@@ -23,20 +23,29 @@ CodecParametersWidget::CodecParametersWidget(QString codecName, QString optionNa
 
     loadCodecParameters("any");
     loadCodecParameters(codecName);
+
+    QVBoxLayout *layout = new QVBoxLayout();
+    layout->addWidget(new QWidget());
+    insertParameterWidget(layout);
 }
 
 CodecParametersWidget::~CodecParametersWidget() { delete ui; }
 
-void CodecParametersWidget::addParameterWidget(QString label, QString parameter, QString value) {
+void CodecParametersWidget::addParameterWidget(QString label, QString parameter, QString value, int fixedWidth) {
     // create new layout for parameter
     QVBoxLayout *layout = new QVBoxLayout();
 
     // add QLabel
     QLabel *labelWidget = new QLabel(label, this);
+    if (fixedWidth != 0)
+        labelWidget->setFixedWidth(fixedWidth);
     layout->addWidget(labelWidget);
 
     // add QLineEdit
     QLineEdit *lineEdit = new QLineEdit(value, this);
+    if (fixedWidth != 0)
+        lineEdit->setFixedWidth(fixedWidth);
+
     // lineEdit->setMaximumWidth(30);
 
     // add tooltips
@@ -85,6 +94,8 @@ void CodecParametersWidget::addComboBoxWidget(QString label, QString parameter, 
     QString tooltip = paramManager.getHint(label);
     labelWidget->setToolTip(tooltip);
     comboBox->setToolTip(tooltip);
+
+    comboBox->setFixedWidth(100);
 
     connect(comboBox, &QComboBox::currentTextChanged, [=](const QString &newValue) {
         if (newValue != streamingParameters->value(parameter)) {
@@ -154,6 +165,8 @@ void CodecParametersWidget::addSliderWidget(QString label, QString parameter, QS
     labelWidget->setToolTip(tooltip);
     slider->setToolTip(tooltip);
 
+    slider->setFixedWidth(100);
+
     layout->addWidget(slider);
 
     // make form interactive
@@ -174,8 +187,8 @@ void CodecParametersWidget::insertParameterWidget(QVBoxLayout *layout) {
     layout->addStretch();
 
     // calculate position
-    int row = layoutCounter / 7;
-    int column = layoutCounter % 7;
+    int row = layoutCounter / 12;
+    int column = layoutCounter % 12;
 
     // insert layout
     ui->mainLayout->addLayout(layout, row, column);
@@ -224,7 +237,8 @@ void CodecParametersWidget::loadCodecParameters(QString codecName) {
         QString paramName = parameterOrder->at(i);
         QMap<QString, QString> paramMap = codec->getParameter(paramName);
 
-        addParameterWidget(paramName, paramMap.value("value"), paramMap.value("default"));
+        addParameterWidget(paramName, paramMap.value("value"), paramMap.value("default"),
+                           paramMap.value("width").toInt());
     }
 
     for (int i = 0; i < comboBoxNames.size(); i++) {
@@ -234,6 +248,7 @@ void CodecParametersWidget::loadCodecParameters(QString codecName) {
         QString defaultValue = paramMap.value("default");
 
         paramMap.remove("value");
+        paramMap.remove("default");
 
         addComboBoxWidget(paramName, paramValue, paramMap, defaultValue);
     }

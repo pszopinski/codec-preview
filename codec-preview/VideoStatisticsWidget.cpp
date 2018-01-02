@@ -20,6 +20,12 @@ VideoStatisticsWidget::VideoStatisticsWidget(QWidget *parent) : QWidget(parent),
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateStats()));
     ui->lBitrate->setToolTip(paramManager.getHint("Bitrate"));
+
+    ui->frameRate->setFixedWidth(42);
+    ui->bitRate->setFixedWidth(218);
+    ui->resolution->setFixedWidth(98);
+    ui->quantization->setFixedWidth(102);
+    ui->frameTypes->setFixedWidth(110);
 }
 
 VideoStatisticsWidget::~VideoStatisticsWidget() { delete ui; }
