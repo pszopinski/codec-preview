@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     codecWidgets.last()->setCodecName("MPEG2");
     codecWidgets.push_back(new CodecParametersWidget("h264", "libx264", "mpegts", this));
     codecWidgets.last()->setCodecName("H264");
-    codecWidgets.push_back(new CodecParametersWidget("h265", "libx265", "matroska", this));
+    codecWidgets.push_back(new CodecParametersWidget("h265", "libx265", "mpegts", this));
     codecWidgets.last()->setCodecName("H265");
 
     for (auto codecWidget : codecWidgets) {

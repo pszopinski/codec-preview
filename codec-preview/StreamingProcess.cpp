@@ -11,8 +11,8 @@ QString StreamingProcess::buildStreamingCommand(QString inputParameters, QString
     list << "-i " << inputLocation;
 
     // TEMPORARY CHANGE FROM COPY TO MJPEG
-    // PP: mjpeg
-    list << "-f nut -an" << rawLocation + "?ttl=0";
+    // list << "-f nut -an" << rawLocation + "?ttl=0";
+    list << "-c:v rawvideo -f nut -an" << rawLocation + "?ttl=0";
 
     list << outputPrameters << encodedLocation + "?ttl=0" + " -vstats_file " + STATS_FILE_NAME;
 
