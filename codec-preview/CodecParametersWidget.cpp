@@ -63,6 +63,11 @@ void CodecParametersWidget::addParameterWidget(QString label, QString parameter,
         QString newValue = lineEdit->text();
         if (newValue != streamingParameters->value(parameter)) {
             streamingParameters->replace(parameter, newValue);
+            if (streamingParameters->contains("b:v") || streamingParameters->contains("minrate") ||
+                streamingParameters->contains("maxrate") || streamingParameters->contains("bufsize")) {
+                streamingParameters->remove("q:v");
+                streamingParameters->remove("qp");
+            }
             emit parametersChanged();
         }
     });
