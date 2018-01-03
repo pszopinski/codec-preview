@@ -17,7 +17,7 @@ CodecParametersWidget::CodecParametersWidget(QString codecName, QString optionNa
       streamingParameters(new QMultiMap<QString, QString>) {
     ui->setupUi(this);
 
-    streamingParameters->insert("c:v", optionName);
+    streamingParameters->replace("c:v", optionName);
 
     this->codecContainer = codecContainer;
 
@@ -58,11 +58,11 @@ void CodecParametersWidget::addParameterWidget(QString label, QString parameter,
     layout->addWidget(lineEdit);
 
     // make form interactive
-    streamingParameters->insert(parameter, value);
+    streamingParameters->replace(parameter, value);
     connect(lineEdit, &QLineEdit::editingFinished, [=] {
         QString newValue = lineEdit->text();
         if (newValue != streamingParameters->value(parameter)) {
-            streamingParameters->insert(parameter, newValue);
+            streamingParameters->replace(parameter, newValue);
             emit parametersChanged();
         }
     });
@@ -99,7 +99,7 @@ void CodecParametersWidget::addComboBoxWidget(QString label, QString parameter, 
 
     connect(comboBox, &QComboBox::currentTextChanged, [=](const QString &newValue) {
         if (newValue != streamingParameters->value(parameter)) {
-            streamingParameters->insert(parameter, comboMap.value(newValue));
+            streamingParameters->replace(parameter, comboMap.value(newValue));
             emit parametersChanged();
         }
     });
@@ -132,7 +132,7 @@ void CodecParametersWidget::addCheckBoxWidget(QString label, QString command, bo
 
     connect(checkBox, &QCheckBox::toggled, [=](bool checked) {
         if (checked) {
-            streamingParameters->insert(command, "");
+            streamingParameters->replace(command, "");
         } else {
             streamingParameters->remove(command);
         }
@@ -142,7 +142,7 @@ void CodecParametersWidget::addCheckBoxWidget(QString label, QString command, bo
     insertParameterWidget(layout);
 
     if (value) {
-        streamingParameters->insert(command, "");
+        streamingParameters->replace(command, "");
     }
 }
 
@@ -174,7 +174,7 @@ void CodecParametersWidget::addSliderWidget(QString label, QString parameter, QS
     connect(slider, &QSlider::sliderReleased, [=] {
         QString newValue = QString::number(slider->value());
         if (newValue != streamingParameters->value(parameter)) {
-            streamingParameters->insert(parameter, newValue);
+            streamingParameters->replace(parameter, newValue);
             emit parametersChanged();
         }
     });
