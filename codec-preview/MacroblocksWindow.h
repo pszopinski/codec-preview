@@ -21,6 +21,10 @@ class MacroblocksWindow : public QWidget {
   public:
     explicit MacroblocksWindow(QPixmap *macroblockPixmap, QWidget *parent = 0);
     ~MacroblocksWindow();
+    QPixmap macroblockPixmapPart1;
+    QPixmap macroblockPixmapPart2;
+    QPixmap macroblockPixmapPart3;
+    QPixmap macroblockPixmapPart4;
 
   private:
     static void insertGraphic(QGraphicsView *graphicsView, QPixmap *pixmap, int scale);

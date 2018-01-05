@@ -20,7 +20,7 @@ void MacroblockPickerView::mousePressEvent(QMouseEvent *event) {
 
         this->setFixedSize(128 * zoomScale, 128 * zoomScale);
 
-        qDebug() << pixmap->width() << " " << pixmap->height();
+        // qDebug() << pixmap->width() << " " << pixmap->height();
 
         zoomed = true;
 
@@ -29,7 +29,7 @@ void MacroblockPickerView::mousePressEvent(QMouseEvent *event) {
     else {
         QRect rect((event->x() / zoomScale) - (event->x() / zoomScale) % 16,
                    (event->y() / zoomScale) - (event->y() / zoomScale) % 16, 16, 16);
-        qDebug() << "rect: " << rect.x() << " " << rect.y() << " " << rect.width() << " " << rect.height();
+        // qDebug() << "rect: " << rect.x() << " " << rect.y() << " " << rect.width() << " " << rect.height();
         QPixmap *mbPixmap = new QPixmap(pixmap->copy(rect));
         macroblocksWindow = new MacroblocksWindow(mbPixmap);
         macroblocksWindow->show();
